@@ -38,7 +38,8 @@ Repository establishment increment — see `AGENTS.md` for the architecture,
 governance, and scope record (the design record: scope, single-source
 multi-render, evidence tiers, membership, notation, governance, roadmap),
 and the spec at `Brothertown-Language/snea-phonetics#118` for the
-requirements.
+requirements. For the forward work map — pending items, blockers, and
+interdependencies — see [`ROADMAP.md`](ROADMAP.md).
 
 ## License
 
