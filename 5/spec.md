@@ -42,10 +42,21 @@ Implementation waits on:
   ratifying body, date, decision reference) or `unratified_variants` (the ancestor
   varieties' attested variants listed, no norm). `provisional` exists for
   repo-default structural records, not for synthesis decisions — a synthesis value
-  is either community-ratified or openly unratified.
+  is either ratified on a recorded decision or openly unratified. **Legitimate
+  ratification sources**: a recorded community decision, or a recorded project
+  direction (the stake-holder's explicit determination, as with the notation
+  standard PSN-RUL-005) — what is excluded is anything the agent invents. The
+  seed's ratified profile value is a real recorded project direction: the
+  Brothertown Language renders surface forms in the Costa alphabet + IPA (the
+  2026-10-11 direction), which is a realization-layer decision by construction.
 - **No fabrication, mechanically enforced**: the validator already rejects a
   ratified norm without provenance fields; this item extends the same discipline to
   profile records.
+- **One grammar, mechanically**: profile records are a distinct record kind
+  (`profile`, added to the kind vocabulary) and carry a required `realizes` field
+  referencing existing core-record ids — the validator rejects a `realizes`
+  reference to a nonexistent or non-core id. By construction a profile record
+  cannot restate structure: it selects among or instantiates core records.
 - **Community-orthography overrides are display-time only**: the storage form stays
   in the Costa alphabet (the recorded notation standard, PSN-RUL-005); overrides
   (e.g. the Wôpanâak orthography) live in a display-override structure applied by
@@ -62,7 +73,7 @@ Implementation waits on:
 | SC-2 | A ratified profile value requires recorded provenance (ratifying body, date, decision reference); the validator rejects one without | structural | A test asserting the validator rejects a ratified profile record missing any provenance field, and accepts one with all three |
 | SC-3 | Unratified profile points render as "no norm yet — variants attested" over the ancestor varieties' attested variants; ratified values render with their provenance | behavioral | Run the prescriptive renderer over seed profile data containing both states; assert both behaviors in the output |
 | SC-4 | Community-orthography overrides are display-time only: stored surface fields validate against the Costa alphabet inventory, and the renderer applies the override mapping at output time | behavioral | A test asserting stored forms pass the inventory check while rendered output shows the overridden orthography |
-| SC-5 | Profile records do not restate structural claims — each references core record ids | structural | A test asserting profile records carry core references and no duplicated structure statement |
+| SC-5 | Profile records are `kind: profile` (a new kind in the vocabulary) with a required `realizes` field; the validator rejects a `realizes` reference to a nonexistent id or to a non-core record | structural | A test asserting the validator rejects a profile record whose `realizes` names a missing id or another profile record, and accepts one referencing existing structure/paradigm/rule records |
 
 ## 4. Non-goals
 

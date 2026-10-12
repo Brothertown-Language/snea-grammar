@@ -18,8 +18,9 @@ Assemble the PSNEA alternation rules — the morphophonological layer of the gra
 as validated grammar records in this repository's knowledge base. The design session
 ruled **alternation is grammar, keep it**: this repository emits Costa-alphabet forms
 plus the alternation rules that derive them; orthographic/phonetic realization stays
-with snea-phonetics. This is the one Phase-1 content stream unblocked today: every
-needed anchor is already mirrored in the corpus submodule at v0.1.2.
+with snea-phonetics. This is the one Phase-1 content stream unblocked today: the corpus mirrors at
+v0.1.2 carry the anchors for every domain except the vowel rows' secondary
+reconciliation note (§2.1) — the primary anchors are all mirrored.
 
 ## 2. Design record
 
@@ -31,10 +32,10 @@ Each rule is a `kind: rule` grammar record. The domains, with their tracked anch
 | Rule domain | Tracked anchor basis |
 |---|---|
 | Final PEA *r → š/s (the correspondence that also carries the paradigm-ending reconstruction: inanimate plural PA *-ari → SNEA -(a)š, 2sg AI imperative *-ro, theme-4 sign *-eTe) | `corpus/docs/research/sources/costa2007.txt` ll. 297–299 (law c), ll. 333–338 |
-| k-palatalization — a PSNEA feature: → ty in Massachusett-Coweset, palatal stop in other SNEA, before PEA *m and some instances of PA *i; conditioning details "notoriously difficult to define" (Costa's own caveat, carried) | `corpus/docs/research/sources/costa2007.txt` ll. 109–120 |
+| k-palatalization — a PSNEA feature: the palatalized *k surfaces as a palatal stop (ty) in Massachusett-Coweset, and as simple β in all other SNEA languages; Costa's fn. 3 rules out a palatal reading for Loup (older *ty merged with β, "not as [š]"); conditioning details "notoriously difficult to define" (Costa's own caveat, carried) | `corpus/docs/research/sources/costa2007.txt` ll. 109–120, fn. 3 ll. 132–138 |
 | hš cluster — PEA *hr and *hx merge as hš (a PSNEA feature), with a documented reduction gradient: hs with gradient consistency in Unquachog (always), Loup (almost always), Quiripi and Montauk (occasionally) | `corpus/docs/research/sources/costa2007.txt` ll. 201–212, ll. 325–330 |
 | Preaspiration hC retention — retained in Massachusett but routinely lost/simplified in colonial transcriptions (the recorder-failure caveat; Edwards 1787 and Prince & Speck 1904 are the recorders who write it) | tracked mirrors that attest it: `corpus/docs/research/sources/edwards-1787-observations-fulltext.txt`, `corpus/docs/research/sources/prince-speck-1904.txt`; caveat provenance: the snea-phonetics research cards |
-| Vowel correspondences — the PSNEA-state vowel rows | the bottom-up PSNEA reconstruction record (`snea-phonetics` feasibility branch, `docs/research/psnea-stage-reconstruction.md` §4.2) reconciled against `costa2007.txt` |
+| Vowel correspondences — the PSNEA-state vowel rows | `corpus/docs/research/sources/costa2007.txt` vowel-correspondence sections (specific line ranges verified live at implementation); reconciled against the bottom-up PSNEA reconstruction record (`snea-phonetics` feasibility branch, `docs/research/psnea-stage-reconstruction.md` §4.2) — the reconstruction card is a reconciliation *note*, not a source anchor: it is not under the corpus submodule (it lives on the unmerged feasibility branch, ROADMAP W7) |
 
 Implementation verifies every anchor path and line range live before writing the
 record; no rule is written from memory.
@@ -49,6 +50,10 @@ Rows the tracked sources disagree on, or that no tracked source licenses, are ca
   already merged with *s in all EA north of Delaware-Mahican before the new
   word-final *š was created. Both positions are card-attested; both are recorded;
   no adjudication without new tracked evidence.
+- **k-palatalization reflex divergence** — Costa's direct text (palatal stop ty in
+  Massachusett-Coweset, simple β in all other SNEA; fn. 3) vs the phrasing carried in
+  the PSNEA reconstruction card §4.1 ("→ palatal stop in other SNEA"). The direct
+  source governs; the divergence is recorded on the rule, not adjudicated away.
 - **š's distribution** — attested only word-finally (the new phoneme created by law
   c); elsewhere unattested in PSNEA.
 - Vowel rows marked contested/unattested per the reconstruction record (the *e·

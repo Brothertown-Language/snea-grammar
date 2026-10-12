@@ -60,6 +60,10 @@ Paradigm records (`kind: paradigm`) for:
   silent, constrained by Costa 2007's dialectology.
 - Where attestation is silent everywhere, the paradigm row is left **visibly
   incomplete** (pending marking) — the renderers' incompleteness machinery governs.
+- **Evidence traces render everywhere**: attested-form citations appear in every
+  rendered view (descriptive, teaching, prescriptive) — the same binding rule that
+  carries tier and norm-status markings into all three outputs (snea-phonetics#118
+  §2.2 rule 1).
 
 ## 3. Success criteria
 
@@ -68,7 +72,7 @@ Paradigm records (`kind: paradigm`) for:
 | SC-1 | Paradigm records exist for the four inflectional domains of §2.2, passing the schema validator | structural | `uv run pytest test/` — validator passes; a coverage test maps ≥1 paradigm record to each domain |
 | SC-2 | Every tier-1 paradigm record's anchors include the Eliot 1666 mirror path (or the Goddard & Bragdon mirror path) and resolve to existing files under the corpus submodule | structural | The anchor-resolution test, extended to the new records, passes |
 | SC-3 | Central corroboration stays architecture-only: tier-4 records carry no `surface_form` fields | structural | A test asserting every tier-4 record in the paradigm set has no surface-form field |
-| SC-4 | The paradigms render in all three views; attested rows carry their citations | behavioral | Run the three renderers; each output contains the paradigm record ids; the descriptive output carries the citation strings |
+| SC-4 | The paradigms render in all three views, with attested-row citations present in each view | behavioral | Run the three renderers; each of the three outputs contains the paradigm record ids AND the citation strings for attested rows |
 | SC-5 | Incomplete paradigm rows render with visible incompleteness (pending marking), per the establishment machinery | behavioral | A paradigm record with a pending PSNEA row renders with the pending marking in all three views |
 
 ## 4. Non-goals
