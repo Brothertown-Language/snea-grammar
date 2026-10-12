@@ -20,7 +20,7 @@ ruled **alternation is grammar, keep it**: this repository emits Costa-alphabet 
 plus the alternation rules that derive them; orthographic/phonetic realization stays
 with snea-phonetics. This is the one Phase-1 content stream unblocked today: the corpus mirrors at
 v0.1.2 carry the anchors for every in-scope domain (§2.1); the
-vowel-correspondence domain is scoped out with its gate recorded (§2.3).
+vowel-correspondence domain is scoped out with its gate recorded (§2.2).
 
 ## 2. Design record
 
