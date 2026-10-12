@@ -1,0 +1,21 @@
+# PSN-PAR-007 — A paradigm record demonstrating visible incompleteness: the
+# corroborating Central paradigm shape is real (Ojibwe PRONOUNS.csv, tier 4),
+# while the PSNEA realization is explicitly pending. Anchors: the Ojibwe
+# component datasets in the corpus submodule.
+id: PSN-PAR-007
+kind: paradigm
+title: Person/number paradigm shape (corroborated; PSNEA realization pending)
+statement: >-
+  The person/number paradigm shape — subject person x number with the
+  inclusive/exclusive first-person-plural distinction — is corroborated by
+  the Ojibwe pronoun paradigms in the corpus submodule. The PSNEA row of
+  this paradigm is pending: filling it from SNEA attestation is Phase 1
+  work, and this record renders with that incompleteness visible.
+evidence_tier: 4
+source_anchors:
+  - corpus/docs/research/data/ojibwe/PRONOUNS.csv
+realizations:
+  PSNEA: "pending — to be filled from SNEA attestation (Phase 1)"
+  Ojibwe: "PRONPer paradigm class, 122 entries (corroborative only)"
+norm_status:
+  state: provisional

@@ -1,0 +1,34 @@
+# PSN-RUL-006 — The reflex of PEA *r: a real, attested variant point with NO
+# recorded norm (SC-5's unratified-variants demonstration). The variants are
+# attested data, quoted by Costa 2007 ll. 402-406 from Roger Williams
+# (1643:104-105): "the word for 'dog' was ‹anùm› in the 'Cowweset' dialect,
+# ‹ayím› in 'Narriganset', ‹arúm› in 'Qunnippiuck', and ‹alùm› in 'Neepmuck'".
+# The choice among them for the Brothertown Language synthesis is a community
+# decision — none is recorded, so the prescriptive layer must say so.
+id: PSN-RUL-006
+kind: rule
+title: Reflex of PEA *r — variants attested across the ancestor varieties, no norm yet
+statement: >-
+  The reflex of Proto-Eastern Algonquian *r varies across the SNEA ancestor
+  varieties — historically the n/y/r/l dialect classification recorded by
+  Roger Williams. The Brothertown Language synthesis descends from several
+  of these varieties; which reflex the synthesis norm carries is a community
+  decision that has not been made. The variants are attested data, not
+  proposals invented here.
+evidence_tier: 1
+source_anchors:
+  - corpus/docs/research/sources/costa2007.txt
+  - corpus/docs/research/sources/williams-1643-key-into-language-america.txt
+realizations:
+  PSNEA: "word-final reflex is š by the regular correspondence; the medial/dialect reflex varies (see variants)"
+  Massachusett-Coweset: "n (attested: ‹anùm› 'dog')"
+  Narragansett: "y (attested: ‹ayím› 'dog')"
+  Quiripi: "r (attested: ‹arúm› 'dog')"
+  Nipmuc: "l (attested: ‹alùm› 'dog')"
+norm_status:
+  state: unratified_variants
+  variants:
+    - "n — Coweset dialect (Massachusett-Coweset)"
+    - "y — Narragansett proper"
+    - "r — Qunnippiuck (Quiripi-Naugatuck)"
+    - "l — Neepmuck (Nipmuc)"

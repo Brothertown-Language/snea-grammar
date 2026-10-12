@@ -1,0 +1,78 @@
+# Languages registry — the PSNEA membership determination, carried verbatim
+# from the tracked mirror of Costa 2007, "The Dialectology of Southern New
+# England Algonquian" (PAC 38), corpus/docs/research/sources/costa2007.txt
+# ll. 33-49 (members), ll. 53-64 (uncertain + no-data languages).
+#
+# Statuses:
+#   member     — PSNEA member (Costa 2007's determination)
+#   uncertain  — possible member; documentation too meagre to classify
+#   projected  — no-data ancestor (Siebert 1975's list); covered by PSNEA
+#                projection with attested rows slotted where attestation exists
+#   neighbor   — comparative language outside the group (Delaware-Mahican and
+#                Abenaki: the PSNEA shared innovations do not characterize them;
+#                costa2007.txt ll. 109-111, 201-205)
+
+languages:
+  - name: Massachusett-Coweset
+    status: member
+    area: eastern Massachusetts and central Rhode Island
+
+  - name: Narragansett proper
+    status: member
+    area: southern Rhode Island
+
+  - name: Mohegan-Pequot-Montauk
+    status: member
+    area: southeastern Connecticut and eastern Long Island
+
+  - name: Quiripi-Naugatuck
+    status: member
+    area: southwestern Connecticut
+
+  - name: Unquachog
+    status: member
+    area: central Long Island
+
+  - name: Loup
+    status: member
+    area: central Massachusetts and adjoining areas of northeastern Connecticut and northwestern Rhode Island
+
+  - name: Western Niantic
+    status: member
+    area: southeast coast of Connecticut
+    note: probably spoke a dialect of the Mohegan-Pequot-Montauk group
+
+  - name: Eastern Niantic
+    status: member
+    area: south coast of Rhode Island
+    note: probably spoke a dialect of the Mohegan-Pequot-Montauk group
+
+  - name: Etchemin
+    status: uncertain
+    area: coast of Maine
+    note: might also have belonged to this group; the extremely meagre
+      documentation will forever prevent its conclusive classification
+
+  - name: Tunxis
+    status: projected
+    note: no data (Siebert 1975's list); probably spoke a Southern New England
+      language — covered by PSNEA projection
+
+  - name: Siwanoy
+    status: projected
+    note: no data (Siebert 1975's list); probably spoke a Southern New England
+      language — covered by PSNEA projection
+
+  - name: Setauket
+    status: projected
+    note: no data (Siebert 1975's list); probably spoke a Southern New England
+      language — covered by PSNEA projection
+
+  - name: Delaware-Mahican
+    status: neighbor
+    note: comparative neighbor, not a PSNEA member; closest well-documented
+      Eastern Algonquian outgroup for evidence tier 3 is Munsee Delaware
+
+  - name: Abenaki
+    status: neighbor
+    note: comparative neighbor, not a PSNEA member
