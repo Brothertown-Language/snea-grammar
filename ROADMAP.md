@@ -1,9 +1,9 @@
 <!-- SPDX-FileCopyrightText: 2026 Michael Conrad -->
 <!-- SPDX-License-Identifier: MIT -->
-
 # ROADMAP — work map and resumption guide
 
-**Currency date: 2026-10-12.** This file orients a fresh-context agent
+**Currency date: 2026-10-12 (specs filed + validated; W1 scope note).** This file
+orients a fresh-context agent
 resuming the snea-grammar work. It carries the work-ordering logic, the
 blockers, and the design-session rules that are not yet written anywhere
 else. **Specs govern, not this file**: every work item below goes through
@@ -72,12 +72,12 @@ a fresh agent is most likely to trip on exactly these:
 
 | ID | Item | Repo | Blocked on | Unblocks |
 |----|------|------|------------|----------|
-| W1 | **Alternation rules (morphophonology) spec** — PEA *r → š/s; k-palatalization before PEA *m / PA *i; the hš cluster with its reduction gradient (Unquachog always, Loup almost, Quiripi/Montauk occasionally); preaspiration hC retention; vowel correspondences — including the contested rows (š/s merger, the *e· discrepancy, schwa status) carried with the tracked discipline's marking | snea-grammar | — (unblocked: Costa 2007 is mirrored at v0.1.2) | Phase 1 core content |
-| W2 | **PSNEA paradigm architecture spec** — tier-1 attestation leading: person/number/obviation exponents, the four verb subtypes (AI/II/TA/TI), independent vs. conjunct orders, possessed-noun inflection; Bloomfield 1946 (mirrored) as the tier-5 skeleton, Ojibwe datasets as tier-4 corroboration | snea-grammar | **W5** (Eliot 1666 paradigms are the tier-1 lead and are not mirrored) | Phase 1 core content; W3 |
-| W3 | **Brothertown Language realization profile spec (Phase 2)** — the community-ratified synthesis over the PSNEA core: norm provenance recording, the realization/exponent layer, community-orthography rendering overrides (display-time only) | snea-grammar | **W1 + W2** content, **and** the community ratification process itself (community-gated, not agent-gated — do not fabricate ratifications) | Phase 2 |
-| W4 | **Governance annotation** on the Modern Mohegan Dictionary catalogue card (`corpus/docs/research/modern-mohegan-dictionary.md`) **and the MANIFEST row** — resolve the live conflict between the mirroring priority and the disavowal ruling | algonquian-library | — (unblocked) | Clean governance surface for every later item |
-| W5 | **Mirror Eliot 1666** (*The Indian Grammar Begun*) in the corpus | algonquian-library | — (unblocked) | **W2**; tier-1 paradigm records generally |
-| W6 | **Mirror Munsee Delaware materials** in the corpus — the tier-3 outgroup has zero corpus presence today (only Delaware-*Mahican* neighbor material: Schmick/Edwards/Masthay) | algonquian-library | — (unblocked) | All tier-3 records |
+| W1 | **Alternation rules (morphophonology) spec** — PEA *r → š/s; k-palatalization (palatal stop in Massachusett-Coweset, simple β elsewhere — Costa's direct text, with the reconstruction-card divergence carried as a contested row); the hš cluster with its reduction gradient (Unquachog always, Loup almost, Quiripi/Montauk occasionally); preaspiration hC retention — including the contested rows (š/s merger) carried with the tracked discipline's marking. *Spec: snea-grammar#3 (validated PASS 2026-10-12). Vowel correspondences are scoped out, gated on a corpus-side anchor or an explicit anchor-contract decision (spec §2.2)* | snea-grammar | — (unblocked: Costa 2007 is mirrored at v0.1.2) | Phase 1 core content |
+| W2 | **PSNEA paradigm architecture spec** — tier-1 attestation leading: person/number/obviation exponents, the four verb subtypes (AI/II/TA/TI), independent vs. conjunct orders, possessed-noun inflection; Bloomfield 1946 (mirrored) as the tier-5 skeleton, Ojibwe datasets as tier-4 corroboration. *Spec: snea-grammar#4 (validated PASS 2026-10-12)* | snea-grammar | **W5** (Eliot 1666 paradigms are the tier-1 lead and are not mirrored) | Phase 1 core content; W3 |
+| W3 | **Brothertown Language realization profile spec (Phase 2)** — the community-ratified synthesis over the PSNEA core: norm provenance recording, the realization/exponent layer, community-orthography rendering overrides (display-time only). *Spec: snea-grammar#5 (validated PASS 2026-10-12)* | snea-grammar | **W1 + W2** content, **and** the community ratification process itself (community-gated, not agent-gated — do not fabricate ratifications) | Phase 2 |
+| W4 | **Governance annotation** on the Modern Mohegan Dictionary catalogue card (`corpus/docs/research/modern-mohegan-dictionary.md`) **and the MANIFEST row** — resolve the live conflict between the mirroring priority and the disavowal ruling. *Spec: corpus#33 (validated PASS 2026-10-12)* | algonquian-library | — (unblocked) | Clean governance surface for every later item |
+| W5 | **Mirror Eliot 1666** (*The Indian Grammar Begun*) in the corpus — survey first; every identified printing dispositioned (mirrored / unavailable-with-evidence); Goddard & Bragdon 1988 dispositioned in the same pass. *Spec: corpus#34 (validated PASS 2026-10-12)* | algonquian-library | — (unblocked) | **W2**; tier-1 paradigm records generally |
+| W6 | **Mirror Munsee Delaware materials** in the corpus — survey, mirror, and disposition every identified source (mirrored / documented-unavailable / governance-gated for community materials); the tier-3 outgroup has zero corpus presence today (only Delaware-*Mahican* neighbor material: Schmick/Edwards/Masthay). *Spec: corpus#35 (validated PASS 2026-10-12)* | algonquian-library | — (unblocked) | All tier-3 records |
 | W7 | **PR for `feature/snea-grammar-feasibility`** (snea-phonetics) — merges the feasibility research card + corpus pin sync; the provenance anchor for this whole program | snea-phonetics | — (unblocked) | Provenance durable in the tracked tree |
 
 **Suggested order.** Start W1 (core, unblocked), W4 (urgent — governance
