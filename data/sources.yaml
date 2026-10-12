@@ -1,0 +1,103 @@
+# Source registry — governance classification of every source the knowledge
+# base may anchor to (spec §2.6, snea-phonetics#118).
+#
+# Classes:
+#   colonial_primary      — colonial-era primary documentation
+#   scholarly_edition     — scholarly editions and reference works
+#   community_dictionary  — modern community dictionaries; community property,
+#                           excluded by default (use requires explicit
+#                           authorization from the owning community)
+#
+# tier_roles use the spec §2.3 evidence-tier vocabulary:
+#   tier1 SNEA-attested · tier2 SNEA-internal · tier3 Munsee Delaware ·
+#   tier4 Central corroboration · tier5 Proto-Algonquian
+
+sources:
+  # --- Colonial-era primary sources (tier-1 attestation) ---
+
+  - id: eliot-bible-1663
+    title: Mamusse Wunneetupanatamwe Up-Biblum God (Eliot's Massachusett Bible, 1663; 2nd ed. 1685)
+    class: colonial_primary
+    tier_roles: [tier1]
+
+  - id: eliot-grammar-1666
+    title: John Eliot, The Indian Grammar Begun (1666)
+    class: colonial_primary
+    tier_roles: [tier1]
+
+  - id: williams-1643
+    title: Roger Williams, A Key into the Language of America (1643)
+    class: colonial_primary
+    tier_roles: [tier1]
+
+  # --- Scholarly editions and reference works ---
+
+  - id: trumbull-1903
+    title: J. Hammond Trumbull, Natick Dictionary (BAE Bulletin 25, 1903)
+    class: scholarly_edition
+    tier_roles: [tier1, tier2]
+
+  - id: prince-speck-1904
+    title: Prince & Speck, Glossary of the Mohegan-Pequot Language (1904; Fidelia Fielding materials)
+    class: scholarly_edition
+    tier_roles: [tier1]
+
+  - id: goddard-bragdon-1988
+    title: Goddard & Bragdon, Native Writings in Massachusett (APS Memoir 185, 1988)
+    class: scholarly_edition
+    tier_roles: [tier1]
+
+  - id: costa-2007
+    title: David J. Costa, The Dialectology of Southern New England Algonquian (PAC 38, 2007)
+    class: scholarly_edition
+    tier_roles: [tier2]
+    note: Constrains SNEA-internal comparison; carries the PSNEA membership
+      determination and the dialect sound correspondences.
+
+  - id: aubin-1972
+    title: George F. Aubin, Narragansett historical phonology (Brown University PhD, 1972; unpublished)
+    class: scholarly_edition
+    tier_roles: [tier2]
+
+  - id: costa-2003
+    title: David J. Costa, The Miami-Illinois Language (2003)
+    class: scholarly_edition
+    tier_roles: [tier4]
+    note: Central Algonquian structural reference — corroborates architecture,
+      never supplies surface forms.
+
+  - id: hewson-1993
+    title: John Hewson, A Computer-generated Dictionary of Proto-Algonquian (Canadian Museum of Civilization, 1993)
+    class: scholarly_edition
+    tier_roles: [tier5]
+
+  - id: aubin-1975
+    title: George F. Aubin, A Proto-Algonquian Dictionary (National Museums of Canada, 1975)
+    class: scholarly_edition
+    tier_roles: [tier5]
+
+  - id: masthay-1991
+    title: Carl Masthay (ed.), Schmick's Mahican Dictionary (1991)
+    class: scholarly_edition
+    tier_roles: [neighbor]
+    note: Delaware-Mahican comparative material — a neighbor language, not a
+      PSNEA member (Costa 2007).
+
+  # --- Modern community dictionaries (excluded by default) ---
+
+  - id: modern-mohegan-dictionary
+    title: A Modern Mohegan Dictionary (2006)
+    class: community_dictionary
+    governance: excluded_by_default
+    note: Disavowed by the Mohegan Nation (project ruling, 2026-10-11
+      session; no public record located). Cannot be used.
+
+  - id: wlrp-wampanoag-dictionary
+    title: Wôpanâak Language Reclamation Project dictionary (in preparation)
+    class: community_dictionary
+    governance: excluded_by_default
+
+  - id: stockbridge-munsee-dictionary
+    title: Stockbridge-Munsee community language materials
+    class: community_dictionary
+    governance: excluded_by_default

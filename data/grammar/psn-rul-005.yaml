@@ -1,0 +1,29 @@
+# PSN-RUL-005 — Notation convention, a ratified project norm (SC-5's
+# ratified-with-provenance demonstration). The ratification is a REAL,
+# recorded project decision: the developer's direction of 2026-10-11
+# ("Assume Costa alphabet + IPA as the standard... unless special
+# instructions are given"), recorded in the spec at snea-phonetics#118 §2.5.
+# The tier-1 anchor demonstrates the practice on attested material: Costa
+# 2007 renders attested forms phonemically (l. 887: ‹wesôag›, phonemic
+# wisôck, Eliot 1663 Psalms 68:13).
+id: PSN-RUL-005
+kind: rule
+title: Notation — surface forms are written in the Costa alphabet; IPA carries phonemic precision
+statement: >-
+  Surface forms in this knowledge base are written in the Costa alphabet
+  (phonemic orthography: vowels a e i o u with length marking; consonants
+  p t k č s š h m n w y; preaspiration written h before stops). IPA is
+  available where phonemic precision requires it. Community-facing
+  orthographies (e.g. the Wôpanâak orthography) are rendering overrides
+  applied at display time, never the storage form.
+evidence_tier: 1
+source_anchors:
+  - corpus/docs/research/sources/costa2007.txt
+realizations:
+  PSNEA: "Costa alphabet + IPA (the storage form)"
+  Brothertown Language: "community orthography as a rendering override (Phase 2)"
+norm_status:
+  state: ratified
+  ratified_by: "Project direction — Michael Conrad, 2026-10-11 design session"
+  ratified_date: "2026-10-11"
+  provenance_anchor: "Brothertown-Language/snea-phonetics#118 spec §2.5"

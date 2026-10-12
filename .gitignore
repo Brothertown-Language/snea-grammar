@@ -1,0 +1,15 @@
+# Build and virtual-environment artifacts
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+
+# The .issues/ worktree is an orphan-branch git worktree, not a regular
+# directory — it is never tracked in the parent repo (see AGENTS.md).
+.issues/
+
+# Scratch space
+tmp/

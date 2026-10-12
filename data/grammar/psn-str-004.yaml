@@ -1,0 +1,27 @@
+# PSN-STR-004 — Proto-Algonquian anchor for the grammatical architecture
+# (tier 5). Anchor: the tracked Bloomfield 1946 "Algonquian" sketch mirror,
+# §117: "The inflectional types are noun, verb (in four subtypes), and
+# (uninflected) particle... Nouns are in two gender classes, inanimate and
+# animate... Person is first, second, and third, with distinction of
+# exclusive and inclusive first person plural... any other animate third
+# person... has a distinguishing form, the obviative."
+id: PSN-STR-004
+kind: structure
+title: Proto-Algonquian grammatical architecture (Bloomfield 1946 §117)
+statement: >-
+  Proto-Algonquian grammar, per Bloomfield's reconstruction: inflectional
+  types are noun, verb (four subtypes: animate intransitive, inanimate
+  intransitive, transitive animate, transitive inanimate), and uninflected
+  particle; nouns split animate/inanimate and inflect for number; person is
+  first/second/third with the inclusive/exclusive first-person-plural
+  distinction; a third-person animate participant in a phrase forces
+  obviative marking on the other third-person participants. This
+  reconstruction is the tier-5 anchor the PSNEA skeleton is built against.
+evidence_tier: 5
+source_anchors:
+  - corpus/docs/research/sources/bloomfield1946.md
+realizations:
+  PSNEA: "architecture adopted as the PSNEA working skeleton, pending SNEA-attested confirmation"
+  Massachusett: "attested obviative and conjunct forms align with the architecture (see PSN-STR-001)"
+norm_status:
+  state: provisional

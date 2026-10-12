@@ -1,0 +1,26 @@
+# PSN-RUL-002 — SNEA grammatical morphology descends from PA morphology
+# through regular sound correspondence (tier 2: SNEA-internal comparison).
+# Anchor: the tracked Costa 2007 mirror, ll. 333-338: "The most commonly seen
+# examples of final PEA *r -> š/s in SNEA languages are from the inanimate
+# plural suffix PA *-ari, the second person singular AI imperative *-ro, and
+# the theme 4 sign *-eTe" — with the SNEA inanimate plural ending -(a)š and
+# the Massachusett example ‹wunnutcheash›.
+id: PSN-RUL-002
+kind: rule
+title: Grammatical morphemes descend from PA morphology through the PEA *r → š/s correspondence
+statement: >-
+  SNEA grammatical morphology is the descendant of Proto-Algonquian
+  morphology under the regular sound correspondences. The tracked mirror
+  names three grammatical morphemes carried through the final PEA *r → š/s
+  correspondence: the inanimate plural suffix (PA *-ari → SNEA -(a)š), the
+  second person singular AI imperative (*-ro), and the theme-4 sign (*-eTe).
+  This correspondence is the reconstruction anchor for paradigm endings.
+evidence_tier: 2
+source_anchors:
+  - corpus/docs/research/sources/costa2007.txt
+surface_form: aš
+realizations:
+  PSNEA: "inanimate plural -(a)š; 2sg AI imperative and theme-4 exponents pending (Phase 1)"
+  Massachusett: "inanimate plural in -ash (Costa 2007 ex. ‹wunnutcheash›)"
+norm_status:
+  state: provisional

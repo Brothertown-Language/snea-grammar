@@ -1,0 +1,25 @@
+# PSN-STR-003 — Central Algonquian corroboration of the person/gender
+# architecture (tier 4: corroborates architecture, never supplies surface
+# forms). Anchors: the Ojibwe component datasets in the corpus submodule
+# (17,073 inflected verb entries; 122 pronoun entries with person/number
+# paradigm classes), mirrored from the Ojibwe Peoples Dictionary.
+id: PSN-STR-003
+kind: structure
+title: Person/number/gender inflection architecture, corroborated by Central Algonquian
+statement: >-
+  The Algonquian architecture — verbs inflected for the person and number of
+  both actor and goal, nouns classed animate/inanimate, first-person-plural
+  inclusive vs exclusive — is corroborated at the architecture level by the
+  Central Algonquian comparanda: the Ojibwe component datasets in the corpus
+  submodule carry large inflected paradigm inventories realizing exactly this
+  shape. Central material corroborates the architecture only; no surface
+  form is borrowed from it into PSNEA.
+evidence_tier: 4
+source_anchors:
+  - corpus/docs/research/data/ojibwe/VERBS.csv
+  - corpus/docs/research/data/ojibwe/PRONOUNS.csv
+realizations:
+  PSNEA: "architecture shape corroborated; PSNEA exponents pending (Phase 1)"
+  Ojibwe: "17,073 inflected verb entries and 122 pronoun entries realize the architecture (corroborative only)"
+norm_status:
+  state: provisional

@@ -1,0 +1,3 @@
+[submodule "corpus"]
+	path = corpus
+	url = git@github.com:Brothertown-Language/algonquian-library.git
