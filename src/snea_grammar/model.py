@@ -71,6 +71,7 @@ class GrammarRecord:
     source_anchors: tuple[str, ...]
     realizations: dict[str, str]
     norm_status: NormStatus
+    row_status: str | None = None  # attested | contested | unattested (optional)
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "GrammarRecord":
@@ -90,4 +91,5 @@ class GrammarRecord:
                 provenance_anchor=norm.get("provenance_anchor"),
                 variants=tuple(str(v) for v in norm.get("variants", ())),
             ),
+            row_status=data.get("row_status"),
         )

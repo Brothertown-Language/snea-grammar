@@ -30,7 +30,10 @@ def test_each_renderer_produces_a_document_with_the_seed_records(kb: KnowledgeBa
 
 
 def test_renderers_share_one_knowledge_base(kb: KnowledgeBase) -> None:
-    assert len(kb.records) == len(SEED_IDS)
+    # The knowledge base grows as records are added (seed + alternation rules
+    # and beyond); the contract is that all records flow through one loader.
+    assert len(kb.records) >= len(SEED_IDS)
+    assert {r.id for r in kb.records} >= set(SEED_IDS)
     assert kb.sources and kb.languages
 
 

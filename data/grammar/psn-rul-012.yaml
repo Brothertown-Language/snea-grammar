@@ -1,0 +1,28 @@
+# PSN-RUL-012 — The š/s merger question: a contested row carrying BOTH
+# tracked positions, no adjudication. Position 1 (Trumbull card):
+# *š → /ʃ/ (sh) phonemically distinct from s in Massachusett. Position 2
+# (Costa, citing Goddard 1978:75, costa2007.txt ll. 322-324): older PA *š
+# had already merged with *s in all EA north of Delaware-Mahican before the
+# new word-final *š was created.
+id: PSN-RUL-012
+kind: rule
+title: Was š a phoneme distinct from s? — both tracked positions recorded, disputed
+statement: >-
+  The phonemic status of š against s in the early SNEA stage is disputed
+  between two card-attested positions. Position 1 — the Trumbull card's
+  correspondence table gives PA *š → /ʃ/ (sh), phonemically distinct from s
+  in Massachusett (Eliot writes sh distinct from s). Position 2 — Costa,
+  citing Goddard 1978:75, states that older PA *š had already merged with *s
+  in all Eastern Algonquian north of Delaware-Mahican before the new
+  word-final *š was created (by law c, PSN-RUL-008). Both positions are
+  recorded; neither is adjudicated here — that requires new tracked evidence,
+  which is a separate decision.
+evidence_tier: 2
+source_anchors:
+  - corpus/docs/research/sources/costa2007.txt
+realizations:
+  PSNEA: "disputed — whether the pre-law-c stage had a distinct š phoneme is the open question"
+  Massachusett: "Eliot's orthography writes sh distinct from s (position 1's evidence)"
+norm_status:
+  state: provisional
+row_status: contested

@@ -1,0 +1,28 @@
+# PSN-RUL-008 — Law c: word-final PEA *r → SNEA š (tier 2).
+# Anchors verified live at v0.1.2: costa2007.txt ll. 295-299 ("all (and only)
+# the SNEA languages share a rule taking word-final PEA *r to š") and
+# ll. 331-338 (the three grammatical morphemes carried through it).
+id: PSN-RUL-008
+kind: rule
+title: Word-final PEA *r → SNEA š (the correspondence behind the plural ending)
+statement: >-
+  All — and only — the SNEA languages share a rule taking word-final
+  Proto-Eastern Algonquian *r to š (Costa's "law c"). The most commonly seen
+  examples come from three grammatical morphemes: the inanimate plural suffix
+  (PA *-ari, surfacing as SNEA -(a)š — see PSN-RUL-002), the second person
+  singular AI imperative (*-ro), and the theme-4 sign (*-eTe). Costa notes
+  that apparent s for expected š is especially common in inanimate noun
+  plurals, largely because English-speaking recorders confused the SNEA
+  plural ending -(a)š with the English plural -s. The phonemic status of š
+  versus s is a separate, contested question — see PSN-RUL-012.
+evidence_tier: 2
+source_anchors:
+  - corpus/docs/research/sources/costa2007.txt
+surface_form: aš
+realizations:
+  PSNEA: "word-final *r → š"
+  Massachusett: "š word-finally (subject to the recorder s/š confusion Costa notes)"
+  Unquachog: "final *r → š/s per the correspondence table"
+norm_status:
+  state: provisional
+row_status: attested

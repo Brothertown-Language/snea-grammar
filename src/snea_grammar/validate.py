@@ -41,6 +41,8 @@ def validate_record(data: dict[str, Any]) -> list[str]:
             errors.append("realizations values must be non-empty strings")
     if "norm_status" in data:
         errors.extend(_validate_norm_status(data["norm_status"]))
+    if "row_status" in data and data["row_status"] not in ("attested", "contested", "unattested"):
+        errors.append(f"row_status must be one of attested/contested/unattested, got {data['row_status']!r}")
     return errors
 
 

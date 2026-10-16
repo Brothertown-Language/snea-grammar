@@ -1,0 +1,36 @@
+# PSN-RUL-010 — The merger of PEA *hr and *hx as hš, a PSNEA feature, with
+# its per-language reduction gradient (tier 2).
+# Anchors verified live at v0.1.2: costa2007.txt ll. 198-212 ("the merger of
+# PEA *hr and *hx is characteristic of all the SNEA languages and none of
+# their neighboring languages"; the hš-retaining languages; the hs gradient
+# "always / almost always / occasionally"; the poor-transcription caveat).
+id: PSN-RUL-010
+kind: rule
+title: PEA *hr and *hx merge as hš — with a per-language hs reduction gradient
+statement: >-
+  PEA *hr and *hx merge as hš in all the SNEA languages and none of their
+  neighbors (not Delaware-Mahican or Abenaki), making the merger a PSNEA
+  feature. Costa reports the cluster as hš in Massachusett-Coweset,
+  Narragansett, Niantic, Mohegan-Pequot and Naugatuck — strongly indicating
+  hš was the PSNEA form — while several other SNEA languages show hs with
+  differing consistency (the gradient below). Costa's caveat is carried: the
+  poor transcription quality of the records makes it difficult to state the
+  exact extent of the hš → hs change in the gradient languages.
+evidence_tier: 2
+source_anchors:
+  - corpus/docs/research/sources/costa2007.txt
+surface_form: hš
+realizations:
+  PSNEA: "hš (the merged cluster)"
+  Massachusett-Coweset: "hš retained"
+  Narragansett: "hš retained"
+  Niantic: "hš retained"
+  Mohegan-Pequot: "hš retained"
+  Naugatuck: "hš retained"
+  Unquachog: "hs — always (Rudes 1997:13, via Costa)"
+  Loup: "hs — almost always (Gustafson 2000:23-24, via Costa)"
+  Quiripi: "hs — occasionally"
+  Montauk: "hs — occasionally"
+norm_status:
+  state: provisional
+row_status: attested
