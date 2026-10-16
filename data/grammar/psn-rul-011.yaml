@@ -1,0 +1,31 @@
+# PSN-RUL-011 — Preaspiration hC retention (tier 1 attestation, contested
+# representation). The preaspirated forms are attested in the recorders who
+# write them: Edwards 1787 (e.g. "kpehtuhquiffeh, thou art tall" — tracked
+# mirror l. 3374) and Prince & Speck 1904 (e.g. "pahkahkshaas" — l. 417).
+# The contested row: most colonial recorders fail to write the h.
+id: PSN-RUL-011
+kind: rule
+title: Preaspiration — breathy h before stops (hp/ht/hk), routinely omitted by colonial recorders
+statement: >-
+  The SNEA languages retain preaspiration: a breathy h before a stop
+  consonant (hp, ht, hk). The recorders who write it attest it directly —
+  Edwards 1787 (‹kpehtuhquiffeh› 'thou art tall', with the kp- and -ht-
+  sequences) and Prince & Speck 1904 (‹pahkahkshaas›, with -hk-). The
+  contested representation: most colonial-era recorders routinely failed to
+  hear and write the preaspiration, so its absence in a source is a property
+  of the recorder, not evidence against the feature — the standing finding
+  of the snea-phonetics research cards (the single most important
+  cross-source finding: the preaspiration /h/ gap). Any record built from a
+  colonial source must account for the recorder's practice before treating
+  an unwritten h as absent.
+evidence_tier: 1
+source_anchors:
+  - corpus/docs/research/sources/edwards-1787-observations-fulltext.txt
+  - corpus/docs/research/sources/prince-speck-1904.txt
+realizations:
+  PSNEA: "preaspiration retained: h before stops (hp/ht/hk)"
+  Massachusett: "hC clusters retained in the language; colonial transcriptions routinely omit the h"
+  Mohegan-Pequot: "written by the recorders who heard it (Fielding materials via Prince & Speck)"
+norm_status:
+  state: provisional
+row_status: contested

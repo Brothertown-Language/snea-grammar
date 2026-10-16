@@ -1,0 +1,35 @@
+# PSN-RUL-009 — The palatalization of PA *k, a PSNEA feature (tier 2).
+# Anchors verified live at v0.1.2: costa2007.txt ll. 108-120 ("this
+# palatalization of PA *k was present in the ancestor language of SNEA,
+# PSNEA"; the [ty]/[β] split; the "notoriously difficult" conditioning
+# caveat) and fn. 3 ll. 132-138 (Loup: older *ty merged with β, "not as
+# [š]").
+id: PSN-RUL-009
+kind: rule
+title: Palatalization of PA *k — a PSNEA feature (ty in Massachusett-Coweset, β elsewhere)
+statement: >-
+  One of the sound changes uniting all the SNEA languages (and neither
+  Delaware-Mahican nor Abenaki): PA *k palatalizes before PEA *m and some
+  instances of PA *i. Costa states this palatalization was present in the
+  ancestor language, PSNEA, noting it occurs in the same places across the
+  SNEA languages once minor morphophonemic analogy is accounted for. The
+  reflexes: a palatal stop (ty) in Massachusett and Coweset, simple β in all
+  other SNEA languages; Costa's fn. 3 rules out a palatal reading for Loup
+  (older *ty merged with β there, not as š). Costa's own caveat is carried:
+  the exact conditioning of this change in Massachusett is notoriously
+  difficult to define. Divergence recorded on the rule: the PSNEA
+  reconstruction card's phrasing ("palatal stop in other SNEA") differs from
+  Costa's direct text (β elsewhere); the direct source governs and the
+  divergence is noted here rather than adjudicated away.
+evidence_tier: 2
+source_anchors:
+  - corpus/docs/research/sources/costa2007.txt
+realizations:
+  PSNEA: "palatalized *k (the PSNEA feature; reflex value per language below)"
+  Massachusett: "palatal stop ty"
+  Coweset: "palatal stop ty"
+  Loup: "β (fn. 3: older *ty merged with β, not as š)"
+  other SNEA: "simple β"
+norm_status:
+  state: provisional
+row_status: attested

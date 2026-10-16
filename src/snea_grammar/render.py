@@ -103,6 +103,8 @@ def render_descriptive(kb: KnowledgeBase) -> str:
             lines.append("Norm status: provisional — not community-ratified; a repo default standing until decided")
         else:
             lines.append(f"Norm status: {norm.state}")
+        if record.row_status in ("contested", "unattested"):
+            lines.append(f"Row status: {record.row_status} — see the record statement; not silently adjudicated")
         lines.append("")
     return "\n".join(lines)
 
