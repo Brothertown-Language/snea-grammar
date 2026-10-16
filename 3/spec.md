@@ -12,6 +12,53 @@ synced_from: "https://github.com/Brothertown-Language/snea-grammar/issues/3"
 **Design source:** the 2026-10-11/12 design sessions (developer rulings, recorded in the
 snea-phonetics#118 design record and the developer-approved `ROADMAP.md`, item W1)
 
+## 0. Plain-language summary — read this first
+
+**In one sentence:** this spec asks for the sound-change rules between the related
+languages to be written down as checked records in the knowledge base.
+
+**Why the grammar project needs it.** The project builds the shared ancestor
+grammar (PSNEA) once, not six separate grammars. To get from an ancestor form to
+each language's version of it, you apply sound-change rules — so the rules are
+part of the grammar. Without them, every form would have to be hand-entered per
+language, which the surviving documentation cannot support.
+
+**A real, attested example.** The ancestor word for "dog" contained an **r**
+sound. Roger Williams recorded how each dialect said it:
+
+| Dialect | Recorded word | What the r became |
+|---|---|---|
+| Coweset | ‹anùm› | n |
+| Narragansett | ‹ayím› | y |
+| Quiripi | ‹arúm› | r |
+| Nipmuc | ‹alùm› | l |
+
+One word, one regular difference, four languages. A second attested rule: at the
+end of words, the ancestor **r** became an **sh** sound — which is why the plural
+ending appears as **-ash** where the ancestor had **-ar**.
+
+**The technical terms in this spec, translated:**
+
+| Term | Plain meaning |
+|---|---|
+| alternation / morphophonology | the sound-change rules between related languages |
+| PSNEA | the shared ancestor language whose grammar this project builds |
+| PEA / PA | earlier ancestor stages of the wider family (Proto-Eastern / Proto-Algonquian) |
+| PEA *r → š/s | the ancestor **r** became an **sh**/**s** sound (the plural-ending rule above) |
+| k-palatalization | the **k** sound softened before certain sounds: it came out as **ty** in Massachusett-Coweset, as a soft b-like sound (β) in the other languages |
+| hš cluster | a breathy **h + sh** combination the ancestor had; some dialects simplified it more than others — that pattern of uneven simplification is the "reduction gradient" |
+| preaspiration hC | a breathy **h** before a stop consonant (hp/ht/hk) — really in the language, but the colonial writers usually failed to hear it and left it unwritten |
+| contested row | a point where the tracked sources disagree — the record states both sides and marks it disputed, never silently picks a winner |
+| evidence tier | how solid the evidence is: 1 = written down in the old records, 2 = compared among these languages, 3 = from Munsee Delaware, 4 = corroborated by related languages outside the group, 5 = reconstructed for the wider family |
+| Costa alphabet | the standard spelling system used in the scholarly work on these languages |
+| schema validator | the program that checks every record carries its required fields |
+
+**What "done" looks like:** the four rules exist as records in the knowledge
+base — each with its evidence rating and its tracked sources, disputed points
+marked — and all three grammar renderings (descriptive, teaching, prescriptive)
+show them with those ratings. The technical sections below are the normative
+spec; this section is the reader's guide.
+
 ## 1. Goal
 
 Assemble the PSNEA alternation rules — the morphophonological layer of the grammar —
