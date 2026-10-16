@@ -18,7 +18,8 @@ snea-phonetics#118 design record and the developer-approved `ROADMAP.md`, item W
 languages to be written down as checked records in the knowledge base.
 
 **Why the grammar project needs it.** The project builds the shared ancestor
-grammar (PSNEA) once, not six separate grammars. To get from an ancestor form to
+grammar (PSNEA) once, not as a separate grammar for each language. To get from an
+ancestor form to
 each language's version of it, you apply sound-change rules — so the rules are
 part of the grammar. Without them, every form would have to be hand-entered per
 language, which the surviving documentation cannot support.
@@ -31,7 +32,7 @@ sound. Roger Williams recorded how each dialect said it:
 | Coweset | ‹anùm› | n |
 | Narragansett | ‹ayím› | y |
 | Quiripi | ‹arúm› | r |
-| Nipmuc | ‹alùm› | l |
+| Neepmuck (Loup) | ‹alùm› | l |
 
 One word, one regular difference, four languages. A second attested rule: at the
 end of words, the ancestor **r** became an **sh** sound — which is why the plural
