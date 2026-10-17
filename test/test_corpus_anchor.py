@@ -23,7 +23,13 @@ def test_corpus_submodule_is_materialized() -> None:
 @pytest.mark.parametrize("record", _records(), ids=lambda r: r["id"])
 def test_seed_anchor_resolves_under_corpus(record: dict) -> None:
     for anchor in record["source_anchors"]:
-        assert anchor.startswith("corpus/"), f"{record['id']} anchor {anchor} must point into the corpus submodule"
+        # Anchors point into the corpus submodule, or into the repo's private
+        # library for developer-directed sources (e.g. the Cunningham
+        # adjustments, 2026-10-16) — the private library is a gitignored,
+        # session-local authority surface.
+        assert anchor.startswith(("corpus/", "private/")), (
+            f"{record['id']} anchor {anchor} must point into the corpus submodule or the private library"
+        )
         assert Path(anchor).is_file(), f"{record['id']} anchor {anchor} does not resolve"
 
 

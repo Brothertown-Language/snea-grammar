@@ -30,6 +30,22 @@ DOMAIN_RECORDS = {
     "preaspiration": "PSN-RUL-011",
 }
 MERGER_RECORD = "PSN-RUL-012"
+ADJUSTMENT_RECORDS = ["PSN-RUL-013", "PSN-RUL-014", "PSN-RUL-015"]
+
+
+def test_cunningham_adjustment_records() -> None:
+    hp = _load("PSN-RUL-013")
+    assert "hp" in hp.realizations["Mohegan"].lower()
+    assert "hp" in hp.realizations["Delaware"].lower()
+    assert "hp" in hp.realizations["Wampanoag"].lower()
+    nt = _load("PSN-RUL-014")
+    assert nt.realizations["Mohegan"].strip() == "t" and nt.realizations["Delaware"].strip().startswith("nt")
+    nk = _load("PSN-RUL-015")
+    assert nk.realizations["Mohegan"].strip() == "k" and nk.realizations["Delaware"].strip().startswith("nk")
+    for record_id in ADJUSTMENT_RECORDS:
+        record = _load(record_id)
+        assert record.row_status == "attested", record_id
+        assert any(a.startswith("private/") for a in record.source_anchors), record_id
 
 
 def _load(record_id: str) -> GrammarRecord:
@@ -51,20 +67,31 @@ def test_all_four_domains_covered() -> None:
         assert record.evidence_tier in (1, 2, 3, 4, 5), domain
 
 
-def test_contested_markings() -> None:
+def test_resolution_record_carries_both_positions_and_the_evidence() -> None:
     merger = _load(MERGER_RECORD)
-    assert merger.norm_status is not None
     data = yaml.safe_load(next(p for p in Path("data/grammar").glob("*.yaml") if MERGER_RECORD.replace("PSN-RUL-", "psn-rul-") in p.name).read_text(encoding="utf-8"))
-    assert data["row_status"] == "contested"
-    statement = merger.statement.lower()
-    assert "merged" in statement, "Costa/Goddard position (pre-PSNEA merger) must appear"
-    assert "distinct" in statement, "Trumbull-card position (š distinct from s) must appear"
+    # The resolution is evidence-based: row_status attested, with new tracked
+    # evidence cited in the record (Goddard 1980/1981 primary sources; the
+    # survey of the tracked Eliot column). Both historical positions remain
+    # stated, with the misattribution explained.
+    assert data["row_status"] == "attested"
+    statement = merger.statement
+    assert "merged" in statement.lower(), "the merger position must be stated"
+    assert "new phoneme" in statement.lower(), "the new-phoneme analysis must be stated"
+    assert "trumbull" in statement.lower(), "the card's original position must remain recorded"
+    assert "goddard 1981" in statement.lower(), "the primary-source citations must be present"
+    assert any("goddard-1981" in a for a in merger.source_anchors)
+
+
+def test_preaspiration_carries_the_cunningham_adjustment() -> None:
     preasp = _load(DOMAIN_RECORDS["preaspiration"])
     preasp_data = yaml.safe_load(
         next(p for p in Path("data/grammar").glob("*.yaml") if DOMAIN_RECORDS["preaspiration"].replace("PSN-RUL-", "psn-rul-") in p.name).read_text(encoding="utf-8")
     )
-    assert preasp_data["row_status"] == "contested"
-    assert "record" in preasp.statement.lower() and ("fail" in preasp.statement.lower() or "omit" in preasp.statement.lower() or "unwritt" in preasp.statement.lower())
+    assert preasp_data["row_status"] == "attested"
+    assert "cunningham" in preasp.statement.lower(), "the adjustment's authority must be recorded"
+    assert any("private/" in a for a in preasp.source_anchors), "the adjustment's private source must be anchored"
+    assert "hp" in preasp.statement.lower(), "the hp-retention adjustment must be stated"
 
 
 def test_k_palatalization_carries_the_divergence_note() -> None:
@@ -100,7 +127,9 @@ def test_alternation_rules_render_in_all_three_views() -> None:
         document = renderer(kb)
         for record_id in (*DOMAIN_RECORDS.values(), MERGER_RECORD):
             assert record_id in document, f"{renderer.__name__} missing {record_id}"
-        assert "Evidence standing" in document or "Norm" in document
+        assert "Evidence standing" in document, (
+            f"{renderer.__name__} lacks evidence-standing lines"
+        )
 
 
 def test_render_cli_smoke(tmp_path) -> None:
