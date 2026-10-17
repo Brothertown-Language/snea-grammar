@@ -124,7 +124,7 @@ Rows the tracked sources disagree on, or that no tracked source licenses, are ca
 | ID | Criterion | Class | Verification method |
 |----|-----------|-------|---------------------|
 | SC-1 | Alternation rules exist as `kind: rule` records under `data/grammar/`, passing the schema validator, covering the four in-scope domains of §2.1 | structural | `uv run pytest test/` — validator passes over `data/grammar/`; a coverage test maps ≥1 record to each of the four domains |
-| SC-2 | Every new rule record's source anchors resolve to existing files under the corpus submodule | structural | The existing anchor-resolution test pattern, extended to the new records, passes |
+| SC-2 | Every new rule record's source anchors resolve to existing files under the corpus submodule; developer-directed private-library sources (e.g. the Cunningham adjustments, 2026-10-16) anchor to the repository's private library instead — gitignored, session-local authority | structural | The existing anchor-resolution test pattern, extended to the new records and to private-library anchors, passes |
 | SC-3 | Contested/unattested rows carry explicit status marking; the š/s merger record states both tracked positions; no record adjudicates a contested row without new tracked evidence | structural | Tests assert the marking on the named records and assert both š/s positions appear in the š/s record's statement |
 | SC-4 | The new rules render in all three views with their evidence standing | behavioral | Run the three renderers; each output contains the new record ids and their evidence-standing lines |
 | SC-5 | The hš reduction gradient renders per language — Unquachog, Loup, Quiripi, Montauk as distinct realization entries | behavioral | The descriptive rendering of the hš record lists the four languages with their gradient values |
@@ -143,6 +143,7 @@ Rows the tracked sources disagree on, or that no tracked source licenses, are ca
 | Date | Change | Author |
 |------|--------|--------|
 | 2026-10-12 | Initial spec from the design sessions and ROADMAP W1 | AI agent |
+| 2026-10-16 | SC-2 extended: developer-directed private-library sources anchor to the private library (gitignored) — per the developer's direction that Dr. Keith Cunningham's adjustments (private/sound change adjustments.md) are used in preference to the Fielding chains | AI agent |
 
 ---
 
