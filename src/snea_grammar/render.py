@@ -177,5 +177,7 @@ def render_prescriptive(kb: KnowledgeBase) -> str:
             lines.append(f"**Provisional default (not community-ratified):** {record.statement.splitlines()[0]}")
             lines.append("")
             lines.append("This default stands until a community ratification is recorded.")
+        # SC-4 (spec #3): every view carries each record's evidence standing
+        lines.append(f"*Evidence standing:* {EVIDENCE_STANDING[record.evidence_tier]}")
         lines.append("")
     return "\n".join(lines)

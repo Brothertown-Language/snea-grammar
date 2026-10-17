@@ -1,0 +1,27 @@
+# PSN-RUL-014 — PA *nt → t | nt | t (Cunningham adjustment, tier 1
+# authority: developer-directed, relayed 2026-10-16, private/sound change
+# adjustments.md, replacing Fielding's <nul>, ô(h) | nd | nd, k row).
+id: PSN-RUL-014
+kind: rule
+title: PA *nt → t in Massachusett(-Wampanoag), nt in Delaware
+statement: >-
+  Per Dr. Keith Cunningham's adjustments (relayed by the developer
+  2026-10-16, used in preference to the Fielding chains): PA *nt gives t in
+  Mohegan and Wampanoag, and nt in Delaware — the nasal is retained in
+  Delaware and lost (cluster simplified) in the SNEA columns. This replaces
+  the Fielding-2005 table's row for *nt/*nk (which had given inconsistent
+  reflexes: <nul>, ô(h) | nd | nd, k). Provenance: the adjustment lives in
+  the repository's private library (gitignored); its authority is the
+  developer's direction on Dr. Cunningham's behalf.
+evidence_tier: 1
+source_anchors:
+  - private/sound change adjustments.md
+
+realizations:
+  PSNEA: "*nt → t (nasal lost in cluster simplification)"
+  Mohegan: "t"
+  Delaware: "nt (nasal retained)"
+  Wampanoag: "t"
+norm_status:
+  state: provisional
+row_status: attested

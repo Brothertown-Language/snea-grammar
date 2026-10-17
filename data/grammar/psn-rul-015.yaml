@@ -1,0 +1,27 @@
+# PSN-RUL-015 — PA *nk → k | nk | k (Cunningham adjustment, tier 1
+# authority: developer-directed, relayed 2026-10-16, private/sound change
+# adjustments.md, replacing Fielding's <nul>, ô(h) | nd | nd, k row).
+id: PSN-RUL-015
+kind: rule
+title: PA *nk → k in Massachusett(-Wampanoag), nk in Delaware
+statement: >-
+  Per Dr. Keith Cunningham's adjustments (relayed by the developer
+  2026-10-16, used in preference to the Fielding chains): PA *nk gives k in
+  Mohegan and Wampanoag, and nk in Delaware — parallel to the *nt rule
+  (PSN-RUL-014): the nasal is retained in Delaware and lost in the SNEA
+  columns. This replaces the Fielding-2005 table's row for *nt/*nk.
+  Provenance: the adjustment lives in the repository's private library
+  (gitignored); its authority is the developer's direction on Dr.
+  Cunningham's behalf.
+evidence_tier: 1
+source_anchors:
+  - private/sound change adjustments.md
+
+realizations:
+  PSNEA: "*nk → k (nasal lost in cluster simplification)"
+  Mohegan: "k"
+  Delaware: "nk (nasal retained)"
+  Wampanoag: "k"
+norm_status:
+  state: provisional
+row_status: attested

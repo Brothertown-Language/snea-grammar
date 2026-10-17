@@ -1,0 +1,29 @@
+# PSN-RUL-013 — PA *hp, *xp → hp (Cunningham adjustment, tier 1 authority:
+# developer-directed, relayed 2026-10-16, private/sound change adjustments.md,
+# used in preference to the Fielding chains — Fielding's table had given
+# cp/kp/chep variants).
+id: PSN-RUL-013
+kind: rule
+title: PA *hp and *xp → hp — preaspiration retained in Mohegan, Delaware, and Wampanoag
+statement: >-
+  Per Dr. Keith Cunningham's adjustments (relayed by the developer
+  2026-10-16, and used in preference to the Fielding chains): the
+  preaspirated clusters PA *hp and *xp give hp in Mohegan, Delaware, and
+  Wampanoag alike. This replaces the Fielding-2005 table's variants (cp |
+  kp | chep), which had suggested reduction or spelling divergence in the
+  daughter columns. The rule anchors PSN-RUL-011's retention claim across
+  the three languages. Provenance: the adjustment lives in the repository's
+  private library (gitignored); its authority is the developer's direction
+  on Dr. Cunningham's behalf.
+evidence_tier: 1
+source_anchors:
+  - private/sound change adjustments.md
+
+realizations:
+  PSNEA: "*hp, *xp → hp (preaspiration retained)"
+  Mohegan: "hp (adjustment replaces Fielding's cp)"
+  Delaware: "hp (adjustment replaces Fielding's kp)"
+  Wampanoag: "hp (adjustment replaces Fielding's chep)"
+norm_status:
+  state: provisional
+row_status: attested
