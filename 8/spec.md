@@ -273,7 +273,7 @@ sources. The drift detectors are mechanical and fail loud:
   registry source; every corpus work this repository's grammar records anchor
   resolves to a dossier row; the document's sourcing table carries one row per
   corpus dossier row, and its row count equals the dossier's row count. The
-  join gate's wording is the one SC-12 states, and SC-12 governs. It runs
+  join gate's wording is the one SC-12c states, and SC-12c governs. It runs
   inside `paper/build.sh`, after the drift check and before the compile.
 - **The precedence gate.** The rendered fill-precedence order equals the
   tracked order in `data/fill-precedence.yaml`, and the sourcing table's
