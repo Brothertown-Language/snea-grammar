@@ -170,6 +170,11 @@ the Niantics, then Quiripi/Unquachog, then Loup, per Costa 2007's grouping.
   `test/test_corpus_anchor.py` accepts `private/` anchors as a gitignored,
   session-local authority surface); such records land only when the copy exists
   in the corpus checkout (no dangling anchors).
+- **OCR sourcing gate:** OCR-derived material is human-proofed before it is
+  directly sourced — the corpus-side human-proofing record (algonquian-library's
+  MANIFEST / private/ README, per its OCR-sourcing runbook and #66 SC-6)
+  conditions every citation and anchor (SC-9); unproofed OCR is working-copy
+  only.
 - **Mirrorable online grammars (open access, verified live 2026-10-23):** Baraga,
   *A Theoretical and Practical Grammar of the Otchipwe Language* (1850; 1879 ed. —
   public-domain era, archive.org CIHM copies) and Okimāsis, *Cree: Language of the
@@ -236,6 +241,7 @@ and none is created:
 | SC-6 | The source registry classifies the fill library: `valentine-2001` and `wolfart-1973` as `scholarly_edition` tier-4 entries with their corpus landing paths/locators (#44/#66); registry entries for every Central component dataset and mirrored online grammar (baraga, okimāsis) that a tier-4 record actually cites, each carrying its `corpus/` path; the G&B entry stands as the primary tier-1 attestation source; **no registry entry exists for the §2.3.3 table B comparanda pending the tier ruling** | structural | Registry checks: entries present with class, tier role, and resolvable locator; the G&B entry carries the primary-attestation role; every registry tier role ∈ 1–5 vocabulary |
 | SC-7 | Every paradigm record with a pending PSNEA row carries a `fill_plan` (gap_type ∈ §2.3.1 classes, candidates = registry ids listed in the §2.3.3 precedence order, disposition ∈ §2.3.5's enum); no pending row is silently empty; `incomplete-pending` rows carry the reason no source is eligible | structural | Coverage test: every pending row inspected; invalid dispositions and out-of-order candidate lists fail the suite |
 | SC-8 | Central-derived fill renders distinctly: any fill content sourced from a tier-4 registry entry is prefixed "Central corroboration — <source>, <locator>" in all three views, styled separately from attestation citations | behavioral | Run the three renderers over a paradigm record containing a tier-4-sourced fill; the prefix appears in each view |
+| SC-9 | OCR-derived material is human-proofed before it is directly sourced: every anchor to an OCR-derived source (corpus mirror or `private/` OCR copy — G&B, `nishnaabemwin-hq-ocr.pdf`) requires the corpus-side human-proofing record (algonquian-library's MANIFEST / private/ README, per its OCR-sourcing runbook and #66 SC-6); unproofed OCR is never anchored or cited | structural | The anchor-resolution test extended: every anchored OCR-derived source resolves to a recorded human-proofing state; anchors to unproofed OCR fail |
 
 ## 4. Non-goals
 
@@ -256,7 +262,8 @@ and none is created:
 | 2026-10-12 | Per Dr. Keith Cunningham's guidance: G&B 1988 promoted to primary grammar (gate flips to its mirror); Eliot 1666 demoted to secondary; Valentine 2001 + Wolfart 1973 named as tier-4 fill references (architecture and usage); registry SC-6 added | AI agent |
 | 2026-10-23 | Fill machinery made concrete per developer direction: §2.3 split into gap types / ladder / tier-4 library dispositions (private/ anchoring per #44, promotion pass algonquian-library#66, component datasets as first-class tier-4, governance gate for online candidates); §2.4 library boundaries added; SC-2 extended to the disposition paths, SC-6 extended to the full library, SC-7 (fill_plan coverage) and SC-8 (Central rendering prefix) added | AI agent |
 | 2026-10-23 | §2.3.3 fill precedence order added: tier-4 sources ranked by familial + evidential distance only (guidance's source-naming order dropped from the ranking rationale; Miami-Illinois leads, component substrate noted as a beneath-the-ranks layer; tier-2 precedence per Costa 2007's grouping); marked provisional, assumed approved, submitted for linguist review; SC-7 extended to enforce candidate order | AI agent |
-| 2026-10-23 | §2.3.3 widened beyond the Cree/Ojibwean line per developer direction: tier-3 prose sources added (O'Meara 1992 per the component bibliography); rank 6 extended to the full Central future-adoption stream (Menominee/Meskwaki/Kickapoo/Shawnee — LB1975, AD stream, PV stream, CV stream); table B added for related languages beyond the tier vocabulary (Eastern non-SNEA: Mi'kmaq / Passamaquoddy-Maliseet / Abenaki; Plains: Arapaho / Blackfoot / Cheyenne; Powhatan note), warranted by the mirrored Goddard 1980 EA-subgrouping; the tier gap is flagged as a design-record question for the developer ruling, registry stays closed to table B (SC-6 extended); corpus-side inventory (algonquian-library#66 SC-4) carries the matching scoping | AI agent |
+| 2026-10-23 | §2.3.3 widened beyond the Cree/Ojibwean line: tier-3 prose sources added (O'Meara 1992 per the component bibliography); rank 6 extended to the full Central future-adoption stream (Menominee/Meskwaki/Kickapoo/Shawnee — LB1975, AD stream, PV stream, CV stream); table B added for related languages beyond the tier vocabulary (Eastern non-SNEA: Mi'kmaq / Passamaquoddy-Maliseet / Abenaki; Plains: Arapaho / Blackfoot / Cheyenne; Powhatan note), warranted by the mirrored Goddard 1980 EA-subgrouping; the tier gap flagged as a design-record question, registry stays closed to table B (SC-6 extended); corpus-side inventory (algonquian-library#66 SC-4) carries the matching scoping | AI agent |
+| 2026-10-23 | OCR sourcing gate added: directly sourced OCR'd data must be human-proofed — SC-9 (anchors require the corpus-side human-proofing record), §2.3.4 gate bullet; corpus side = algonquian-library#66 SC-6 + its OCR-sourcing runbook; the rule lands in both repos' AGENTS.md conventions | AI agent |
 
 ---
 
