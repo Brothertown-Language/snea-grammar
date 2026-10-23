@@ -132,18 +132,18 @@ gate.
 
 The rule set carries these rules:
 
-| Id | Subject |
-|----|---------|
-| `GRM-01` | The evidence ladder and the direction of the pull: tier 1 leads, and a lower rung is reached only where the rung above is silent |
-| `GRM-02` | Central corroboration supplies no surface forms |
-| `GRM-03` | The three gap classes — architecture, usage, exponent — and what may fill each |
-| `GRM-04` | The fill precedence order and its two ranking axes, familial distance and evidential distance |
-| `GRM-05` | Tier 2 fills where single-source attestation is silent |
-| `GRM-06` | Incompleteness stays visible: a row with no eligible source renders as pending |
-| `GRM-07` | Community dictionaries are excluded by default; use requires explicit authorization from the owning community |
-| `GRM-08` | The OCR sourcing rule, cited to the corpus runbook's rules `OCR-1`…`OCR-8` |
-| `GRM-09` | Every pending row records a fill plan; the ladder is auditable, not silent |
-| `GRM-10` | Tier-2 precedence follows Costa 2007's dialect grouping |
+| Id | Subject | Required term in the statement |
+|----|---------|-------------------------------|
+| `GRM-01` | The evidence ladder and the direction of the pull: tier 1 leads, and a lower rung is reached only where the rung above is silent | `tier 1` |
+| `GRM-02` | Central corroboration supplies no surface forms | `surface form` |
+| `GRM-03` | The three gap classes — architecture, usage, exponent — and what may fill each | `exponent` |
+| `GRM-04` | The fill precedence order and its two ranking axes, familial distance and evidential distance | `familial` |
+| `GRM-05` | Tier 2 fills where single-source attestation is silent | `tier 2` |
+| `GRM-06` | Incompleteness stays visible: a row with no eligible source renders as pending | `pending` |
+| `GRM-07` | Community dictionaries are excluded by default; use requires explicit authorization from the owning community | `community dictionar` |
+| `GRM-08` | The OCR sourcing rule, cited to the corpus runbook's rules `OCR-1`…`OCR-9` | `working-copy` |
+| `GRM-09` | Every pending row records a fill plan; the ladder is auditable, not silent | `fill plan` |
+| `GRM-10` | Tier-2 precedence follows Costa 2007's dialect grouping | `Costa` |
 
 ### 2.4 The fill-precedence file
 
@@ -229,7 +229,7 @@ are generated from the corpus store. The document states the rule that
 unproofed OCR'd segments are legitimate working-copy material — available for
 staging, diffing, and availability scoping, never backing a citation or an
 anchor until a human proofing pass covers the passage — as its own rule
-`GRM-08`, citing the corpus runbook's rules `OCR-1`…`OCR-8` by id and path.
+`GRM-08`, citing the corpus runbook's rules `OCR-1`…`OCR-9` by id and path.
 The build gate resolves that citation: the cited path must exist under the
 corpus submodule and the cited rule ids must be present in the runbook.
 
@@ -242,7 +242,7 @@ sources. The drift detectors are mechanical and fail loud:
 - **The generated-source gate.** The five generated files are tracked and
   byte-identical to the generator's output for the tracked inputs, and the
   tracked LaTeX sources contain no table content of their own.
-- **The freshness gate.** The document records two things about the corpus:
+- **The freshness gate.** The document records three things about the corpus:
   the pinned commit it was generated against, a per-file digest manifest of
   the corpus store at that commit, and an aggregate digest over the manifest.
   The manifest maps each tracked file under
@@ -276,7 +276,7 @@ steps each fires are fixed:
 |-------|---------------|
 | A corpus material change | advance the `corpus/` submodule pin to a commit carrying the change; regenerate the five generated files; rebuild the document |
 | A proofed segment landing | the same three steps, with the checklist and supporting-materials tables picking up the new row |
-| A rule change | edit `data/grammar-rules.yaml`; regenerate the five generated files; rebuild the document; record the change in the document's maintenance section |
+| A rule change | edit `data/grammar-rules.yaml`; update the document's `\grammarrule` statements to the file's new `statement` values; regenerate the five generated files; rebuild the document; record the change in the document's maintenance section |
 | A registry change | edit `data/sources.yaml`; add a row for the new source in the corpus store; regenerate the five generated files; rebuild the document; record the change in snea-grammar#4's change-control table |
 
 The cross-repository half of the duty — the corpus repository
@@ -298,7 +298,9 @@ file, its review owner, its scope globs, and its tracked binaries directory.
 
 The document root holds `master.tex`, the `sections/` tree, the `figures/`
 tree, the `generated/` directory, and the `outputs/` directory for the tracked
-PDF; the generated bibliography lives at `generated/references.bib`. The build creates the `build/`
+PDF — the document's output is committed, as the phonetics repository commits
+its evergreen document's PDF; the generated bibliography lives at
+`generated/references.bib`. The build creates the `build/`
 directory for intermediates; it is not tracked, and the repository's
 `.gitignore` excludes it. The repository-level assets are `paper/build.sh`,
 `paper/fonts/` (the vendored CharisSIL faces, with their OFL text and a
@@ -358,12 +360,12 @@ in snea-grammar#4's change-control table.
 | SC-3 | The document root path appears in the root `AGENTS.md` repository-structure table, and `ROADMAP.md` carries a work item for this document | structural | A text check for the document root path in the root `AGENTS.md`; a text check for the document's work item in `ROADMAP.md` |
 | SC-4 | `bash paper/build.sh` produces the PDF from the tracked sources in a checkout with the corpus submodule materialized, and exits nonzero naming the submodule remedy when the submodule is not materialized | behavioral | Build in a scratch copy with the submodule materialized and assert the PDF exists; empty the submodule directory, rebuild, and assert a nonzero exit whose message names the submodule remedy |
 | SC-5 | Every section in §2.6 is wired into `master.tex` and renders in the built PDF | behavioral | Build the document, extract the section headings from the built document's text, and assert each of the ten named sections is present |
-| SC-6 | `data/grammar-rules.yaml` carries a file-level `revision` date and the ten rules of §2.3, each with a non-empty `statement`, `scope`, and `authority`; the document's rendered rule statements are exactly the file's `statement` values, compared sentence for sentence in both directions | behavioral | Read the rule file and assert the revision date, the ten ids, and the three non-empty fields each; extract the statements inside the document's `\grammarrule{...}` environments and compare them with the file's `statement` values in both directions |
+| SC-6 | `data/grammar-rules.yaml` carries a file-level `revision` date and the ten rules of §2.3, each with a non-empty `statement`, `scope`, and `authority`, and each `statement` carrying its rule's required term; the document's rendered rule statements are exactly the file's `statement` values, compared sentence for sentence in both directions | behavioral | Read the rule file and assert the revision date, the ten ids, the three non-empty fields each, and each statement's required term; extract the statements inside the document's `\grammarrule{...}` environments and compare them with the file's `statement` values in both directions |
 | SC-7 | The five generated files — `generated/sourcing-table.tex`, `generated/proofing-checklist.tex`, `generated/supporting-materials.tex`, `generated/as-of-metadata.tex`, and `generated/references.bib` — are byte-identical to the generator's output for the tracked inputs | structural | Run the generator into a scratch directory and compare each output file byte for byte with its tracked counterpart |
 | SC-8 | No tracked LaTeX source under the document root carries table content of its own: the sourcing table's rows, the checklist's rows, and the supporting-materials rows appear only in the three generated `.tex` files | structural | A test that reads the tracked LaTeX sources and asserts that none of the three generated tables' rows appears in them |
 | SC-9 | Figures F1–F5 appear in the built PDF, each is referenced from a section source, and each carries its caption | behavioral | Extract the built document's text and assert the five captions are present; assert each figure's label is referenced from at least one section source |
 | SC-10 | The built PDF's extracted text carries the generated payload: a known registry source id with its tier role and its proofing state from the generated sourcing table, the neighbour classification of `masthay-1991`, the checklist's status values, the supporting-materials rows, each bibliography entry's rendered title, and the precedence order's provisional-status statement; and the generated sourcing table places `masthay-1991`'s tier-role cell empty with the neighbour classification in the classification column | behavioral | Extract the built document's text and assert each payload element, with the source id, tier role, and proofing state taken from the generated sourcing table, the status values from the generated checklist table, the supporting rows from the generated supporting-materials table, and the titles from the generated bibliography; read the generated sourcing table and assert `masthay-1991`'s tier-role cell is empty and its classification cell carries the neighbour marker |
-| SC-11 | The document's citation of the corpus runbook resolves: the cited path exists under the corpus submodule, and the cited rule ids are present in that runbook | structural | A test that resolves the cited path under `corpus/` and asserts each cited rule id appears in the runbook text |
+| SC-11 | The document's rule `GRM-08` carries a citation of the corpus runbook — a non-empty path and the rule ids `OCR-1`…`OCR-9` — and the citation resolves: the cited path exists under the corpus submodule, and the cited rule ids are present in that runbook | structural | A test that asserts `GRM-08`'s rendered statement carries a non-empty cited path and the nine rule ids, resolves the path under `corpus/`, and asserts each cited rule id appears in the runbook text |
 | SC-12 | The sourcing table carries one row per corpus dossier row — twenty-two under the corpus store's seed — and the table's row count equals the dossier's row count; every dossier row that carries a `registry_id` resolves to a source in `data/sources.yaml`, and every source in `data/sources.yaml` resolves to a dossier row; every corpus work the grammar records anchor resolves to a dossier row; the table's rendered tier-role column equals the registry's tier roles for the same source; every registry `tier_roles` value is one of the five tokens `tier1`…`tier5`; and the neighbor marker is carried in its own `classification` field | structural | A test over the registry, the grammar records' anchors, the corpus store, and the generated sourcing table |
 | SC-13 | `data/fill-precedence.yaml` carries exactly the nine entries §2.4 fixes, in that rank order, with the keys §2.4 names, each entry's `familial_note`, `evidential_note`, and `authority` non-empty, and each entry carrying a `source_id` or a `group` name; the rendered fill-precedence order equals the tracked order — the same ranks and the same identifiers, in the same sequence — and each entry's familial note and evidential note appear in the built document's text | behavioral | Read the file and assert the nine entries' ranks and identifiers against §2.4's list, assert the keys and the non-empty fields on every entry; extract the rendered order and the notes from the built document's text and compare them with the file's entries in order |
 | SC-14 | The drift check fails loud when the corpus store drifts from the record: with a corpus store file altered, the build exits nonzero and the message names the drifting path and the recorded and current digests; with the store unaltered, the build succeeds | behavioral | Build in a scratch copy with one corpus store file altered and assert a nonzero exit whose message names that path and both digests; build the unaltered copy and assert success |
@@ -396,9 +398,9 @@ says so rather than presenting it as settled.
 **Contract status.** The methodology document and the two new tracked data
 files are not exports-contract surfaces: this repository's contract enumerates
 the knowledge base, the rendered grammar documents, and the source registry.
-The root `AGENTS.md`'s exports-contract section gains a line saying so, and
-the rendered methodology document is a published artifact fetched by URL
-rather than a tracked export.
+The root `AGENTS.md`'s exports-contract section gains a line saying so; the
+methodology document's PDF is committed as the document's own output, and the
+document is a published artifact rather than a tracked export.
 
 **Blast radius.** A new `paper/evergreen/` tree with its scope registry; a new
 `paper/build.sh`, `paper/fonts/`, `paper/vendor/`, and `paper/README.md`; a
