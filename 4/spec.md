@@ -97,20 +97,17 @@ row carries its `fill_plan` (SC-7):
 
 #### 2.3.3 The fill precedence order (familial + evidential distance; added 2026-10-23)
 
-**Status: provisional working order — adopted per developer direction
-2026-10-23, assumed approved pending linguist review;** submitted to the
-reviewing linguists as the recommended precedence sourcing order. Review
-outcomes flow through change control here and in algonquian-library#66.
-The order ranks fill-in sources *within* the ladder's rungs (it never
-re-ranks the rungs): **familial distance** — genealogical closeness to PSNEA —
-and **evidential distance** — temporal drift from the PSNEA construction
-window plus fullness/analytic standard of the source. Prior recommendations
-(including the guidance's own source-naming order) are not used as ranking
-input; sources were *identified* by the guidance, *ordered* by distance.
-**Scope (widened 2026-10-23, per developer direction): all related-language
-grammars, not only the Cree/Ojibwean line** — tier-3 Eastern prose sources,
-the full Central set, and related languages beyond the current tier
-vocabulary (table B below), each ranked by the same two axes.
+**Status: provisional working order**, adopted 2026-10-23, assumed approved
+pending linguist review; review outcomes flow through change control here and
+in algonquian-library#66. **Scope: all related-language grammars, not only the
+Cree/Ojibwean line** (widened 2026-10-23) — tier-3 Eastern prose sources, the
+full Central set, and related languages beyond the current tier vocabulary
+(table B below), each ranked by the same axes. The order ranks fill-in sources
+*within* the ladder's rungs (it never re-ranks the rungs): **familial
+distance** — genealogical closeness to PSNEA — and **evidential distance** —
+temporal drift from the PSNEA construction window plus fullness/analytic
+standard of the source. Ranking input is the two axes only; the guidance's
+source-naming order identifies sources, not their precedence.
 
 Familial axis: Munsee Delaware (tier 3) precedes every Central source by
 shared Eastern descent — and the whole Eastern side shares the PEA defining
@@ -124,7 +121,8 @@ known innovations with SNEA — so the familial axis resolves to the
 **retention profile**: proximity of the documented inflectional system to the
 PA skeleton (Bloomfield §117, the tier-5 anchor). Evidential axis: temporal
 closeness of the documentation to the PSNEA window, then fullness and
-analytic standard. All rationales are **working claims for linguist review**.
+analytic standard. Every rationale is a working claim, subject to linguist
+review.
 
 | Rank | Source | Familial note | Evidential note |
 |------|--------|---------------|-----------------|
@@ -138,12 +136,12 @@ analytic standard. All rationales are **working claims for linguist review**.
 | 7 | `baraga-1850` — Otchipwe (Ojibwe) grammar | substantively Ojibwean | missionary-era, pre-linguistic analysis — corroboration-only weight |
 | 8 | `okimasis` — Cree: Language of the Plains | substantively Cree | pedagogical register — lowest scholarly weight; corroboration-only |
 
-**Table B — related languages beyond the current tier vocabulary** (ranked
-by the same axes; **adoption pending the tier ruling**: the evidence ladder
-(snea-phonetics#118 §2.3) has no rung for non-Central/non-SNEA comparanda,
-and the registry stays closed to them until the design record is extended —
-until then they ride the algonquian-library#66 candidate inventory and
-corpus-side dispositions only, never silently adopted):
+**Table B — related languages beyond the current tier vocabulary** (ranked by
+the same axes; **adoption pending the tier ruling** — the evidence ladder
+(snea-phonetics#118 §2.3) carries no rung for non-Central/non-SNEA comparanda,
+and the registry stays closed to them until the design record is extended
+(SC-6); they scope in the algonquian-library#66 candidate inventory and
+corpus-side dispositions only):
 
 | Rank | Language — prose source | Familial note | Evidential note |
 |------|-------------------------|---------------|-----------------|
@@ -157,8 +155,7 @@ corpus-side dispositions only, never silently adopted):
 
 Tier-2 (SNEA-internal) precedence follows Costa 2007's dialect grouping:
 the Massachusett–Coweset–Narragansett block, then Mohegan-Pequot-Montauk and
-the Niantics, then Quiripi/Unquachog, then Loup — per the dialectology record,
-not by prior recommendation.
+the Niantics, then Quiripi/Unquachog, then Loup, per Costa 2007's grouping.
 
 #### 2.3.4 The tier-4 fill library and its dispositions
 
@@ -171,14 +168,14 @@ not by prior recommendation.
   §2.3 as the recorded need evidence). Anchored via the corpus `private/`
   reference-library mechanism (the PSN-RUL-011/013/014/015 precedent —
   `test/test_corpus_anchor.py` accepts `private/` anchors as a gitignored,
-  session-local authority surface); such records land **only when the copy exists
-  in the corpus checkout**, so the suite never ships dangling anchors.
+  session-local authority surface); such records land only when the copy exists
+  in the corpus checkout (no dangling anchors).
 - **Mirrorable online grammars (open access, verified live 2026-10-23):** Baraga,
   *A Theoretical and Practical Grammar of the Otchipwe Language* (1850; 1879 ed. —
   public-domain era, archive.org CIHM copies) and Okimāsis, *Cree: Language of the
   Plains* (U Regina Press open textbook). Mirror requests ride algonquian-library#66;
   registry entries follow the MANIFEST landing (SC-6).
-- **Already-mirrored Central material (first-class, zero-copy-cost):** the Central
+- **Already-mirrored Central material (already mirrored):** the Central
   component datasets — `corpus/data/csv/Cree_Plains/`, `Cree_Swampy/`,
   `Cree_Moose_Swampy/`, `Ojibwe_Odawa/`, `Ojibwe_Eastern/`, `Potawatomi/`,
   `Menominee/`, `Meskwaki/`, `Miami_Illinois/` (row-citation-keyed, incl.
@@ -191,7 +188,7 @@ not by prior recommendation.
 - **Governance gate for online candidates:** university-press/lab and scholarly
   open-access works classify `scholarly_edition`; community-authored teaching
   materials classify `community_dictionary` (excluded by default) unless authorized
-  — the modern-Mohegan-dictionary ruling pattern, applied mechanically.
+  — the modern-Mohegan-dictionary ruling pattern.
 - Where attestation is silent everywhere, the paradigm row stays **visibly
   incomplete** (pending marking) — never silently absorbed.
 
@@ -225,7 +222,7 @@ and none is created:
 | Classification of every source, mirrored or not | this repo — `data/sources.yaml` |
 | Locator pins / fill provenance for un-landed sources | this repo — `fill_plan` candidates + registry notes, resolving to corpus paths only once the copy lands |
 | Grammar knowledge extracted from any source | this repo — `data/grammar/` records; the corpus is the source surface, the knowledge base is ours |
-| Working extract notes, if ever needed | this repo — `data/notes/` (only if prose extracts outgrow the records; not planned) |
+| Working extract notes, if ever needed | this repo — `data/notes/` (contingency row; no such folder planned) |
 
 ## 3. Success criteria
 
