@@ -51,15 +51,16 @@ program needs:
    working-copy material, that the proofing pass covers the used portions at
    locator level, and what is currently proofed and what is not.
 
-No tracked non-spec document states the pull rules in full. The root
-`AGENTS.md` summarizes the ladder and two of the rules — that incompleteness
-stays visible and that Central material corroborates without supplying
-surface forms — and `data/sources.yaml` carries the per-source classifications
-in prose comments rather than as a machine-readable vocabulary. The pull
-rules, the precedence order, the proofing gate, and the join between a rule
-and the source that supplies it exist only in the spec at snea-grammar#4
-§2.3, and nothing in this repository states the proofing state of the
-passages the program sources.
+The state of the proofing — which passages of which documents are proofed — is
+recorded nowhere. The rule itself is stated in this repository's root
+`AGENTS.md` and in snea-grammar#4 §2.3.4; the pull rules, the precedence
+order, and the join between a rule and the source that supplies it are stated
+in the spec at snea-grammar#4 §2.3 and nowhere else in full. The per-source
+classifications are machine-readable in `data/sources.yaml`; the tier-role
+legend is a prose comment in that file, and the tier display names live in
+the package (`src/snea_grammar/render.py`). No tracked document assembles the
+ladder, the pull rules, the precedence order, and the proofing state into the
+one place a reader or an agent can consult.
 
 The document does not restate the grammar itself, the lexicon, or the
 phonetic realization — those are the other renderings and the other
@@ -94,16 +95,16 @@ extends it with the proofing state, following algonquian-library#68 §2.1.
 
 | Fact | Owner |
 |------|-------|
-| The evidence tier of a source; the fill rules; the precedence order | this repository (`data/sources.yaml`; snea-grammar#4 §2.3) |
+| The evidence tier of a source; the fill rules; the precedence order | this repository (`data/sources.yaml`; `data/fill-precedence.yaml`; snea-grammar#4 §2.3) |
 | Which documents exist, where each is held, its disposition, its proofing state, the proofed readings | algonquian-library — the grammar-source store, proofing checklist, and tracked proofed extracts (algonquian-library#68) |
 | The grammar records and the anchors that consume both | this repository (`data/grammar/`) |
 
 The document therefore joins a local authority with a corpus-side dataset. The
 join is generated, not typed: the sourcing table, the proofing checklist
-table, the bibliography, and the as-of anchors are all produced by a
-generator from the tracked inputs, and the tracked LaTeX sources carry no
-hand-written table rows (the generated-source rule the corpus repository
-already applies to its rendered volume).
+table, the supporting-materials table, the bibliography, and the as-of
+anchors are all produced by a generator from the tracked inputs, and the
+tracked LaTeX sources carry no hand-written table rows (the generated-source
+rule the corpus repository already applies to its rendered volume).
 
 The corpus side produces the store's coverage: algonquian-library#68 requires
 a dossier row for every source id in this repository's `data/sources.yaml` and
@@ -139,7 +140,21 @@ The rule set carries these rules:
 | `GRM-09` | Every pending row records a fill plan; the ladder is auditable, not silent |
 | `GRM-10` | Tier-2 precedence follows Costa 2007's dialect grouping |
 
-### 2.4 The figures
+### 2.4 The fill-precedence file
+
+The fill precedence order — the ranked sources, the two ranking axes, and
+each source's rationale — is stated in snea-grammar#4 §2.3.3, which is a spec
+file in the issue store rather than a tracked file in this repository. A
+document that renders the order needs a tracked form of it, so the order
+becomes a tracked file, `data/fill-precedence.yaml`: one entry per ranked
+source, each carrying its rank, its source id, its familial note, its
+evidential note, the axis the rank rests on, and the authority the entry
+derives from (snea-grammar#4 §2.3.3). The file's entries are the order the
+document renders, and snea-grammar#4's change-control table records that the
+file is the order's tracked form. The order remains a provisional working
+order pending linguist review, and the document says so.
+
+### 2.5 The figures
 
 Five figures carry the rules. They are TikZ/forest sources, compiled into the
 document, and each is referenced from the section whose rule it shows.
@@ -152,7 +167,7 @@ document, and each is referenced from the section whose rule it shows.
 | F4 | The proofing pipeline — capture, OCR, human proofing pass, back-apply, tracked extract, citable; and the branch that leaves an unproofed passage as working-copy material |
 | F5 | The traceability chain — a grammar record, its anchor, the corpus path, the tracked proofed extract, the page render |
 
-### 2.5 The document's sections
+### 2.6 The document's sections and its generated payload
 
 The document's section set is fixed; the sections are wired into `master.tex`
 in this order.
@@ -166,36 +181,46 @@ in this order.
 | Governance | the community-dictionary exclusion and the basis for it | — |
 | The proofing gate | what counts as OCR-derived, the working-copy rule, the coverage rule | F4 |
 | The proofing checklist | the generated checklist table: what is proofed and what still needs proofing | — |
-| Supporting materials | the tracked proofed extracts the document's citations resolve against | F5 |
+| Supporting materials | the generated supporting-materials table: the tracked proofed extracts the document's citations resolve against | F5 |
 | Maintenance | the currency procedure, the cross-repository responsibilities, the change-control record | — |
 | Glossary | the terms the document uses | — |
 
-The generated payload reaches the document: the sourcing table, the
-proofing-checklist table, and the bibliography are `\input` from the
-`generated/` directory, and the build asserts that their content appears in
-the built PDF's extracted text.
+The generator writes five files into the document root's `generated/`
+directory, and the document consumes them as follows:
 
-### 2.6 The proofing state in the document
+| Generated file | How the document consumes it |
+|----------------|-----------------------------|
+| `sourcing-table.tex` | `\input` into the sourcing-documents section |
+| `proofing-checklist.tex` | `\input` into the proofing-checklist section |
+| `supporting-materials.tex` | `\input` into the supporting-materials section |
+| `as-of-metadata.tex` | `\input` into the introduction section, where the anchor values are printed |
+| `references.bib` | `\addbibresource` in the preamble and processed by `biber` — the bibliography is not `\input`ed |
+
+The hand-written sources hold the prose and the `\input` commands; the table
+content, the bibliography entries, and the anchor values live only in the
+generated files. The build asserts that the generated payload reaches the
+built PDF's text.
+
+### 2.7 The proofing state in the document
 
 The document carries the proofing state of the passages the grammar program
-sources, in two places: the sourcing table's proofing column, and the
-proofing-checklist section that lists what is proofed and what still needs
-proofing. Both are generated from the corpus store. The document states the
-rule that unproofed OCR'd segments are legitimate working-copy material —
-available for staging, diffing, and availability scoping, never backing a
-citation or an anchor until a human proofing pass covers the passage — as its
-own rule `GRM-08`, citing the corpus runbook's rules `OCR-1`…`OCR-8` by id
-and path. The build gate resolves that citation: the cited path must exist
-under the corpus submodule and the cited rule ids must be present in the
-runbook.
+sources, in three places: the sourcing table's proofing column, the
+proofing-checklist section, and the supporting-materials section. All three
+are generated from the corpus store. The document states the rule that
+unproofed OCR'd segments are legitimate working-copy material — available for
+staging, diffing, and availability scoping, never backing a citation or an
+anchor until a human proofing pass covers the passage — as its own rule
+`GRM-08`, citing the corpus runbook's rules `OCR-1`…`OCR-8` by id and path.
+The build gate resolves that citation: the cited path must exist under the
+corpus submodule and the cited rule ids must be present in the runbook.
 
-### 2.7 The currency machinery
+### 2.8 The currency machinery
 
-The document's volatile inputs are the corpus store and the registry; its
-stable inputs are the rule set and the section sources. The drift detectors
-are mechanical and fail loud:
+The document's volatile inputs are the corpus store, the registry, and the
+fill-precedence file; its stable inputs are the rule set and the section
+sources. The drift detectors are mechanical and fail loud:
 
-- **The generated-source gate.** The four generated files are tracked and
+- **The generated-source gate.** The five generated files are tracked and
   byte-identical to the generator's output for the tracked inputs, and the
   tracked LaTeX sources contain no table content of their own.
 - **The freshness gate.** The document records two things about the corpus:
@@ -208,6 +233,9 @@ are mechanical and fail loud:
   dossier row and the reverse holds; every corpus work this repository's
   grammar records anchor resolves to a dossier row; the document's sourcing
   table row count equals the join size.
+- **The precedence gate.** The rendered fill-precedence order equals the
+  tracked order in `data/fill-precedence.yaml`, and the rendered table's
+  tier-role column equals the registry's tier roles.
 
 The refresh duty is recorded in two places: this repository's root `AGENTS.md`
 names the trigger events and the refresh steps, and the document folder's
@@ -219,7 +247,7 @@ methodology document's refresh among the surfaces each event fires — is
 recorded in the corpus repository's own agent instructions
 (algonquian-library#68 SC-9).
 
-### 2.8 The document tree and the toolchain
+### 2.9 The document tree, the toolchain, and the assets
 
 The document is an evergreen document, and it follows the convention the
 phonetics repository established for that class: the document root is
@@ -231,11 +259,13 @@ script change. The registry entry names the document, its path, its entry
 file, its review owner, its scope globs, and its tracked binaries directory.
 
 The document root holds `master.tex`, the `sections/` tree, the `figures/`
-tree, the `generated/` directory, `references.bib` (generated), the `outputs/`
-directory for the tracked PDF, and the `build/` directory for intermediates.
-The repository-level assets are `paper/fonts/` (the vendored CharisSIL faces
-with their OFL text) and `paper/vendor/` (the vendored linguistic-example
-styles).
+tree, the `generated/` directory, `references.bib` (generated), and the
+`outputs/` directory for the tracked PDF. The build creates the `build/`
+directory for intermediates; it is not tracked, and the repository's
+`.gitignore` excludes it. The repository-level assets are `paper/build.sh`,
+`paper/fonts/` (the vendored CharisSIL faces, with their OFL text and a
+provenance record), `paper/vendor/` (the vendored linguistic-example styles),
+and `paper/README.md` (the toolchain provisioning note).
 
 The preamble loads CharisSIL (for the IPA inventory), `gb4e` (numbered
 linguistic examples), `tikz` and `forest` (the figures), `booktabs`,
@@ -243,6 +273,14 @@ linguistic examples), `tikz` and `forest` (the figures), `booktabs`,
 typesetting convention follows the phonetics repository's: `\sloppy`,
 `\raggedbottom`, and flexible vertical lengths in the preamble, with no layout
 enforcement in the build tooling.
+
+**The toolchain precondition.** The build needs `latexmk` with the XeLaTeX
+engine, `biber`, and `pdftotext`, plus the TeX packages named above. The
+provisioning note at `paper/README.md` states the requirement and the
+installation command. On a machine without the toolchain, the build-dependent
+tests skip with a reason naming the missing tool and the provisioning
+command, following the skip-with-instruction convention the corpus repository
+uses; the rest of the suite runs.
 
 The tier labels the document prints come from the package's `TIER_NAMES`
 (`src/snea_grammar/render.py`), which is the machine-readable display
@@ -255,7 +293,7 @@ command-line entry point in the style of the existing render CLI, so that the
 document's content is produced by the same validated package that produces
 the other renderings.
 
-### 2.9 A live registry value outside the tier vocabulary
+### 2.10 A live registry value outside the tier vocabulary
 
 `data/sources.yaml` gives `masthay-1991` the tier role `neighbor` — a
 Delaware-Mahican comparative source that is a neighbor language and not a
@@ -266,35 +304,38 @@ vocabulary, so the live registry contradicts that criterion today.
 This issue resolves the contradiction in the registry rather than blessing
 the value: the `masthay-1991` entry moves its neighbor marker out of
 `tier_roles` into a `classification` field of its own, so that every
-`tier_roles` value in the registry is one of the five tiers, as
-snea-grammar#4 SC-6 requires. The document renders the neighbor marker as a
-classification outside the five rungs — the sourcing table's neighbour row
-sits beside the ladder rather than on a rung — and `GRM-01` states that the
-pull runs through the five rungs only. The change is recorded in
-snea-grammar#4's change-control table.
+`tier_roles` value in the registry is one of the five tokens `tier1`…
+`tier5`, as snea-grammar#4 SC-6 requires. The document renders the neighbor
+marker as a classification outside the five rungs — the sourcing table's
+neighbour row sits beside the ladder rather than on a rung — and `GRM-01`
+states that the pull runs through the five rungs only. The change is recorded
+in snea-grammar#4's change-control table.
 
 ## 3. Success criteria
 
 | ID | Criterion | Class | Verification method |
 |----|-----------|-------|---------------------|
-| SC-1 | The document root `paper/evergreen/grammar-reconstruction-methodology/` holds `master.tex`, the `sections/` tree, the `figures/` tree, the `generated/` directory, `references.bib`, the `outputs/` directory, and the `build/` directory; the repository-level `paper/build.sh`, `paper/fonts/`, and `paper/vendor/` exist at those paths | structural | File-existence checks over the named paths |
+| SC-1 | The named paths exist: the document root's `master.tex`, `sections/` tree, `figures/` tree, `generated/` directory, `references.bib`, and `outputs/` directory; the repository-level `paper/build.sh`, `paper/fonts/`, `paper/vendor/`, `paper/README.md`, `paper/fonts/OFL-CharisSIL.txt`, and `paper/fonts/PROVENANCE.md` | structural | File-existence checks over the named paths |
 | SC-2 | The document is registered in `paper/evergreen/EVERGREEN.md` with its name, path, entry file, review owner, scope globs, and tracked binaries directory, and `paper/build.sh --list` names the document root | behavioral | Read the registry and assert the six registry fields for the document; run the build script's listing mode and assert the document root appears in its output |
-| SC-3 | The document root path appears in the root `AGENTS.md` repository-structure table | structural | A text check for the document root path in the root `AGENTS.md` |
+| SC-3 | The document root path appears in the root `AGENTS.md` repository-structure table, and `ROADMAP.md` carries a work item for this document | structural | A text check for the document root path in the root `AGENTS.md`; a text check for the document's work item in `ROADMAP.md` |
 | SC-4 | `bash paper/build.sh` produces the PDF from the tracked sources in a checkout with the corpus submodule materialized, and exits nonzero naming the submodule remedy when the submodule is not materialized | behavioral | Build in a scratch copy with the submodule materialized and assert the PDF exists; empty the submodule directory, rebuild, and assert a nonzero exit whose message names the submodule remedy |
-| SC-5 | Every section in §2.5 is wired into `master.tex` and renders in the built PDF | behavioral | Build the document, extract the section headings from the built document's text, and assert each of the ten named sections is present |
+| SC-5 | Every section in §2.6 is wired into `master.tex` and renders in the built PDF | behavioral | Build the document, extract the section headings from the built document's text, and assert each of the ten named sections is present |
 | SC-6 | `data/grammar-rules.yaml` carries a file-level `revision` date and the ten rules of §2.3, each with a non-empty `statement`, `scope`, and `authority`; the document's rendered rule statements are exactly the file's `statement` values, compared sentence for sentence in both directions | behavioral | Read the rule file and assert the revision date, the ten ids, and the three non-empty fields each; extract the statements inside the document's `\grammarrule{...}` environments and compare them with the file's `statement` values in both directions |
-| SC-7 | The four generated files — sourcing table, proofing checklist table, bibliography, and as-of metadata — are byte-identical to the generator's output for the tracked inputs | structural | Run the generator into a scratch directory and compare each output file byte for byte with its tracked counterpart |
-| SC-8 | No tracked LaTeX source under the document root carries table content of its own: the sourcing table's rows, the checklist's rows, the bibliography's entries, and the as-of anchor values appear only in the generated files | structural | A test that reads the tracked LaTeX sources, strips the `\input` of the generated files, and asserts that none of the generated files' table rows appears in the hand-written sources |
+| SC-7 | The five generated files are byte-identical to the generator's output for the tracked inputs | structural | Run the generator into a scratch directory and compare each output file byte for byte with its tracked counterpart |
+| SC-8 | No tracked LaTeX source under the document root carries table content of its own: the sourcing table's rows and the checklist's rows appear only in the generated files | structural | A test that reads the tracked LaTeX sources and asserts that none of the generated tables' rows appears in them |
 | SC-9 | Figures F1–F5 appear in the built PDF, each is referenced from a section source, and each carries its caption | behavioral | Extract the built document's text and assert the five captions are present; assert each figure's label is referenced from at least one section source |
-| SC-10 | The built PDF's extracted text carries the generated payload: a known registry source id with its proofing state from the generated sourcing table, the checklist's status values, the bibliography's entries, and the precedence order's provisional-status statement | behavioral | Extract the built document's text and assert each of the four payload elements is present, with the registry source id and the proofing state taken from the generated sourcing table and the status values taken from the generated checklist table |
+| SC-10 | The built PDF's extracted text carries the generated payload: a known registry source id with its tier role and its proofing state from the generated sourcing table, the checklist's status values, the supporting-materials rows, each bibliography entry's rendered title, and the precedence order's provisional-status statement | behavioral | Extract the built document's text and assert each payload element, with the source id, tier role, and proofing state taken from the generated sourcing table, the status values from the generated checklist table, the supporting rows from the generated supporting-materials table, and the titles from the generated bibliography |
 | SC-11 | The document's citation of the corpus runbook resolves: the cited path exists under the corpus submodule, and the cited rule ids are present in that runbook | structural | A test that resolves the cited path under `corpus/` and asserts each cited rule id appears in the runbook text |
-| SC-12 | Every source in `data/sources.yaml` resolves to a corpus dossier row, every corpus work the grammar records anchor resolves to a dossier row, the document's sourcing table row count equals the join size, every registry `tier_roles` value is one of the five tier roles, and the neighbor marker is carried in its own `classification` field | structural | A test over the registry, the grammar records' anchors, the corpus store, and the generated sourcing table |
-| SC-13 | The freshness gate fails loud when the corpus store drifts from the record: with the corpus store's files altered, the build exits nonzero and names the drift; with them unaltered, the build succeeds | behavioral | Build in a scratch copy with the corpus store's files altered and assert a nonzero exit naming the drift; build the unaltered copy and assert success |
-| SC-14 | The document states its as-of anchors — the rule set's revision date, the corpus commit it was generated against, the digest of the corpus store at that commit, and the tier vocabulary — and each anchor is stamped from a tracked input rather than typed by hand | structural | A test that reads the generated metadata file and compares each anchor with the tracked input it derives from — the rule file's `revision`, the submodule's commit, the store's digest, and `TIER_NAMES` — and asserts the document's text carries those values |
-| SC-15 | The root `AGENTS.md` and `paper/evergreen/grammar-reconstruction-methodology/AGENTS.md` each name the four trigger events — a corpus material change, a proofed segment landing, a rule change, a registry change — and the refresh steps that each event fires | structural | A test that asserts each event name and each named refresh surface appears in both files |
-| SC-16 | The root `AGENTS.md` records the one-way corpus dependency and the decision not to add a `grammar/` submodule registration in the corpus repository, with the cycle named | structural | A text check over the root `AGENTS.md` for the dependency statement, the registration decision, and the cycle's ground |
-| SC-17 | The `corpus/` submodule pin is advanced to a commit that carries the corpus store, and the document's recorded corpus commit matches the checked-out submodule commit | structural | A test that compares the recorded commit in the generated metadata with `git -C corpus rev-parse HEAD` |
-| SC-18 | The default test tier is green with the document's gate tests included | behavioral | `uv run pytest test/` executed in this repository; the passing output recorded in the session evidence |
+| SC-12 | Every source in `data/sources.yaml` resolves to a corpus dossier row, every corpus work the grammar records anchor resolves to a dossier row, the document's sourcing table row count equals the join size, every registry `tier_roles` value is one of the five tokens `tier1`…`tier5`, and the neighbor marker is carried in its own `classification` field | structural | A test over the registry, the grammar records' anchors, the corpus store, and the generated sourcing table |
+| SC-13 | The rendered fill-precedence order equals the tracked order in `data/fill-precedence.yaml` — the same ranks, the same source ids, in the same sequence — and each file entry carries its authority citation | behavioral | Extract the rendered order from the built document's text and compare it with the file's entries in order; assert each entry carries the authority field |
+| SC-14 | The freshness gate fails loud when the corpus store drifts from the record: with the corpus store's files altered, the build exits nonzero and names the drift; with them unaltered, the build succeeds | behavioral | Build in a scratch copy with the corpus store's files altered and assert a nonzero exit naming the drift; build the unaltered copy and assert success |
+| SC-15 | The document states its as-of anchors — the rule set's revision date, the corpus commit it was generated against, the digest of the corpus store at that commit, and the tier vocabulary — and each anchor is stamped from a tracked input rather than typed by hand | structural | A test that reads the generated metadata file and compares each anchor with the tracked input it derives from — the rule file's `revision`, the submodule's commit, the store's digest, and the package's tier names — and asserts the document's text carries those values |
+| SC-16 | The root `AGENTS.md` and `paper/evergreen/grammar-reconstruction-methodology/AGENTS.md` each name the four trigger events — a corpus material change, a proofed segment landing, a rule change, a registry change — and the refresh steps that each event fires | structural | A test that asserts each event name and each named refresh surface appears in both files |
+| SC-17 | The root `AGENTS.md`'s five tier labels equal the package's `TIER_NAMES` values, in order | structural | A test that extracts the five tier labels from the root `AGENTS.md`'s tier paragraph and compares them with `TIER_NAMES` |
+| SC-18 | The root `AGENTS.md` records the one-way corpus dependency and the decision not to add a `grammar/` submodule registration in the corpus repository, with the cycle named | structural | A text check over the root `AGENTS.md` for the dependency statement, the registration decision, and the cycle's ground |
+| SC-19 | The `corpus/` submodule pin is advanced to a commit that carries the corpus store, and the document's recorded corpus commit matches the checked-out submodule commit | structural | A test that compares the recorded commit in the generated metadata with `git -C corpus rev-parse HEAD` |
+| SC-20 | snea-grammar#4's change-control table carries a row naming this document as the human-readable form of its §2.3 fill machinery and recording the neighbour-marker amendment and the tracked fill-precedence file | structural | A file check on snea-grammar#4's spec for the change-control row and its two named subjects |
+| SC-21 | The suite is green; on a machine without the TeX toolchain, the build-dependent tests skip with a reason naming the missing tool and the provisioning command | behavioral | `uv run pytest test/` executed in this repository, with the passing output recorded; where the toolchain is absent, the skips' reasons are read and each names the missing tool and the provisioning command |
 
 ## 4. Impact
 
@@ -314,13 +355,15 @@ build rather than shipping a wrong document. The fill precedence order
 remains a provisional working order pending linguist review, and the document
 says so rather than presenting it as settled.
 
-**Blast radius.** A new `paper/evergreen/` tree with its scope registry, a new
-`data/grammar-rules.yaml`, one new module in the package, a corpus submodule
-pin advance, the root `AGENTS.md` (its structure table, its tier paragraph,
-its agent conventions, and the corpus-dependency statement), the
-`data/sources.yaml` neighbour-marker change, and a change-control row in
-snea-grammar#4's spec. The grammar records, the three existing renderings,
-and the corpus repository's own surfaces are untouched.
+**Blast radius.** A new `paper/evergreen/` tree with its scope registry; a new
+`paper/build.sh`, `paper/fonts/`, `paper/vendor/`, and `paper/README.md`; a
+new `data/grammar-rules.yaml` and `data/fill-precedence.yaml`; one new module
+in the package; a corpus submodule pin advance; the root `AGENTS.md` (its
+structure table, its tier paragraph, its agent conventions, and the
+corpus-dependency statement); the `data/sources.yaml` neighbour-marker change;
+`ROADMAP.md`; and a change-control row in snea-grammar#4's spec. The grammar
+records, the three existing renderings, and the corpus repository's own
+surfaces are untouched.
 
 ## 5. Non-goals
 
@@ -344,11 +387,11 @@ and the corpus repository's own surfaces are untouched.
 
 - algonquian-library#68 — the corpus-side store, checklist, and tracked
   proofed extracts this document consumes. It lands first; the corpus pin
-  advance in SC-17 depends on it, and its SC-9 carries the cross-repository
+  advance in SC-19 depends on it, and its SC-9 carries the cross-repository
   refresh duty.
 - snea-grammar#4 — the fill machinery, tier vocabulary, and precedence order
-  this document renders. Its change-control record gains the cross-link and
-  the neighbour-marker amendment.
+  this document renders. Its change-control record gains the cross-link, the
+  neighbour-marker amendment, and the tracked fill-precedence file.
 - algonquian-library#66, #34 — the copy set whose dispositions the sourcing
   table shows.
 - snea-grammar#3 — the alternation rules, the first consumer of the tier
