@@ -45,9 +45,11 @@ directory for the tracked PDF. The build creates the `build/` directory for
 intermediates; it is not tracked, and the repository's `.gitignore` excludes
 it.
 
-The preamble loads CharisSIL (for the IPA inventory), `gb4e` (numbered
-linguistic examples), `tikz` and `forest` (the figures), `booktabs`,
-`biblatex` with `biber`, and `hyperref` with `cleveref` after it. The
+The preamble loads `fontspec`, then the vendored CharisSIL faces by file —
+`\setmainfont{CharisSIL}[Path=fonts/, Extension=.ttf, ...]`, the path resolved
+from the build's working directory — then `gb4e` (numbered linguistic
+examples), `tikz` and `forest` (the figures), `booktabs`, `biblatex` with
+`biber`, and `hyperref` with `cleveref` after it. The
 typesetting convention follows the phonetics repository's: `\sloppy`,
 `\raggedbottom`, and flexible vertical lengths in the preamble, with no
 layout enforcement in the build tooling. The document's date is fixed, not
@@ -72,20 +74,21 @@ of the existing render CLI — `uv run python -m snea_grammar.docgen --out <dir>
 — so that the document's content is produced by the same validated package
 that produces the other renderings. It reads the registry, the rule set, the
 order file, and the corpus store under the `corpus/` submodule, and writes the
-six generated files into the directory `--out` names. Its output is
+seven generated files into the directory `--out` names. Its output is
 deterministic: the same inputs produce byte-identical outputs.
 
 ### 2.5 The build gates
 
 The build's gate order is fixed, and each gate fails loud naming its cause:
 
+0. **The submodule precondition** — the build fails loud when the `corpus/` submodule is not materialized, naming the materialization command, before any gate runs.
 1. **The drift check** — compares the checked-out corpus store's per-file
    digests and its aggregate digest against the digests the document
    recorded, and when they differ fails naming the drifting path and the
    recorded and current digests. It never compares generated files, which
    the next gate does, so a corpus change is reported as corpus drift rather
    than as a generated-file mismatch.
-2. **The generated-source comparison** — compares the six generated files
+2. **The generated-source comparison** — compares the seven generated files
    with the generator's output for the tracked inputs.
 3. **The rule-correspondence check** — compares the document's rendered
    `\grammarrule` statements with the rule set's `statement` values, sentence
@@ -110,10 +113,12 @@ that advanced without the document's regeneration is reported as drift.
 |----|-----------|-------|---------------------|
 | SC-1 | The named paths exist: the document root's `master.tex`, `sections/` tree, `figures/` tree, `generated/` directory, and `outputs/` directory; and the repository-level `paper/build.sh`, `paper/fonts/`, `paper/vendor/`, `paper/README.md`, `paper/fonts/OFL-CharisSIL.txt`, and `paper/fonts/PROVENANCE.md` | structural | File-existence checks over the named paths |
 | SC-2 | The document is registered in `paper/evergreen/EVERGREEN.md` with its name, path, entry file, review owner, scope globs, and tracked binaries directory, and `paper/build.sh --list` names the document root | behavioral | Read the registry and assert the six registry fields; run the build script's listing mode and assert the document root appears in its output |
-| SC-3 | The provisioning note names each required tool — Python with `uv`, `latexmk` with the XeLaTeX engine, `biber`, and `pdftotext` — with its installation command; and where a tool is absent, the build-dependent tests skip with a reason naming the missing tool and the provisioning command | structural | A text check over `paper/README.md` for each of the four tools and an installation command; in a checkout without a tool, a test's skip reason is read and checked for the missing tool and the command |
-| SC-4 | `bash paper/build.sh` produces the PDF from the tracked sources with the corpus submodule materialized, and exits nonzero naming the submodule remedy when the submodule is not materialized | behavioral | Build in a scratch copy with the submodule materialized and assert the PDF exists; empty the submodule directory, rebuild, and assert a nonzero exit whose message names the submodule remedy |
-| SC-5 | The generator reads the registry, the rule set, the order file, and the corpus store, writes the six generated files into the directory `--out` names, and produces byte-identical output for the same inputs | structural | Run the generator twice with `--out` naming a scratch directory and compare the two runs byte for byte, and compare each output with its tracked counterpart |
-| SC-6 | Each of the five build gates fails loud naming its cause when its condition is violated, and the gates run in the §2.5 order | behavioral | In a scratch copy, break each gate's condition in turn — a corpus store file altered, the corpus pin moved, a generated file edited, a rule statement reworded, a dossier row removed, the order file reordered — and assert the build exits nonzero with a message naming that gate's cause; assert the reported cause order matches §2.5 |
+| SC-3 | The provisioning note names each required tool — Python with `uv`, `latexmk` with the XeLaTeX engine, `biber`, and `pdftotext` — with its installation command, and the build-dependent tests skip through one shared helper whose reason names the missing tool and the provisioning command | structural | A text check over `paper/README.md` for each of the four tools and an installation command; a test over the shared skip helper asserting that its reason message carries the missing tool's name and the provisioning command |
+| SC-4 | `bash paper/build.sh` produces the PDF from the tracked sources with the corpus submodule materialized | behavioral | Build in a scratch copy with the submodule materialized and assert the PDF exists |
+| SC-4b | The build exits nonzero naming the materialization command when the corpus submodule is not materialized | behavioral | Empty the submodule directory, rebuild, and assert a nonzero exit whose message names the materialization command |
+| SC-5 | The generator reads the registry, the rule set, the order file, and the corpus store, writes the seven generated files into the directory `--out` names, and produces byte-identical output for the same inputs | structural | Run the generator twice with `--out` naming a scratch directory and compare the two runs byte for byte, and compare each output with its tracked counterpart |
+| SC-6 | Each of the five build gates fails loud naming its cause when its condition is violated | behavioral | In a scratch copy, break each gate's condition in turn — a corpus store file altered, the corpus pin moved, a generated file edited, a rule statement reworded, a dossier row removed, the order file reordered — and assert the build exits nonzero with a message naming that gate's cause |
+| SC-6b | The gates run in the §2.5 order | behavioral | In a scratch copy, break all five gates' conditions at once and assert the reported cause is gate 1's; then restore them one at a time and assert the reported cause advances through the order |
 | SC-7 | The default test tier is green with the pipeline's gate tests included | behavioral | `uv run pytest test/` executed in this repository, with the passing output recorded |
 
 ## 4. Impact
