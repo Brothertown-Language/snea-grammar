@@ -107,9 +107,18 @@ and **evidential distance** — temporal drift from the PSNEA construction
 window plus fullness/analytic standard of the source. Prior recommendations
 (including the guidance's own source-naming order) are not used as ranking
 input; sources were *identified* by the guidance, *ordered* by distance.
+**Scope (widened 2026-10-23, per developer direction): all related-language
+grammars, not only the Cree/Ojibwean line** — tier-3 Eastern prose sources,
+the full Central set, and related languages beyond the current tier
+vocabulary (table B below), each ranked by the same two axes.
 
 Familial axis: Munsee Delaware (tier 3) precedes every Central source by
-shared Eastern descent. Within tier 4 all Central languages are *equidistant
+shared Eastern descent — and the whole Eastern side shares the PEA defining
+changes (vowel-length loss, \*e → \*ə, final-vowel loss) documented in the
+mirrored Goddard 1980, *Eastern Algonquian as a genetic subgroup*
+(`corpus/docs/research/sources/goddard1980.*`), the textual warrant for
+ranking the Eastern non-SNEA comparanda (table B) above every Central source.
+Within tier 4 all Central languages are *equidistant
 familially* — Central subgrouping is contested and no Central subgroup shares
 known innovations with SNEA — so the familial axis resolves to the
 **retention profile**: proximity of the documented inflectional system to the
@@ -119,14 +128,32 @@ analytic standard. All rationales are **working claims for linguist review**.
 
 | Rank | Source | Familial note | Evidential note |
 |------|--------|---------------|-----------------|
+| T3 | `omeara-1992` — Munsee prose: O'Meara, *Delaware Reference Grammar* (UTP; JWM1992 in the component bibliography — verified live 2026-10-23); Goddard's Munsee/Unami analysis stream; `Delaware_Munsee`/`Delaware_Unami` datasets already mirrored | nearest relative — outranks all tier-4 by the ladder itself | full modern scholarly reference grammar |
 | 1 | `costa-2003` — Miami-Illinois | most PA-conservative documented Central inflection (notably uncontracted PA independent-order material) | historical grammar of a language documented across the same colonial window as SNEA; full modern scholarly treatment |
 | 2 | `valentine-2001` — Nishnaabemwin (Odawa/Eastern Ojibwe) | conservative verb architecture; Ojibwean-level sound innovations as caveat | exhaustive modern reference grammar, fullest usage coverage in the set |
 | 3 | `wolfart-1973` — Plains Cree | fullest PA-style person/obviation/possession retention; documented independent-order contraction as caveat | standard scholarly Cree reference (APS Trans 63.5); more compact than rank 2 |
 | 4 | `hockett-1939` — Potawatomi | Ojibwean sibling of rank 2; radical phonological divergence makes it a cautionary comparator | full 1939 dissertation (staged in algonquian-library#44 copy set) |
 | 5 | component substrate — `corpus/data/csv/` Central datasets + O'Brien charts | all Central families, citation-keyed | machine-readable cross-check **beneath every rank above**, not a prose-usage source |
-| 6 | Menominee / Meskwaki full grammars (future adoption) | conservative Central comparators | no adopted full reference grammar yet — candidate inventory (algonquian-library#66 SC-4) |
+| 6 | Menominee (Bloomfield 1975), Meskwaki, Kickapoo (Voorhis stream), Shawnee (Voegelin stream) — future adoption | conservative Central comparators; each carries a cited scholarly stream in the component bibliography (LB1975; AD1986–2017 + Goddard & Dahlstrom 2022; PV1967–1988; CV1935–1959) | none has an adopted full-grammar monograph — dataset-backed pending the algonquian-library#66 candidate inventory |
 | 7 | `baraga-1850` — Otchipwe (Ojibwe) grammar | substantively Ojibwean | missionary-era, pre-linguistic analysis — corroboration-only weight |
 | 8 | `okimasis` — Cree: Language of the Plains | substantively Cree | pedagogical register — lowest scholarly weight; corroboration-only |
+
+**Table B — related languages beyond the current tier vocabulary** (ranked
+by the same axes; **adoption pending the tier ruling**: the evidence ladder
+(snea-phonetics#118 §2.3) has no rung for non-Central/non-SNEA comparanda,
+and the registry stays closed to them until the design record is extended —
+until then they ride the algonquian-library#66 candidate inventory and
+corpus-side dispositions only, never silently adopted):
+
+| Rank | Language — prose source | Familial note | Evidential note |
+|------|-------------------------|---------------|-----------------|
+| B1 | Mi'kmaq — Pacifique's grammar (Hewson & Francis, 1990, Algonquian & Iroquoian Linguistics — verified live 2026-10-23); Hewson stream in the bibliography; `Mikmaq` datasets mirrored | Eastern, shares the PEA defining changes (mirrored Goddard 1980) | scholarly re-edition of a Jesuit-era treatment; divergent Eastern inflection as caveat |
+| B2 | Passamaquoddy-Maliseet — Francis & Leavitt stream (DAF_RL1994, RL1985/1992) + LeSourd's Passamaquoddy work (PL1995/2004/2009); `Passamaquoddy_Maliseet` datasets mirrored | Eastern, same warrant | dictionary-plus-analysis stream rather than one monolithic grammar; online portals are community-gated (governance gate applies) |
+| B3 | Western Abenaki — Day 1995 (GMD1995 in the bibliography); Edwards 1787 already mirrored | Eastern **neighbor** (not a PSNEA member per Costa 2007's membership ruling) — comparative role only | dictionary-plus-grammar tradition |
+| B4 | Arapaho — Cowell & Moss, *The Arapaho Language* (U Press Colorado, 2008; AC_AM2008 in the bibliography — verified live 2026-10-23) | Plains branch — deepest familial distance in this table | exemplary modern full reference grammar (544 pp) |
+| B5 | Blackfoot — Frantz stream (DF1966–2017 in the bibliography) | Plains branch | monograph scoping pending |
+| B6 | Cheyenne — Leman stream (WL1979/1985) | Plains branch | monograph scoping pending |
+| — | Powhatan | Eastern; SNEA-adjacency unresolved | component-data-only (`corpus/data/csv/Powhatan/`) |
 
 Tier-2 (SNEA-internal) precedence follows Costa 2007's dialect grouping:
 the Massachusett–Coweset–Narragansett block, then Mohegan-Pequot-Montauk and
@@ -209,7 +236,7 @@ and none is created:
 | SC-3 | Central corroboration stays architecture-only: tier-4 records carry no `surface_form` fields | structural | A test asserting every tier-4 record in the paradigm set has no surface-form field |
 | SC-4 | The paradigms render in all three views, with attested-row citations present in each view | behavioral | Run the three renderers; each of the three outputs contains the paradigm record ids AND the citation strings for attested rows |
 | SC-5 | Incomplete paradigm rows render with visible incompleteness (pending marking), per the establishment machinery | behavioral | A paradigm record with a pending PSNEA row renders with the pending marking in all three views |
-| SC-6 | The source registry classifies the fill library: `valentine-2001` and `wolfart-1973` as `scholarly_edition` tier-4 entries with their corpus landing paths/locators (#44/#66); registry entries for every Central component dataset and mirrored online grammar (baraga, okimāsis) that a tier-4 record actually cites, each carrying its `corpus/` path; the G&B entry stands as the primary tier-1 attestation source | structural | Registry checks: entries present with class, tier role, and resolvable locator; the G&B entry carries the primary-attestation role |
+| SC-6 | The source registry classifies the fill library: `valentine-2001` and `wolfart-1973` as `scholarly_edition` tier-4 entries with their corpus landing paths/locators (#44/#66); registry entries for every Central component dataset and mirrored online grammar (baraga, okimāsis) that a tier-4 record actually cites, each carrying its `corpus/` path; the G&B entry stands as the primary tier-1 attestation source; **no registry entry exists for the §2.3.3 table B comparanda pending the tier ruling** | structural | Registry checks: entries present with class, tier role, and resolvable locator; the G&B entry carries the primary-attestation role; every registry tier role ∈ 1–5 vocabulary |
 | SC-7 | Every paradigm record with a pending PSNEA row carries a `fill_plan` (gap_type ∈ §2.3.1 classes, candidates = registry ids listed in the §2.3.3 precedence order, disposition ∈ §2.3.5's enum); no pending row is silently empty; `incomplete-pending` rows carry the reason no source is eligible | structural | Coverage test: every pending row inspected; invalid dispositions and out-of-order candidate lists fail the suite |
 | SC-8 | Central-derived fill renders distinctly: any fill content sourced from a tier-4 registry entry is prefixed "Central corroboration — <source>, <locator>" in all three views, styled separately from attestation citations | behavioral | Run the three renderers over a paradigm record containing a tier-4-sourced fill; the prefix appears in each view |
 
@@ -232,6 +259,7 @@ and none is created:
 | 2026-10-12 | Per Dr. Keith Cunningham's guidance: G&B 1988 promoted to primary grammar (gate flips to its mirror); Eliot 1666 demoted to secondary; Valentine 2001 + Wolfart 1973 named as tier-4 fill references (architecture and usage); registry SC-6 added | AI agent |
 | 2026-10-23 | Fill machinery made concrete per developer direction: §2.3 split into gap types / ladder / tier-4 library dispositions (private/ anchoring per #44, promotion pass algonquian-library#66, component datasets as first-class tier-4, governance gate for online candidates); §2.4 library boundaries added; SC-2 extended to the disposition paths, SC-6 extended to the full library, SC-7 (fill_plan coverage) and SC-8 (Central rendering prefix) added | AI agent |
 | 2026-10-23 | §2.3.3 fill precedence order added: tier-4 sources ranked by familial + evidential distance only (guidance's source-naming order dropped from the ranking rationale; Miami-Illinois leads, component substrate noted as a beneath-the-ranks layer; tier-2 precedence per Costa 2007's grouping); marked provisional, assumed approved, submitted for linguist review; SC-7 extended to enforce candidate order | AI agent |
+| 2026-10-23 | §2.3.3 widened beyond the Cree/Ojibwean line per developer direction: tier-3 prose sources added (O'Meara 1992 per the component bibliography); rank 6 extended to the full Central future-adoption stream (Menominee/Meskwaki/Kickapoo/Shawnee — LB1975, AD stream, PV stream, CV stream); table B added for related languages beyond the tier vocabulary (Eastern non-SNEA: Mi'kmaq / Passamaquoddy-Maliseet / Abenaki; Plains: Arapaho / Blackfoot / Cheyenne; Powhatan note), warranted by the mirrored Goddard 1980 EA-subgrouping; the tier gap is flagged as a design-record question for the developer ruling, registry stays closed to table B (SC-6 extended); corpus-side inventory (algonquian-library#66 SC-4) carries the matching scoping | AI agent |
 
 ---
 
