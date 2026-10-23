@@ -109,11 +109,13 @@ anchors are all produced by a generator from the tracked inputs, and the
 tracked LaTeX sources carry no hand-written table rows (the generated-source
 rule the corpus repository already applies to its rendered volume).
 
-The corpus side produces the store's coverage: algonquian-library#68 requires
-a dossier row for every source id in this repository's `data/sources.yaml` and
-for every corpus work this repository's grammar records anchor, and its seed
-row set names both. This repository's join gate checks that coverage against
-the live records.
+The corpus side produces the store's coverage: algonquian-library#68 seeds
+the dossier with a row for every source id this repository's registry holds
+and for every corpus work this repository's grammar records anchor, and its
+criterion permits the row set to grow. The seam's growth rule is explicit:
+when this repository's registry gains a source, the corpus store gains a row
+for it in the same change, and the change is recorded on both sides. This
+repository's join gate checks the coverage against the live records.
 
 ### 2.3 The machine-readable rule set
 
@@ -151,11 +153,11 @@ file in the issue store rather than a tracked file in this repository. A
 document that renders the order needs a tracked form of it, so the order
 becomes a tracked file, `data/fill-precedence.yaml`: one entry per ranked
 source, with the keys `rank`, `source_id`, `group`, `familial_note`,
-`evidential_note`, `axis`, and `authority` — the authority being
+`evidential_note`, and `authority` — the authority being
 snea-grammar#4 §2.3.3. Each of
-the four note and rationale fields — `familial_note`, `evidential_note`,
-`axis`, and `authority` — is non-empty on every entry, and the document
-renders the ranks, the source ids, the notes, and the axes. The file's entries are the order the
+the three note and rationale fields — `familial_note`, `evidential_note`, and
+`authority` — is non-empty on every entry, and the document renders the
+ranks, the source ids, and the notes. The file's entries are the order the
 document renders. snea-grammar#4 §2.3.3 keeps its table and gains a pointer
 to the file; the change-control table records the pointer, and the file is the
 order's rendered form. The file's nine entries are fixed by the authority:
@@ -164,12 +166,11 @@ order's rendered form. The file's nine entries are fixed by the authority:
 adoption group (a set); `7` `baraga-1850`; `8` `okimasis`. A set entry carries
 an empty `source_id` and a `group` name instead.
 
-The `axis` key records which of the two ranking axes the entry's rank rests
-on, as the authority's rationale states it, and takes the values `familial`,
-`evidential`, or `familial+evidential` where the rationale rests on both. In
-F3 a source entry is placed at a point on the two axes, a set entry is drawn
-as a labelled band, and the `T3` entry is placed above the five rungs as the
-outgroup rung. The order remains a provisional working
+The two axes are not ranked against each other in the authority's
+rationale, so the file carries no per-entry axis: each entry's familial note
+and evidential note carry both. In F3 a source entry is placed at a point on
+the two axes, a set entry is drawn as a labelled band, and the `T3` entry is
+placed above the five rungs as the outgroup rung. The order remains a provisional working
 order pending linguist review, and the document says so.
 
 ### 2.5 The figures
@@ -242,10 +243,12 @@ sources. The drift detectors are mechanical and fail loud:
   byte-identical to the generator's output for the tracked inputs, and the
   tracked LaTeX sources contain no table content of their own.
 - **The freshness gate.** The document records two things about the corpus:
-  the pinned commit it was generated against, and a digest of the corpus
-  store's files at that commit. The digest is the SHA-256 over the sorted
-  list of every tracked file under `corpus/docs/research/data/grammar-sources/`,
-  each contributing its repository-relative path and its content. The
+  the pinned commit it was generated against, a per-file digest manifest of
+  the corpus store at that commit, and an aggregate digest over the manifest.
+  The manifest maps each tracked file under
+  `corpus/docs/research/data/grammar-sources/` to the SHA-256 of its content;
+  the aggregate digest is the SHA-256 over the manifest's sorted path-and-digest
+  lines. The
   drift check runs inside `paper/build.sh` **before** the
   generated-source comparison: it compares the digest of the checked-out
   corpus store against the recorded digest and, when they differ, fails
@@ -361,10 +364,10 @@ in snea-grammar#4's change-control table.
 | SC-10 | The built PDF's extracted text carries the generated payload: a known registry source id with its tier role and its proofing state from the generated sourcing table, the neighbour classification of `masthay-1991`, the checklist's status values, the supporting-materials rows, each bibliography entry's rendered title, and the precedence order's provisional-status statement; and the generated sourcing table places `masthay-1991`'s tier-role cell empty with the neighbour classification in the classification column | behavioral | Extract the built document's text and assert each payload element, with the source id, tier role, and proofing state taken from the generated sourcing table, the status values from the generated checklist table, the supporting rows from the generated supporting-materials table, and the titles from the generated bibliography; read the generated sourcing table and assert `masthay-1991`'s tier-role cell is empty and its classification cell carries the neighbour marker |
 | SC-11 | The document's citation of the corpus runbook resolves: the cited path exists under the corpus submodule, and the cited rule ids are present in that runbook | structural | A test that resolves the cited path under `corpus/` and asserts each cited rule id appears in the runbook text |
 | SC-12 | The sourcing table carries one row per corpus dossier row — twenty-two under the corpus store's seed — and the table's row count equals the dossier's row count; every dossier row that carries a `registry_id` resolves to a source in `data/sources.yaml`, and every source in `data/sources.yaml` resolves to a dossier row; every corpus work the grammar records anchor resolves to a dossier row; the table's rendered tier-role column equals the registry's tier roles for the same source; every registry `tier_roles` value is one of the five tokens `tier1`…`tier5`; and the neighbor marker is carried in its own `classification` field | structural | A test over the registry, the grammar records' anchors, the corpus store, and the generated sourcing table |
-| SC-13 | `data/fill-precedence.yaml` carries exactly the nine entries §2.4 fixes, in that rank order, with the keys §2.4 names, each entry's `familial_note`, `evidential_note`, `axis`, and `authority` non-empty, each entry carrying a `source_id` or a `group` name, and every `axis` value in the stated value set; the rendered fill-precedence order equals the tracked order — the same ranks and the same identifiers, in the same sequence — and each entry's familial note, evidential note, and axis appear in the built document's text | behavioral | Read the file and assert the nine entries' ranks and identifiers against §2.4's list, assert the keys and the non-empty fields on every entry, and assert the axis values; extract the rendered order, the notes, and the axes from the built document's text and compare them with the file's entries in order |
-| SC-14 | The freshness gate fails loud when the corpus store drifts from the record: with the corpus store's files altered, the build exits nonzero and names the drift; with them unaltered, the build succeeds | behavioral | Build in a scratch copy with the corpus store's files altered and assert a nonzero exit naming the drift; build the unaltered copy and assert success |
-| SC-15 | The document states its as-of anchors — the rule set's revision date, the corpus commit it was generated against, the digest of the corpus store at that commit, and the tier vocabulary — and each anchor is stamped from a tracked input rather than typed by hand | structural | A test that reads the generated metadata file and compares each anchor with the tracked input it derives from — the rule file's `revision`, the submodule's commit, the store's digest, and the package's tier names — and asserts the document's text carries those values |
-| SC-16 | The root `AGENTS.md` and `paper/evergreen/grammar-reconstruction-methodology/AGENTS.md` each name the four trigger events and the refresh steps §2.8 fixes for each — advancing the corpus pin, regenerating the five generated files, rebuilding the document, and recording the change in the document's maintenance section or in snea-grammar#4's change-control table | structural | A test that asserts each event name and each of the four refresh steps appears in both files |
+| SC-13 | `data/fill-precedence.yaml` carries exactly the nine entries §2.4 fixes, in that rank order, with the keys §2.4 names, each entry's `familial_note`, `evidential_note`, and `authority` non-empty, and each entry carrying a `source_id` or a `group` name; the rendered fill-precedence order equals the tracked order — the same ranks and the same identifiers, in the same sequence — and each entry's familial note and evidential note appear in the built document's text | behavioral | Read the file and assert the nine entries' ranks and identifiers against §2.4's list, assert the keys and the non-empty fields on every entry; extract the rendered order and the notes from the built document's text and compare them with the file's entries in order |
+| SC-14 | The drift check fails loud when the corpus store drifts from the record: with a corpus store file altered, the build exits nonzero and the message names the drifting path and the recorded and current digests; with the store unaltered, the build succeeds | behavioral | Build in a scratch copy with one corpus store file altered and assert a nonzero exit whose message names that path and both digests; build the unaltered copy and assert success |
+| SC-15 | The document states its as-of anchors — the rule set's revision date, the corpus commit it was generated against, the corpus store's per-file digest manifest and the aggregate digest over it, and the tier vocabulary — and each anchor is stamped from a tracked input rather than typed by hand | structural | A test that reads the generated metadata file and compares each anchor with the tracked input it derives from — the rule file's `revision`, the submodule's commit, the store's digest manifest and aggregate, and the package's tier names — and asserts the document's text carries those values |
+| SC-16 | The root `AGENTS.md` and `paper/evergreen/grammar-reconstruction-methodology/AGENTS.md` each bind each of §2.8's four trigger events to exactly the refresh steps §2.8's table fixes for that event | structural | A test that reads both files, locates each event name, and asserts the step text that follows it in that file is the step set §2.8's table fixes for that event |
 | SC-17 | The root `AGENTS.md`'s five tier labels equal the package's `TIER_NAMES` values, in order | structural | A test that extracts the five tier labels from the root `AGENTS.md`'s tier paragraph and compares them with `TIER_NAMES` |
 | SC-18 | The root `AGENTS.md` records the one-way corpus dependency and the decision not to add a `grammar/` submodule registration in the corpus repository, with the cycle named | structural | A text check over the root `AGENTS.md` for the dependency statement, the registration decision, and the cycle's ground |
 | SC-19 | The `corpus/` submodule pin is advanced to a commit that carries the corpus store, and the document's recorded corpus commit matches the checked-out submodule commit | structural | A test that compares the recorded commit in the generated metadata with `git -C corpus rev-parse HEAD` |
@@ -389,14 +392,21 @@ build rather than shipping a wrong document. The fill precedence order
 remains a provisional working order pending linguist review, and the document
 says so rather than presenting it as settled.
 
+**Contract status.** The methodology document and the two new tracked data
+files are not exports-contract surfaces: this repository's contract enumerates
+the knowledge base, the rendered grammar documents, and the source registry.
+The root `AGENTS.md`'s exports-contract section gains a line saying so, and
+the rendered methodology document is a published artifact fetched by URL
+rather than a tracked export.
+
 **Blast radius.** A new `paper/evergreen/` tree with its scope registry; a new
 `paper/build.sh`, `paper/fonts/`, `paper/vendor/`, and `paper/README.md`; a
 new `data/grammar-rules.yaml` and `data/fill-precedence.yaml`; one new module
 in the package; the new gate tests under `test/`, including the build-dependent
 tier that skips with a reason naming the missing tool and the provisioning
 command; a corpus submodule pin advance; the root `AGENTS.md` (its
-structure table, its tier paragraph, its agent conventions, and the
-corpus-dependency statement); the `data/sources.yaml` neighbour-marker change;
+structure table, its tier paragraph, its agent conventions, its
+exports-contract section, and the corpus-dependency statement); the `data/sources.yaml` neighbour-marker change;
 `ROADMAP.md`; and a change-control row in snea-grammar#4's spec. The grammar
 records, the three existing renderings, and the corpus repository's own
 surfaces are untouched.
