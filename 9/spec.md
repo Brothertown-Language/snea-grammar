@@ -68,10 +68,11 @@ skip-with-instruction convention the corpus repository uses.
 ### 2.4 The generator
 
 `src/snea_grammar/docgen.py`, with a command-line entry point in the style
-of the existing render CLI, so that the document's content is produced by
-the same validated package that produces the other renderings. It reads the
-registry, the rule set, the order file, and the corpus store under the
-`corpus/` submodule, and writes the six generated files. Its output is
+of the existing render CLI — `uv run python -m snea_grammar.docgen --out <dir>`
+— so that the document's content is produced by the same validated package
+that produces the other renderings. It reads the registry, the rule set, the
+order file, and the corpus store under the `corpus/` submodule, and writes the
+six generated files into the directory `--out` names. Its output is
 deterministic: the same inputs produce byte-identical outputs.
 
 ### 2.5 The build gates
@@ -89,16 +90,19 @@ The build's gate order is fixed, and each gate fails loud naming its cause:
 3. **The rule-correspondence check** — compares the document's rendered
    `\grammarrule` statements with the rule set's `statement` values, sentence
    for sentence, in both directions.
-4. **The join gate** — every source in the registry resolves to a corpus
-   dossier row, every dossier row that carries a `registry_id` resolves to
-   a registry source, every corpus work the grammar records anchor resolves
-   to a dossier row, and the sourcing table carries one row per dossier row.
+4. **The join gate** — every dossier row that carries a `registry_id`
+   resolves to a registry source, every corpus work the grammar records
+   anchor resolves to a dossier row, and the sourcing table carries one row
+   per dossier row. A registry source the store has no row for fails this
+   gate, and the store gains that row in the same change — the
+   cross-repository duty the corpus store's agent instructions record.
 5. **The precedence gate** — the rendered fill-precedence order equals the
    tracked order, and the sourcing table's rendered tier-role column equals
    the registry's tier roles.
 
-Then the compile. The pin check — the document's recorded corpus commit
-against the checked-out submodule commit — runs with the drift check.
+Then the compile. The pin check — the document's recorded corpus commit against the
+checked-out submodule commit — is part of the drift check, so a corpus pin
+that advanced without the document's regeneration is reported as drift.
 
 ## 3. Success criteria
 
@@ -108,8 +112,8 @@ against the checked-out submodule commit — runs with the drift check.
 | SC-2 | The document is registered in `paper/evergreen/EVERGREEN.md` with its name, path, entry file, review owner, scope globs, and tracked binaries directory, and `paper/build.sh --list` names the document root | behavioral | Read the registry and assert the six registry fields; run the build script's listing mode and assert the document root appears in its output |
 | SC-3 | The provisioning note names each required tool — Python with `uv`, `latexmk` with the XeLaTeX engine, `biber`, and `pdftotext` — with its installation command; and where a tool is absent, the build-dependent tests skip with a reason naming the missing tool and the provisioning command | structural | A text check over `paper/README.md` for each of the four tools and an installation command; in a checkout without a tool, a test's skip reason is read and checked for the missing tool and the command |
 | SC-4 | `bash paper/build.sh` produces the PDF from the tracked sources with the corpus submodule materialized, and exits nonzero naming the submodule remedy when the submodule is not materialized | behavioral | Build in a scratch copy with the submodule materialized and assert the PDF exists; empty the submodule directory, rebuild, and assert a nonzero exit whose message names the submodule remedy |
-| SC-5 | The generator reads the registry, the rule set, the order file, and the corpus store, writes the six generated files, and produces byte-identical output for the same inputs | structural | Run the generator into a scratch directory twice and compare the two runs byte for byte, and compare each output with its tracked counterpart |
-| SC-6 | Each of the five build gates fails loud naming its cause when its condition is violated, and the gates run in the §2.5 order | behavioral | In a scratch copy, break each gate's condition in turn — a corpus store file altered, a generated file edited, a rule statement reworded, a dossier row removed, the order file reordered — and assert the build exits nonzero with a message naming that gate's cause; assert the reported cause order matches §2.5 |
+| SC-5 | The generator reads the registry, the rule set, the order file, and the corpus store, writes the six generated files into the directory `--out` names, and produces byte-identical output for the same inputs | structural | Run the generator twice with `--out` naming a scratch directory and compare the two runs byte for byte, and compare each output with its tracked counterpart |
+| SC-6 | Each of the five build gates fails loud naming its cause when its condition is violated, and the gates run in the §2.5 order | behavioral | In a scratch copy, break each gate's condition in turn — a corpus store file altered, the corpus pin moved, a generated file edited, a rule statement reworded, a dossier row removed, the order file reordered — and assert the build exits nonzero with a message naming that gate's cause; assert the reported cause order matches §2.5 |
 | SC-7 | The default test tier is green with the pipeline's gate tests included | behavioral | `uv run pytest test/` executed in this repository, with the passing output recorded |
 
 ## 4. Impact
