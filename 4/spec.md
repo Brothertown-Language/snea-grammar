@@ -95,7 +95,45 @@ row carries its `fill_plan` (SC-7):
 5. **incomplete-pending** — no eligible source; the row renders visibly pending
    (the renderers' incompleteness machinery governs).
 
-#### 2.3.3 The tier-4 fill library and its dispositions
+#### 2.3.3 The fill precedence order (familial + evidential distance; added 2026-10-23)
+
+**Status: provisional working order — adopted per developer direction
+2026-10-23, assumed approved pending linguist review;** submitted to the
+reviewing linguists as the recommended precedence sourcing order. Review
+outcomes flow through change control here and in algonquian-library#66.
+The order ranks fill-in sources *within* the ladder's rungs (it never
+re-ranks the rungs): **familial distance** — genealogical closeness to PSNEA —
+and **evidential distance** — temporal drift from the PSNEA construction
+window plus fullness/analytic standard of the source. Prior recommendations
+(including the guidance's own source-naming order) are not used as ranking
+input; sources were *identified* by the guidance, *ordered* by distance.
+
+Familial axis: Munsee Delaware (tier 3) precedes every Central source by
+shared Eastern descent. Within tier 4 all Central languages are *equidistant
+familially* — Central subgrouping is contested and no Central subgroup shares
+known innovations with SNEA — so the familial axis resolves to the
+**retention profile**: proximity of the documented inflectional system to the
+PA skeleton (Bloomfield §117, the tier-5 anchor). Evidential axis: temporal
+closeness of the documentation to the PSNEA window, then fullness and
+analytic standard. All rationales are **working claims for linguist review**.
+
+| Rank | Source | Familial note | Evidential note |
+|------|--------|---------------|-----------------|
+| 1 | `costa-2003` — Miami-Illinois | most PA-conservative documented Central inflection (notably uncontracted PA independent-order material) | historical grammar of a language documented across the same colonial window as SNEA; full modern scholarly treatment |
+| 2 | `valentine-2001` — Nishnaabemwin (Odawa/Eastern Ojibwe) | conservative verb architecture; Ojibwean-level sound innovations as caveat | exhaustive modern reference grammar, fullest usage coverage in the set |
+| 3 | `wolfart-1973` — Plains Cree | fullest PA-style person/obviation/possession retention; documented independent-order contraction as caveat | standard scholarly Cree reference (APS Trans 63.5); more compact than rank 2 |
+| 4 | `hockett-1939` — Potawatomi | Ojibwean sibling of rank 2; radical phonological divergence makes it a cautionary comparator | full 1939 dissertation (staged in algonquian-library#44 copy set) |
+| 5 | component substrate — `corpus/data/csv/` Central datasets + O'Brien charts | all Central families, citation-keyed | machine-readable cross-check **beneath every rank above**, not a prose-usage source |
+| 6 | Menominee / Meskwaki full grammars (future adoption) | conservative Central comparators | no adopted full reference grammar yet — candidate inventory (algonquian-library#66 SC-4) |
+| 7 | `baraga-1850` — Otchipwe (Ojibwe) grammar | substantively Ojibwean | missionary-era, pre-linguistic analysis — corroboration-only weight |
+| 8 | `okimasis` — Cree: Language of the Plains | substantively Cree | pedagogical register — lowest scholarly weight; corroboration-only |
+
+Tier-2 (SNEA-internal) precedence follows Costa 2007's dialect grouping:
+the Massachusett–Coweset–Narragansett block, then Mohegan-Pequot-Montauk and
+the Niantics, then Quiripi/Unquachog, then Loup — per the dialectology record,
+not by prior recommendation.
+
+#### 2.3.4 The tier-4 fill library and its dispositions
 
 - **The named reference grammars (in-copyright):** Valentine 2001
   (*Nishnaabemwin Reference Grammar*, U Toronto Press — already staged in
@@ -130,7 +168,7 @@ row carries its `fill_plan` (SC-7):
 - Where attestation is silent everywhere, the paradigm row stays **visibly
   incomplete** (pending marking) — never silently absorbed.
 
-#### 2.3.4 Rendering and provenance
+#### 2.3.5 Rendering and provenance
 
 - **Evidence traces render everywhere**: attested-form citations appear in every
   rendered view (descriptive, teaching, prescriptive) — the same binding rule that
@@ -142,7 +180,8 @@ row carries its `fill_plan` (SC-7):
   statements with pinpoint locators; Central-derived exponent shapes never enter
   PSNEA claims.
 - **Every pending row records a fill_plan** — `gap_type` (§2.3.1's classes),
-  `candidates` (source-registry ids), `disposition` (one of
+  `candidates` (source-registry ids, **listed in the §2.3.3 precedence
+  order** — highest-precedence eligible source first), `disposition` (one of
   `central-arch`/`central-usage`/`internal-comparison`/`outgroup`/
   `incomplete-pending`) — the ladder is auditable, not silent (SC-7).
 
@@ -171,7 +210,7 @@ and none is created:
 | SC-4 | The paradigms render in all three views, with attested-row citations present in each view | behavioral | Run the three renderers; each of the three outputs contains the paradigm record ids AND the citation strings for attested rows |
 | SC-5 | Incomplete paradigm rows render with visible incompleteness (pending marking), per the establishment machinery | behavioral | A paradigm record with a pending PSNEA row renders with the pending marking in all three views |
 | SC-6 | The source registry classifies the fill library: `valentine-2001` and `wolfart-1973` as `scholarly_edition` tier-4 entries with their corpus landing paths/locators (#44/#66); registry entries for every Central component dataset and mirrored online grammar (baraga, okimāsis) that a tier-4 record actually cites, each carrying its `corpus/` path; the G&B entry stands as the primary tier-1 attestation source | structural | Registry checks: entries present with class, tier role, and resolvable locator; the G&B entry carries the primary-attestation role |
-| SC-7 | Every paradigm record with a pending PSNEA row carries a `fill_plan` (gap_type ∈ §2.3.1 classes, candidates = registry ids, disposition ∈ §2.3.4's enum); no pending row is silently empty; `incomplete-pending` rows carry the reason no source is eligible | structural | Coverage test: every pending row inspected; invalid dispositions fail the suite |
+| SC-7 | Every paradigm record with a pending PSNEA row carries a `fill_plan` (gap_type ∈ §2.3.1 classes, candidates = registry ids listed in the §2.3.3 precedence order, disposition ∈ §2.3.5's enum); no pending row is silently empty; `incomplete-pending` rows carry the reason no source is eligible | structural | Coverage test: every pending row inspected; invalid dispositions and out-of-order candidate lists fail the suite |
 | SC-8 | Central-derived fill renders distinctly: any fill content sourced from a tier-4 registry entry is prefixed "Central corroboration — <source>, <locator>" in all three views, styled separately from attestation citations | behavioral | Run the three renderers over a paradigm record containing a tier-4-sourced fill; the prefix appears in each view |
 
 ## 4. Non-goals
@@ -192,6 +231,7 @@ and none is created:
 | 2026-10-12 | Initial spec from the design sessions and ROADMAP W2 | AI agent |
 | 2026-10-12 | Per Dr. Keith Cunningham's guidance: G&B 1988 promoted to primary grammar (gate flips to its mirror); Eliot 1666 demoted to secondary; Valentine 2001 + Wolfart 1973 named as tier-4 fill references (architecture and usage); registry SC-6 added | AI agent |
 | 2026-10-23 | Fill machinery made concrete per developer direction: §2.3 split into gap types / ladder / tier-4 library dispositions (private/ anchoring per #44, promotion pass algonquian-library#66, component datasets as first-class tier-4, governance gate for online candidates); §2.4 library boundaries added; SC-2 extended to the disposition paths, SC-6 extended to the full library, SC-7 (fill_plan coverage) and SC-8 (Central rendering prefix) added | AI agent |
+| 2026-10-23 | §2.3.3 fill precedence order added: tier-4 sources ranked by familial + evidential distance only (guidance's source-naming order dropped from the ranking rationale; Miami-Illinois leads, component substrate noted as a beneath-the-ranks layer; tier-2 precedence per Costa 2007's grouping); marked provisional, assumed approved, submitted for linguist review; SC-7 extended to enforce candidate order | AI agent |
 
 ---
 
