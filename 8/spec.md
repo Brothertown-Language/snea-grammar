@@ -168,9 +168,11 @@ an empty `source_id` and a `group` name instead.
 
 The two axes are not ranked against each other in the authority's
 rationale, so the file carries no per-entry axis: each entry's familial note
-and evidential note carry both. In F3 a source entry is placed at a point on
-the two axes, a set entry is drawn as a labelled band, and the `T3` entry is
-placed above the five rungs as the outgroup rung. The order remains a provisional working
+and evidential note carry both. In F3 the entries are placed on the two axes
+by their notes — a source entry at a point, a set entry as a labelled band —
+and the `T3` entry, the Munsee Delaware outgroup source, is placed at the
+nearest point to the other entries, since it is the nearest relative. F3
+draws no ladder: the five rungs and the downward pull belong to F1. The order remains a provisional working
 order pending linguist review, and the document says so.
 
 ### 2.5 The figures
@@ -261,11 +263,13 @@ sources. The drift detectors are mechanical and fail loud:
   registry source; every corpus work this repository's grammar records anchor
   resolves to a dossier row; the document's sourcing table carries one row per
   corpus dossier row, and its row count equals the dossier's row count. The
-  join gate's wording is the one SC-12 states, and SC-12 governs.
+  join gate's wording is the one SC-12 states, and SC-12 governs. It runs
+  inside `paper/build.sh`, after the drift check and before the compile.
 - **The precedence gate.** The rendered fill-precedence order equals the
   tracked order in `data/fill-precedence.yaml`, and the sourcing table's
   rendered tier-role column equals the registry's tier roles for the same
-  source.
+  source. It runs inside `paper/build.sh`, after the join gate and before the
+  compile.
 
 The refresh duty is recorded in two places: this repository's root `AGENTS.md`
 names the trigger events and the refresh steps, and the document folder's
@@ -357,7 +361,7 @@ in snea-grammar#4's change-control table.
 |----|-----------|-------|---------------------|
 | SC-1 | The named paths exist: the document root's `master.tex`, `sections/` tree, `figures/` tree, `generated/` directory, `generated/references.bib`, and `outputs/` directory; the repository-level `paper/build.sh`, `paper/fonts/`, `paper/vendor/`, `paper/README.md`, `paper/fonts/OFL-CharisSIL.txt`, and `paper/fonts/PROVENANCE.md` | structural | File-existence checks over the named paths |
 | SC-2 | The document is registered in `paper/evergreen/EVERGREEN.md` with its name, path, entry file, review owner, scope globs, and tracked binaries directory, and `paper/build.sh --list` names the document root | behavioral | Read the registry and assert the six registry fields for the document; run the build script's listing mode and assert the document root appears in its output |
-| SC-3 | The document root path appears in the root `AGENTS.md` repository-structure table, and `ROADMAP.md` carries a work item for this document | structural | A text check for the document root path in the root `AGENTS.md`; a text check for the document's work item in `ROADMAP.md` |
+| SC-3 | The document root path appears in the root `AGENTS.md` repository-structure table; the root `AGENTS.md`'s Exports Contract section names the methodology document and states that it is not a contract surface; and `ROADMAP.md` carries a work item for this document | structural | A text check for the document root path in the root `AGENTS.md`; a text check that the Exports Contract section names the methodology document and states it is not a contract surface; a text check for the work item in `ROADMAP.md` |
 | SC-4 | `bash paper/build.sh` produces the PDF from the tracked sources in a checkout with the corpus submodule materialized, and exits nonzero naming the submodule remedy when the submodule is not materialized | behavioral | Build in a scratch copy with the submodule materialized and assert the PDF exists; empty the submodule directory, rebuild, and assert a nonzero exit whose message names the submodule remedy |
 | SC-5 | Every section in §2.6 is wired into `master.tex` and renders in the built PDF | behavioral | Build the document, extract the section headings from the built document's text, and assert each of the ten named sections is present |
 | SC-6 | `data/grammar-rules.yaml` carries a file-level `revision` date and the ten rules of §2.3, each with a non-empty `statement`, `scope`, and `authority`, and each `statement` carrying its rule's required term; the document's rendered rule statements are exactly the file's `statement` values, compared sentence for sentence in both directions | behavioral | Read the rule file and assert the revision date, the ten ids, the three non-empty fields each, and each statement's required term; extract the statements inside the document's `\grammarrule{...}` environments and compare them with the file's `statement` values in both directions |
@@ -370,10 +374,11 @@ in snea-grammar#4's change-control table.
 | SC-13 | `data/fill-precedence.yaml` carries exactly the nine entries §2.4 fixes, in that rank order, with the keys §2.4 names, each entry's `familial_note`, `evidential_note`, and `authority` non-empty, and each entry carrying a `source_id` or a `group` name; the rendered fill-precedence order equals the tracked order — the same ranks and the same identifiers, in the same sequence — and each entry's familial note and evidential note appear in the built document's text | behavioral | Read the file and assert the nine entries' ranks and identifiers against §2.4's list, assert the keys and the non-empty fields on every entry; extract the rendered order and the notes from the built document's text and compare them with the file's entries in order |
 | SC-14 | The drift check fails loud when the corpus store drifts from the record: with a corpus store file altered, the build exits nonzero and the message names the drifting path and the recorded and current digests; with the store unaltered, the build succeeds | behavioral | Build in a scratch copy with one corpus store file altered and assert a nonzero exit whose message names that path and both digests; build the unaltered copy and assert success |
 | SC-15 | The document states its as-of anchors — the rule set's revision date, the corpus commit it was generated against, the corpus store's per-file digest manifest and the aggregate digest over it, and the tier vocabulary — and each anchor is stamped from a tracked input rather than typed by hand | structural | A test that reads the generated metadata file and compares each anchor with the tracked input it derives from — the rule file's `revision`, the submodule's commit, the store's digest manifest and aggregate, and the package's tier names — and asserts the document's text carries those values |
+| SC-16a | The tracked `outputs/master.pdf` corresponds to the tracked sources: its extracted text equals the extracted text of a fresh build of them, so a hand edit to a section source cannot leave the committed PDF stale (PDF byte-identity is not reproducible — the build stamps a timestamp — so the comparison is text-level) | behavioral | Build the document into a temporary directory, extract the text of both the fresh PDF and the tracked `outputs/master.pdf`, and assert the two texts are equal |
 | SC-16 | The root `AGENTS.md` and `paper/evergreen/grammar-reconstruction-methodology/AGENTS.md` each bind each of §2.8's four trigger events to exactly the refresh steps §2.8's table fixes for that event | structural | A test that reads both files, locates each event name, and asserts the step text that follows it in that file is the step set §2.8's table fixes for that event |
 | SC-17 | The root `AGENTS.md`'s five tier labels equal the package's `TIER_NAMES` values, in order | structural | A test that extracts the five tier labels from the root `AGENTS.md`'s tier paragraph and compares them with `TIER_NAMES` |
 | SC-18 | The root `AGENTS.md` records the one-way corpus dependency and the decision not to add a `grammar/` submodule registration in the corpus repository, with the cycle named | structural | A text check over the root `AGENTS.md` for the dependency statement, the registration decision, and the cycle's ground |
-| SC-19 | The `corpus/` submodule pin is advanced to a commit that carries the corpus store, and the document's recorded corpus commit matches the checked-out submodule commit | structural | A test that compares the recorded commit in the generated metadata with `git -C corpus rev-parse HEAD` |
+| SC-19 | The `corpus/` submodule pin is advanced to a commit that carries the corpus store, and the document's recorded corpus commit matches the checked-out submodule commit | structural | A test that compares the recorded commit in the generated metadata with `git -C corpus rev-parse HEAD`, and asserts that the checked-out commit carries the store — `git -C corpus cat-file -e HEAD:docs/research/data/grammar-sources/dossier.tsv` succeeds |
 | SC-20 | snea-grammar#4's change-control table carries a row naming this document as the human-readable form of its §2.3 fill machinery and recording the neighbour-marker amendment and the tracked fill-precedence file; where the issue-store worktree is absent, the check skips with a reason naming the provisioning step | structural | A file check on snea-grammar#4's spec for the change-control row and its two named subjects; in a checkout without the issue-store worktree, the test skips with a reason naming the provisioning command |
 | SC-21 | The suite is green; on a machine without the TeX toolchain, the build-dependent tests skip with a reason naming the missing tool and the provisioning command | behavioral | `uv run pytest test/` executed in this repository, with the passing output recorded; where the toolchain is absent, the skips' reasons are read and each names the missing tool and the provisioning command |
 
