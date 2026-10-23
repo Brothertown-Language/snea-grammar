@@ -50,17 +50,23 @@ The ten rules, each with the term its statement must carry:
 ### 2.2 The order file
 
 `data/fill-precedence.yaml`: one entry per ranked source, with the keys
-`rank`, `source_id`, `group`, `familial_note`, `evidential_note`, and
-`authority` — the authority being snea-grammar#4 §2.3.3. Each of the three
-note and rationale fields is non-empty on every entry.
+`rank`, `source_id`, `group`, `familial_note`, `evidential_note`, `status`,
+and `authority` — the authority being snea-grammar#4 §2.3.3. Each of the
+note, status, and rationale fields is non-empty on every entry, and the
+`status` is `provisional-pending-linguist-review`.
 
-The file's entries are the order the authority states: `T3` `omeara-1992`;
+The file carries the authority's main table only: the authority's Table B
+— related languages beyond the current tier vocabulary — is out of scope
+pending the tier ruling, and the file gains those entries only when that
+ruling lands. The file's entries are the order the authority's main table
+states: `T3` `omeara-1992`;
 `1` `costa-2003`; `2` `valentine-2001`; `3` `wolfart-1973`; `4`
 `hockett-1939`; `5` the component substrate (a set); `6` the future-adoption
 group (a set); `7` `baraga-1850`; `8` `okimasis`. A set entry carries an
 empty `source_id` and a `group` name instead. The two axes are not ranked
 against each other in the authority's rationale, so the file carries no
-per-entry axis: each entry's familial note and evidential note carry both.
+per-entry axis-ranking value: the two axes' rationales are carried
+separately, in `familial_note` and `evidential_note`.
 
 snea-grammar#4 §2.3.3 keeps its table and gains a pointer to the file, and
 the file is the order's rendered form. The order remains a provisional
@@ -98,7 +104,7 @@ the neighbour-marker amendment, and recording the tracked order file.
 |----|-----------|-------|---------------------|
 | SC-1 | `data/grammar-rules.yaml` carries a file-level `revision` date and the ten rules of §2.1, each with a non-empty `statement`, `scope`, and `authority` | structural | A test that reads the file and asserts the revision date, the ten ids, and the three non-empty fields on every entry |
 | SC-2 | Every rule's `statement` carries its rule's required term from §2.1 | structural | A test that reads the file and asserts each statement contains its rule's required term |
-| SC-3 | `data/fill-precedence.yaml` carries exactly the nine entries §2.2 fixes, in that rank order, each with a non-empty `familial_note`, `evidential_note`, and `authority`, and each carrying a `source_id` or a `group` name | structural | A test that reads the file and asserts the nine entries' ranks and identifiers, and the three non-empty fields on every entry |
+| SC-3 | `data/fill-precedence.yaml` carries exactly the nine entries §2.2 fixes, in that rank order, each with a non-empty `familial_note`, `evidential_note`, `status`, and `authority`, each `status` being `provisional-pending-linguist-review`, and each carrying a `source_id` or a `group` name | structural | A test that reads the file and asserts the nine entries' ranks and identifiers, and the four non-empty fields on every entry |
 | SC-4 | Every registry `tier_roles` value is one of the five tokens `tier1`…`tier5`; every `colonial_primary` or `scholarly_edition` source carries at least one tier role unless it carries a non-empty `classification` marker; and `masthay-1991` is the sole such source | structural | A test that reads `data/sources.yaml` and asserts the vocabulary, the invariant, and the named exception |
 | SC-5 | snea-grammar#4's change-control table carries a row naming the methodology document, the neighbour-marker amendment, and the tracked order file, and snea-grammar#4's §2.3.3 carries a pointer to `data/fill-precedence.yaml`; where the issue-store worktree is absent, the check skips with a reason naming the provisioning step | structural | A file check on snea-grammar#4's spec for the change-control row and the §2.3.3 pointer; in a checkout without the issue-store worktree, the test skips with a reason naming the provisioning command |
 | SC-6 | `ROADMAP.md` carries a work item for the methodology document, and the root `AGENTS.md` names the document root path in its repository-structure table | structural | A text check for the work item in `ROADMAP.md` and for the document root path in the root `AGENTS.md` |
