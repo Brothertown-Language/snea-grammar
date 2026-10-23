@@ -71,11 +71,13 @@ in this order.
 
 ### 2.4 The generated payload
 
-The generator writes six files into the document root's `generated/`
+The generator writes seven files into the document root's `generated/`
 directory: `sourcing-table.tex`, `proofing-checklist.tex`,
-`supporting-materials.tex`, `as-of-metadata.tex`, `fill-precedence.tex`, and
-`references.bib`. The first five are `\input` by their sections; the
-bibliography is `\addbibresource`d and processed by `biber`. The hand-written
+`supporting-materials.tex`, `grammar-rules.tex`, `fill-precedence.tex`,
+`as-of-metadata.tex`, and `references.bib`. The first six are `\input` by
+their sections; the bibliography is `\addbibresource`d and processed by
+`biber`. The rule statements live only in `grammar-rules.tex` — the
+hand-written sections `\input` it and never restate a rule. The hand-written
 sources hold the prose and the `\input` commands; the table content, the
 precedence order, the bibliography entries, and the anchor values live only
 in the generated files. One block is exempt: the maintenance section's
@@ -92,7 +94,9 @@ its classification outside the rung column.
 The document's rules are rendered verbatim from the tracked rule set, inside
 the environment `\grammarrule{<id>}`; the fill-precedence order is rendered
 from the tracked order file, together with the notes that carry the two
-ranking axes. The rule set's and the order file's own schemas, and the
+ranking axes. The rule set's `statement` values reach the document only
+through the generated `grammar-rules.tex`, and the order file's entries
+through the generated `fill-precedence.tex`. The rule set's and the order file's own schemas, and the
 neighbour-marker correction in the source registry, are a separate spec.
 
 The document's rule `GRM-08` carries the citation of the corpus runbook: a
@@ -103,11 +107,14 @@ nine-rule runbook before the citation resolves.
 ### 2.6 The as-of anchors and the currency duty
 
 The document states its as-of anchors — the rule set's revision date, the
-corpus commit it was generated against, the corpus store's per-file digest
-manifest and the aggregate digest over it, and the tier vocabulary — each
-stamped from a tracked input rather than typed by hand. The corpus commit
-and the digests are the drift record the pipeline's drift check compares
-against.
+corpus commit it was generated against, the corpus store's digest, and the
+tier vocabulary — each stamped from a tracked input rather than typed by
+hand. The digest is computed by the generator over the corpus store's
+tracked files and written into the generated as-of metadata; the corpus
+commit is the checked-out submodule commit, and the tier vocabulary is the
+package's `TIER_NAMES` display names, the five rungs of the ladder that
+snea-phonetics#118 §2.3 established. The corpus commit and the digest are
+the drift record the pipeline's drift check compares against.
 
 The refresh duty is recorded in this repository's root `AGENTS.md` and in the
 document folder's `AGENTS.md`, each binding the trigger events to the steps
@@ -130,16 +137,16 @@ corpus repository's own agent instructions (algonquian-library#68).
 
 | ID | Criterion | Class | Verification method |
 |----|-----------|-------|---------------------|
-| SC-1 | Every section in §2.2 is wired into `master.tex` and renders in the built PDF | behavioral | Build the document, extract the section headings from the built document's text, and assert each of the ten named sections is present |
-| SC-2 | Figures F1–F5 compile into the built PDF, each is referenced from a section source, and each carries its caption; and the build log records no missing-file or float-lost error for them | behavioral | Extract the built document's text and assert the five captions; assert each figure's source file is `\input` by a section and its label is referenced; assert the build log carries no missing-file or float-lost error for the five |
-| SC-3 | The built PDF's extracted text carries the generated payload: a known registry source id with its tier role and its proofing state, the neighbour classification of a tier-role-less source, the checklist's status values, the supporting-materials rows, each bibliography entry's rendered title, and the precedence order's provisional-status statement | behavioral | Extract the built document's text and assert each payload element, with the values taken from the generated files |
+| SC-1 | Every section in §2.2 is wired into `master.tex`, in the order §2.2 fixes, and renders in the built PDF | behavioral | Build the document, extract the section headings from the built document's text, and assert the ten named sections are present in the fixed order |
+| SC-2 | Figures F1–F5 compile into the built PDF, each is referenced from a section source, and each carries its caption; the build log records no missing-file or float-lost error for them; and F2's five disposition labels and F3's nine placed entries are the ones the tracked files carry — the dispositions from the rule set's `GRM-03` and `GRM-04` entries, the entries from the order file | behavioral | Extract the built document's text and assert the five captions, the five disposition labels, and the nine entry names; assert each figure's source file is `\input` by a section and its label is referenced; assert the build log carries no missing-file or float-lost error for the five |
+| SC-3 | The built PDF's extracted text carries the generated payload: a known registry source id with its tier role and its proofing state, the neighbour classification of a tier-role-less source, the checklist's status values, the supporting-materials rows, each bibliography entry's rendered title, and the order file's provisional status | behavioral | Extract the built document's text and assert each payload element, with the values taken from the generated files |
 | SC-4 | The document's rendered `\grammarrule` statements equal the rule set's `statement` values, sentence for sentence, in both directions | behavioral | Extract the statements inside the document's `\grammarrule{...}` environments and compare them with the rule file's statements in both directions |
-| SC-5 | The rendered fill-precedence order equals the tracked order — the same ranks and the same identifiers, in the same sequence — and each entry's familial and evidential notes appear in the built document's text | behavioral | Extract the rendered order and the notes from the built document's text and compare them with the order file's entries in order |
+| SC-5 | The rendered fill-precedence order equals the tracked order — the same ranks and the same identifiers, in the same sequence — each entry's familial and evidential notes appears in the built document's text, and the order's provisional status appears with it | behavioral | Extract the rendered order and the notes from the built document's text and compare them with the order file's entries in order |
 | SC-6 | The document's rule `GRM-08` carries a non-empty cited path and the nine rule ids, and the citation resolves: the cited path exists under the corpus submodule and the cited rule ids are present in that runbook | structural | A test that asserts `GRM-08`'s rendered statement carries a non-empty path and the nine ids, resolves the path under `corpus/`, and asserts each cited rule id appears in the runbook text |
-| SC-7 | The built PDF's extracted text carries the four as-of anchors — the rule set's revision date, the corpus commit, the corpus store's aggregate digest, and the tier vocabulary — each equal to the tracked input it derives from, and the recorded corpus commit equals the checked-out submodule commit | structural | A test that reads the generated metadata file, compares each anchor with the tracked input it derives from, asserts the document's text carries them, and compares the recorded commit with `git -C corpus rev-parse HEAD` |
+| SC-7 | The built PDF's extracted text carries the four as-of anchors — the rule set's revision date, the corpus commit, the corpus store's digest, and the tier vocabulary — each equal to the tracked input it derives from, and the recorded corpus commit equals the checked-out submodule commit | structural | A test that reads the generated metadata file, compares each anchor with the tracked input it derives from — the rule file's `revision`, the submodule's commit, the store's digest, and the package's `TIER_NAMES` — asserts the document's text carries them, and compares the recorded commit with `git -C corpus rev-parse HEAD` |
 | SC-8 | The tracked `outputs/master.pdf` corresponds to the tracked sources: its extracted text equals the extracted text of a fresh build of them (the comparison is text-level — a PDF build stamps a timestamp, and the document's date is fixed) | behavioral | Build the document into a temporary directory, extract the text of both the fresh PDF and the tracked PDF, and assert the two texts are equal |
 | SC-9 | The root `AGENTS.md` and the document folder's `AGENTS.md` each carry a refresh-duty entry in their agent-conventions section, and in that entry each of §2.6's five trigger events names the actions its row fixes for it | structural | A test that reads each file's agent-conventions section, locates each of the five event names, and asserts that the actions of that event's row appear, in the row's order, within that event's entry |
-| SC-10 | The document's maintenance section carries a change-control record whose entries are dated and name their subject, and it carries an entry for the current rule-set revision — carrying the rule file's `revision` date — and an entry naming the tracked order file | structural | A text check that the maintenance section's record contains the rule file's `revision` date and the order file's path |
+| SC-10 | The document's maintenance section carries a change-control record whose every entry carries a date and a non-empty subject, and the record carries an entry for the current rule-set revision — carrying the rule file's `revision` date — and an entry naming the tracked order file | structural | A text check that every entry of the record carries a date and a non-empty subject, and that the record contains the rule file's `revision` date and the order file's path |
 | SC-11 | The default test tier is green with the document's gate tests included | behavioral | `uv run pytest test/` executed in this repository, with the passing output recorded |
 
 ## 4. Impact
