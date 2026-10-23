@@ -65,7 +65,7 @@ in this order.
 |--------|---------------|
 | F1 | The evidence ladder — five rungs, tier 1 at the top, the pull direction drawn downward, the callout that tier 4 supplies no surface forms, and the governance gate drawn as a barred side branch |
 | F2 | The pull-decision flow chart — attestation first, then the gap class, then the rung, then the ranked source, then the disposition. Its terminal outcomes are the five dispositions the pull rules define (`central-arch`, `central-usage`, `internal-comparison`, `outgroup`, `incomplete-pending`), each labelled with what it yields; a tier-2 or tier-3 fill is labelled as such and never as an attested form |
-| F3 | The fill-precedence diagram — the familial and evidential axes with each ranked source placed on them; a source entry at a point, a set entry as a labelled band, and the outgroup entry nearer the PSNEA end than rank 1, because the order ranks sources within a rung and never across rungs. F3 draws no ladder — the five rungs and the downward pull belong to F1 |
+| F3 | The fill-precedence diagram — the familial and evidential axes with each of the tracked order file's nine entries placed on them; the authority's Table B comparanda are out of scope pending the tier ruling, and the registry stays closed to them; a source entry at a point, a set entry as a labelled band, and the outgroup entry nearer the PSNEA end than rank 1, because the order ranks sources within a rung and never across rungs. F3 draws no ladder — the five rungs and the downward pull belong to F1 |
 | F4 | The proofing pipeline — capture, OCR, human proofing pass, back-apply, tracked extract, citable; and the branch that leaves an unproofed passage as working-copy material |
 | F5 | The traceability chain — a grammar record, its anchor, the corpus path, the tracked proofed extract, the page render |
 
@@ -97,7 +97,8 @@ neighbour-marker correction in the source registry, are a separate spec.
 
 The document's rule `GRM-08` carries the citation of the corpus runbook: a
 non-empty path and the rule ids `OCR-1`…`OCR-9`, resolved under the corpus
-submodule.
+submodule. The corpus pin must advance to a commit carrying the tracked
+nine-rule runbook before the citation resolves.
 
 ### 2.6 The as-of anchors and the currency duty
 
@@ -135,10 +136,11 @@ corpus repository's own agent instructions (algonquian-library#68).
 | SC-4 | The document's rendered `\grammarrule` statements equal the rule set's `statement` values, sentence for sentence, in both directions | behavioral | Extract the statements inside the document's `\grammarrule{...}` environments and compare them with the rule file's statements in both directions |
 | SC-5 | The rendered fill-precedence order equals the tracked order — the same ranks and the same identifiers, in the same sequence — and each entry's familial and evidential notes appear in the built document's text | behavioral | Extract the rendered order and the notes from the built document's text and compare them with the order file's entries in order |
 | SC-6 | The document's rule `GRM-08` carries a non-empty cited path and the nine rule ids, and the citation resolves: the cited path exists under the corpus submodule and the cited rule ids are present in that runbook | structural | A test that asserts `GRM-08`'s rendered statement carries a non-empty path and the nine ids, resolves the path under `corpus/`, and asserts each cited rule id appears in the runbook text |
-| SC-7 | The tracked `outputs/master.pdf` corresponds to the tracked sources: its extracted text equals the extracted text of a fresh build of them (the comparison is text-level — a PDF build stamps a timestamp, and the document's date is fixed) | behavioral | Build the document into a temporary directory, extract the text of both the fresh PDF and the tracked PDF, and assert the two texts are equal |
-| SC-8 | The root `AGENTS.md` and the document folder's `AGENTS.md` each carry a refresh-duty entry in their agent-conventions section, and in that entry each of §2.6's five trigger events names the actions its row fixes for it | structural | A test that reads each file's agent-conventions section, locates each of the five event names, and asserts that the actions of that event's row appear, in the row's order, within that event's entry |
-| SC-9 | The document's maintenance section carries a change-control record whose entries are dated and name their subject, and it carries an entry for the current rule-set revision — carrying the rule file's `revision` date — and an entry naming the tracked order file | structural | A text check that the maintenance section's record contains the rule file's `revision` date and the order file's path |
-| SC-10 | The default test tier is green with the document's gate tests included | behavioral | `uv run pytest test/` executed in this repository, with the passing output recorded |
+| SC-7 | The built PDF's extracted text carries the four as-of anchors — the rule set's revision date, the corpus commit, the corpus store's aggregate digest, and the tier vocabulary — each equal to the tracked input it derives from, and the recorded corpus commit equals the checked-out submodule commit | structural | A test that reads the generated metadata file, compares each anchor with the tracked input it derives from, asserts the document's text carries them, and compares the recorded commit with `git -C corpus rev-parse HEAD` |
+| SC-8 | The tracked `outputs/master.pdf` corresponds to the tracked sources: its extracted text equals the extracted text of a fresh build of them (the comparison is text-level — a PDF build stamps a timestamp, and the document's date is fixed) | behavioral | Build the document into a temporary directory, extract the text of both the fresh PDF and the tracked PDF, and assert the two texts are equal |
+| SC-9 | The root `AGENTS.md` and the document folder's `AGENTS.md` each carry a refresh-duty entry in their agent-conventions section, and in that entry each of §2.6's five trigger events names the actions its row fixes for it | structural | A test that reads each file's agent-conventions section, locates each of the five event names, and asserts that the actions of that event's row appear, in the row's order, within that event's entry |
+| SC-10 | The document's maintenance section carries a change-control record whose entries are dated and name their subject, and it carries an entry for the current rule-set revision — carrying the rule file's `revision` date — and an entry naming the tracked order file | structural | A text check that the maintenance section's record contains the rule file's `revision` date and the order file's path |
+| SC-11 | The default test tier is green with the document's gate tests included | behavioral | `uv run pytest test/` executed in this repository, with the passing output recorded |
 
 ## 4. Impact
 
@@ -160,9 +162,10 @@ each stop the build rather than shipping a wrong document. The fill
 precedence order remains a provisional working order pending linguist
 review, and the document says so.
 
-**Blast radius.** The document tree's section and figure sources; the
-document folder's `AGENTS.md`; the root `AGENTS.md`'s agent conventions and
-its structure table.
+**Blast radius.** The document root's `master.tex`; the section and figure
+sources; the six tracked generated files under `generated/`; the tracked
+`outputs/master.pdf`; the document folder's `AGENTS.md`; the root
+`AGENTS.md`'s agent conventions and its structure table.
 
 ## 5. Non-goals
 
@@ -188,6 +191,8 @@ its structure table.
 - algonquian-library#68 — the corpus-side store, checklist, and tracked
   proofed extracts this document consumes, and the cross-repository refresh
   duty its SC-7 records.
+- algonquian-library#69 — the runbook this document's rule `GRM-08` cites; the
+  corpus pin must advance to a commit carrying it.
 - snea-grammar#4 — the fill machinery, tier vocabulary, and precedence order
   this document renders.
 
