@@ -16,6 +16,10 @@ revised 2026-10-12 per the developer's guidance on the authority of
 PhD 2024, historical phonology of Nanticoke — verified live): "the Goddard Bragdon
 Natick grammar is the primary grammar to use. fill in missing pieces and usage can be
 taken from Nishnaabemwin Reference Grammar plus other items like the Cree grammar."
+**Revised again 2026-10-23** per the developer's direction to make the Central fill
+library concrete (valentine-2001 / wolfart-1973 / online grammars) and to fix the
+library boundaries: grammar sources are held by algonquian-library; the knowledge
+extracted from them is held here.
 
 ## 1. Goal
 
@@ -31,15 +35,24 @@ layers carry the differences, and dataless ancestors are covered by projection.
 **Per Dr. Keith Cunningham's guidance (2026-10-12), the primary grammar is Goddard &
 Bragdon 1988** — *Native Writings in Massachusett* (APS Memoir 185): the scholarly
 edition of the native-written Natick/Massachusett corpus, with its grammatical
-analysis of that corpus. **Implementation is blocked on the Goddard & Bragdon
-mirror** (algonquian-library#34, where it is now the primary target). Eliot 1666
-(*The Indian Grammar Begun*, dense paradigm sets) is demoted to the secondary
-attestation stream — still mirrored and used, but G&B leads.
+analysis of that corpus. **Implementation is blocked on the G&B copy disposition
+corpus-side** (algonquian-library#34, MANIFEST discipline; the work is also staged in
+the algonquian-library#44 private/ reference copy set as
+`private/Wampanoak/Goddard-Bragdon-NativeWritings-II-ocr.pdf`). Either landing path
+counts: the disposition is `mirrored` (public mirror under
+`docs/research/sources/`) or the `private/` reference copy — recorded corpus-side
+before this spec's tier-1 anchors are added. Eliot 1666 (*The Indian Grammar
+Begun*, dense paradigm sets) is demoted to the secondary attestation stream — still
+mirrored (algonquian-library#34's pass) and used, but G&B leads.
 
-The disposition rule (mirrored or documented-unavailable with evidence) governs
-what "unblocked" means: if the G&B disposition comes back documented-unavailable,
-this spec's tier-1 lead re-scopes to Eliot 1666 (or the next available attestation
-stream) and the change is recorded here.
+The disposition rule (mirrored, private-dispositioned, or documented-unavailable with
+evidence) governs what "unblocked" means: if the G&B disposition comes back
+documented-unavailable, this spec's tier-1 lead re-scopes to Eliot 1666 (or the next
+available attestation stream) and the change is recorded here.
+
+The tier-4 fill machinery (§2.3) gates separately: Valentine 2001 and Wolfart 1973
+anchors land only when the corpus-side private/ disposition (algonquian-library#44
+copy set; #66 promotion/mirror pass) materializes the copies in the corpus checkout.
 
 ### 2.2 The inflectional domains
 
@@ -55,42 +68,111 @@ Paradigm records (`kind: paradigm`) for:
 - **Possessed-noun inflection** — possessor person/number marking, the obviative
   possessor rule.
 
-### 2.3 Evidence discipline
+### 2.3 The fill machinery (revised 2026-10-23)
 
-- **Tier 1 leads**: exponents drawn from attested SNEA material — **Goddard &
-  Bragdon 1988 primary** (per Dr. Cunningham's guidance), Eliot 1666 secondary —
-  each form carrying its citation.
-- **Tier 5 anchors the skeleton**: Bloomfield 1946 §117 (mirrored) — the PA
-  architecture the paradigm tables are built against.
-- **Tier 4 corroborates and fills**: the Ojibwe component datasets (mirrored), and
-  — per Dr. Cunningham's guidance — the named Central reference grammars:
-  **Valentine 2001, *Nishnaabemwin Reference Grammar*** (U Toronto Press; Odawa and
-  Eastern Ojibwe; verified live 2026-10-12) and **Wolfart 1973, *Plains Cree: A
-  Grammatical Study*** (APS Trans 63.5; identified as the standard Cree reference
-  grammar, verified live). Where SNEA attestation is silent, missing pieces of
-  architecture and usage may be filled from these reference grammars and their
-  usage patterns — always tier-4-marked, Central-origin labeled, and never blended
-  into PSNEA surface claims (Central corroborates architecture, never supplies
-  surface forms).
-- **Tier 2 fills from SNEA-internal comparison** where single-source attestation is
-  silent, constrained by Costa 2007's dialectology.
-- Where attestation is silent everywhere, the paradigm row is left **visibly
-  incomplete** (pending marking) — the renderers' incompleteness machinery governs.
+#### 2.3.1 Gap types — what may be filled, by whom
+
+"Missing pieces and usage" (the guidance) are two different gap classes with
+different rules, plus a third the guidance does *not* authorize:
+
+| Gap type | Question | Fill source | Rule |
+|----------|----------|-------------|------|
+| architecture | does the PSNEA category exist? | PA skeleton (tier 5, Bloomfield §117) + Central corroboration (tier 4) | freely fillable, Central-marked |
+| usage | how does the category behave — person/number co-occurrence, possession, obviative possessor mechanics, order distribution? | Valentine 2001, Wolfart 1973, the open-access Cree/Ojibwe grammars | fillable as *statements* — never as forms (SC-3) |
+| exponent | what does the PSNEA marker look like? | **nothing Central** | SNEA-internal comparison (tier 2) or visibly pending |
+
+#### 2.3.2 The fill ladder
+
+Ordered, and required to be *recorded* rather than applied silently — each pending
+row carries its `fill_plan` (SC-7):
+
+1. **tier 1** — attested SNEA material: G&B primary, Eliot secondary, the tracked
+   colonial-primary streams.
+2. **tier 2** — SNEA-internal comparison, constrained by Costa 2007's dialectology.
+3. **tier 3** — Munsee Delaware outgroup; the `corpus/data/csv/Delaware_Munsee/`
+   component dataset is already mirrored.
+4. **tier 4** — Central corroboration: the fill library of §2.3.3.
+5. **incomplete-pending** — no eligible source; the row renders visibly pending
+   (the renderers' incompleteness machinery governs).
+
+#### 2.3.3 The tier-4 fill library and its dispositions
+
+- **The named reference grammars (in-copyright):** Valentine 2001
+  (*Nishnaabemwin Reference Grammar*, U Toronto Press — already staged in
+  algonquian-library#44's private/ copy set as `nishnaabemwin-hq-ocr.pdf`, with 25
+  page-numbered citations already carried in `Ojibwe_Common.ndjson`) and Wolfart
+  1973 (*Plains Cree: A Grammatical Study*, APS Trans 63.5 — excluded from the #44
+  copy set as uncited; the promotion pass is algonquian-library#66, with this spec's
+  §2.3 as the recorded need evidence). Anchored via the corpus `private/`
+  reference-library mechanism (the PSN-RUL-011/013/014/015 precedent —
+  `test/test_corpus_anchor.py` accepts `private/` anchors as a gitignored,
+  session-local authority surface); such records land **only when the copy exists
+  in the corpus checkout**, so the suite never ships dangling anchors.
+- **Mirrorable online grammars (open access, verified live 2026-10-23):** Baraga,
+  *A Theoretical and Practical Grammar of the Otchipwe Language* (1850; 1879 ed. —
+  public-domain era, archive.org CIHM copies) and Okimāsis, *Cree: Language of the
+  Plains* (U Regina Press open textbook). Mirror requests ride algonquian-library#66;
+  registry entries follow the MANIFEST landing (SC-6).
+- **Already-mirrored Central material (first-class, zero-copy-cost):** the Central
+  component datasets — `corpus/data/csv/Cree_Plains/`, `Cree_Swampy/`,
+  `Cree_Moose_Swampy/`, `Ojibwe_Odawa/`, `Ojibwe_Eastern/`, `Potawatomi/`,
+  `Menominee/`, `Meskwaki/`, `Miami_Illinois/` (row-citation-keyed, incl.
+  Ahenakew & Wolfart 1983/1991 in `corpus/data/json/citationKeys.json`) — and the
+  O'Brien Ojibwe paradigm-chart mirror
+  (`corpus/docs/research/sources/bigorrin-waabu11-obrien-charts-abc.html`). Eastern-
+  group Cree sets (`Cree_East`, `Cree_Innu`, `Cree_Naskapi_*`) are not tier-4.
+- **Tier 2 still fills where single-source attestation is silent** — costed into the
+  ladder above the Central rung, constrained by Costa 2007's dialectology.
+- **Governance gate for online candidates:** university-press/lab and scholarly
+  open-access works classify `scholarly_edition`; community-authored teaching
+  materials classify `community_dictionary` (excluded by default) unless authorized
+  — the modern-Mohegan-dictionary ruling pattern, applied mechanically.
+- Where attestation is silent everywhere, the paradigm row stays **visibly
+  incomplete** (pending marking) — never silently absorbed.
+
+#### 2.3.4 Rendering and provenance
+
 - **Evidence traces render everywhere**: attested-form citations appear in every
   rendered view (descriptive, teaching, prescriptive) — the same binding rule that
   carries tier and norm-status markings into all three outputs (snea-phonetics#118
-  §2.2 rule 1).
+  §2.2 rule 1). Central-corroboration fills render **prefixed explicitly**
+  ("Central corroboration — *source*, *locator*") in every view, so no reader can
+  mistake a usage-fill for attestation (SC-8).
+- **Tier 4 carries no surface forms** (SC-3) — usage fill lands as architecture
+  statements with pinpoint locators; Central-derived exponent shapes never enter
+  PSNEA claims.
+- **Every pending row records a fill_plan** — `gap_type` (§2.3.1's classes),
+  `candidates` (source-registry ids), `disposition` (one of
+  `central-arch`/`central-usage`/`internal-comparison`/`outgroup`/
+  `incomplete-pending`) — the ladder is auditable, not silent (SC-7).
+
+### 2.4 Library boundaries (added 2026-10-23)
+
+The division of labor between this repository and the corpus library — no
+grammar-source folder set exists here beyond the existing `private/` precedent,
+and none is created:
+
+| Thing | Lives in |
+|-------|----------|
+| Mirrorable source documents (colonial primaries, public-domain-era Central grammars, open-access textbooks, component datasets, paradigm-chart mirrors) | algonquian-library — `docs/research/sources/` mirrors + `data/csv` component database; tracked via #34/#66 |
+| In-copyright reference works (Valentine 2001, Wolfart 1973, G&B 1988) | algonquian-library `private/` reference library (#44 machinery; need-filtered; promotion is a deliberate recorded step — #66) |
+| Classification of every source, mirrored or not | this repo — `data/sources.yaml` |
+| Locator pins / fill provenance for un-landed sources | this repo — `fill_plan` candidates + registry notes, resolving to corpus paths only once the copy lands |
+| Grammar knowledge extracted from any source | this repo — `data/grammar/` records; the corpus is the source surface, the knowledge base is ours |
+| Working extract notes, if ever needed | this repo — `data/notes/` (only if prose extracts outgrow the records; not planned) |
 
 ## 3. Success criteria
 
 | ID | Criterion | Class | Verification method |
 |----|-----------|-------|---------------------|
 | SC-1 | Paradigm records exist for the four inflectional domains of §2.2, passing the schema validator | structural | `uv run pytest test/` — validator passes; a coverage test maps ≥1 paradigm record to each domain |
-| SC-2 | Every tier-1 paradigm record's anchors include the Goddard & Bragdon mirror path (or, for secondary-stream records, the Eliot 1666 mirror path) and resolve to existing files under the corpus submodule | structural | The anchor-resolution test, extended to the new records, passes |
+| SC-2 | Every tier-1 paradigm record's anchors include the G&B disposition path — a corpus mirror path or a corpus `private/` reference path — recorded corpus-side (#34/#44/#66) and resolving under the corpus submodule before the record lands; private/ anchors resolve session-locally per the PSN-RUL precedent (test/test_corpus_anchor.py) | structural | The anchor-resolution test, extended to the new records, passes |
 | SC-3 | Central corroboration stays architecture-only: tier-4 records carry no `surface_form` fields | structural | A test asserting every tier-4 record in the paradigm set has no surface-form field |
 | SC-4 | The paradigms render in all three views, with attested-row citations present in each view | behavioral | Run the three renderers; each of the three outputs contains the paradigm record ids AND the citation strings for attested rows |
 | SC-5 | Incomplete paradigm rows render with visible incompleteness (pending marking), per the establishment machinery | behavioral | A paradigm record with a pending PSNEA row renders with the pending marking in all three views |
-| SC-6 | The source registry carries the Central reference grammars named by the guidance — `valentine-2001` (Nishnaabemwin Reference Grammar) and `wolfart-1973` (Plains Cree: A Grammatical Study) — as `scholarly_edition` entries with tier-4 roles; the Goddard & Bragdon entry stands as the primary tier-1 attestation source | structural | Registry checks: both new entries present with class and tier role; the G&B entry carries the primary-attestation role |
+| SC-6 | The source registry classifies the fill library: `valentine-2001` and `wolfart-1973` as `scholarly_edition` tier-4 entries with their corpus landing paths/locators (#44/#66); registry entries for every Central component dataset and mirrored online grammar (baraga, okimāsis) that a tier-4 record actually cites, each carrying its `corpus/` path; the G&B entry stands as the primary tier-1 attestation source | structural | Registry checks: entries present with class, tier role, and resolvable locator; the G&B entry carries the primary-attestation role |
+| SC-7 | Every paradigm record with a pending PSNEA row carries a `fill_plan` (gap_type ∈ §2.3.1 classes, candidates = registry ids, disposition ∈ §2.3.4's enum); no pending row is silently empty; `incomplete-pending` rows carry the reason no source is eligible | structural | Coverage test: every pending row inspected; invalid dispositions fail the suite |
+| SC-8 | Central-derived fill renders distinctly: any fill content sourced from a tier-4 registry entry is prefixed "Central corroboration — <source>, <locator>" in all three views, styled separately from attestation citations | behavioral | Run the three renderers over a paradigm record containing a tier-4-sourced fill; the prefix appears in each view |
 
 ## 4. Non-goals
 
@@ -99,7 +181,9 @@ Paradigm records (`kind: paradigm`) for:
   over this core.
 - Phonetic realization (snea-phonetics).
 - Vocabulary/lexicon content.
-- Mirroring itself (corpus#34's deliverable).
+- Mirroring and private-library execution itself — algonquian-library#34, #44, #66
+  own the copy set; only the anchor paths, registry rows, and `fill_plan` fields
+  land here.
 
 ## 5. Change control
 
@@ -107,6 +191,7 @@ Paradigm records (`kind: paradigm`) for:
 |------|--------|--------|
 | 2026-10-12 | Initial spec from the design sessions and ROADMAP W2 | AI agent |
 | 2026-10-12 | Per Dr. Keith Cunningham's guidance: G&B 1988 promoted to primary grammar (gate flips to its mirror); Eliot 1666 demoted to secondary; Valentine 2001 + Wolfart 1973 named as tier-4 fill references (architecture and usage); registry SC-6 added | AI agent |
+| 2026-10-23 | Fill machinery made concrete per developer direction: §2.3 split into gap types / ladder / tier-4 library dispositions (private/ anchoring per #44, promotion pass algonquian-library#66, component datasets as first-class tier-4, governance gate for online candidates); §2.4 library boundaries added; SC-2 extended to the disposition paths, SC-6 extended to the full library, SC-7 (fill_plan coverage) and SC-8 (Central rendering prefix) added | AI agent |
 
 ---
 
