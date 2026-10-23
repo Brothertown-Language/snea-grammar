@@ -36,13 +36,13 @@ The ten rules, each with the term its statement must carry:
 
 | Id | Subject | Required term |
 |----|---------|---------------|
-| `GRM-01` | The evidence ladder and the direction of the pull: tier 1 leads, and a lower rung is reached only where the rung above is silent | `tier 1` |
+| `GRM-01` | The evidence ladder and the direction of the pull: tier 1 leads, and a lower rung is reached only where the rung above is silent | `tier 1` and `silent` |
 | `GRM-02` | Central corroboration supplies no surface forms | `surface form` |
-| `GRM-03` | The three gap classes — architecture, usage, exponent — and what may fill each | `exponent` |
-| `GRM-04` | The fill precedence order and its two ranking axes, familial distance and evidential distance | `familial` |
+| `GRM-03` | The three gap classes — architecture, usage, exponent — and what may fill each | `architecture`, `usage`, and `exponent` |
+| `GRM-04` | The fill precedence order and its two ranking axes, familial distance and evidential distance | `familial` and `evidential` |
 | `GRM-05` | Tier 2 fills where single-source attestation is silent | `tier 2` |
 | `GRM-06` | Incompleteness stays visible: a row with no eligible source renders as pending | `pending` |
-| `GRM-07` | Community dictionaries are excluded by default; use requires explicit authorization from the owning community | `community dictionar` |
+| `GRM-07` | Community dictionaries are excluded by default; use requires explicit authorization from the owning community | `community dictionar` and `authoriz` |
 | `GRM-08` | The OCR sourcing rule, cited to the corpus runbook's rules `OCR-1`…`OCR-9` | `working-copy` |
 | `GRM-09` | Every pending row records a fill plan; the ladder is auditable, not silent | `fill plan` |
 | `GRM-10` | Tier-2 precedence follows Costa 2007's dialect grouping | `Costa` |
@@ -51,9 +51,9 @@ The ten rules, each with the term its statement must carry:
 
 `data/fill-precedence.yaml`: one entry per ranked source, with the keys
 `rank`, `source_id`, `group`, `familial_note`, `evidential_note`, `status`,
-and `authority` — the authority being snea-grammar#4 §2.3.3. Each of the
-note, status, and rationale fields is non-empty on every entry, and the
-`status` is `provisional-pending-linguist-review`.
+and `authority` — the authority being snea-grammar#4 §2.3.3. The two notes,
+the status, and the authority are non-empty on every entry, and the `status` is
+`provisional-pending-linguist-review`.
 
 The file carries the authority's main table only: the authority's Table B
 — related languages beyond the current tier vocabulary — is out of scope
@@ -107,7 +107,7 @@ the neighbour-marker amendment, and recording the tracked order file.
 | SC-3 | `data/fill-precedence.yaml` carries exactly the nine entries §2.2 fixes, in that rank order, each with a non-empty `familial_note`, `evidential_note`, `status`, and `authority`, each `status` being `provisional-pending-linguist-review`, and each carrying a `source_id` or a `group` name | structural | A test that reads the file and asserts the nine entries' ranks and identifiers, and the four non-empty fields on every entry |
 | SC-4 | Every registry `tier_roles` value is one of the five tokens `tier1`…`tier5`; every `colonial_primary` or `scholarly_edition` source carries at least one tier role unless it carries a non-empty `classification` marker; and `masthay-1991` is the sole such source | structural | A test that reads `data/sources.yaml` and asserts the vocabulary, the invariant, and the named exception |
 | SC-5 | snea-grammar#4's change-control table carries a row naming the methodology document, the neighbour-marker amendment, and the tracked order file, and snea-grammar#4's §2.3.3 carries a pointer to `data/fill-precedence.yaml`; where the issue-store worktree is absent, the check skips with a reason naming the provisioning step | structural | A file check on snea-grammar#4's spec for the change-control row and the §2.3.3 pointer; in a checkout without the issue-store worktree, the test skips with a reason naming the provisioning command |
-| SC-6 | `ROADMAP.md` carries a work item for the methodology document, and the root `AGENTS.md` names the document root path in its repository-structure table | structural | A text check for the work item in `ROADMAP.md` and for the document root path in the root `AGENTS.md` |
+| SC-6 | `ROADMAP.md` carries a work item for the methodology document, and the root `AGENTS.md` names the document root path `paper/evergreen/grammar-reconstruction-methodology/` in its repository-structure table | structural | A text check for the work item in `ROADMAP.md` and for the document root path in the root `AGENTS.md` |
 | SC-7 | The default test tier is green with the rule set, the order file, and the registry checks included | behavioral | `uv run pytest test/` executed in this repository, with the passing output recorded |
 
 ## 4. Impact
@@ -144,7 +144,8 @@ pointer; `ROADMAP.md`; the root `AGENTS.md`'s structure table.
 ## 6. Relations and dependencies
 
 - The document spec — the document that renders these files; it lands after
-  this one.
+  this one. The pipeline spec, which fixes the document root path this
+  spec's SC-6 names, lands independently of it.
 - The pipeline spec — the generator and the gates that read these files.
 - snea-grammar#4 — the fill machinery, tier vocabulary, and precedence order
   these files state.
