@@ -125,10 +125,10 @@ machine-readable file, `data/grammar-rules.yaml`: a file-level `revision`
 date, and one entry per rule, each carrying an id, the canonical statement
 the document renders, the scope it binds, and the authority it derives from.
 The document renders each canonical statement verbatim inside the environment
-`\grammarrule{<id>}`, and the build gate asserts the two-way correspondence
-between the file's statements and the document's rendered statements — sentence
-for sentence, not id for id, so that a reworded rule in the document fails the
-gate.
+`\grammarrule{<id>}`, and the rule-correspondence gate asserts the two-way
+correspondence between the file's statements and the document's rendered
+statements — sentence for sentence, not id for id, so that a reworded rule in
+the document fails the gate. The gate runs inside `paper/build.sh`.
 
 The rule set carries these rules:
 
@@ -244,9 +244,12 @@ The document's volatile inputs are the corpus store, the registry, and the
 fill-precedence file; its stable inputs are the rule set and the section
 sources. The drift detectors are mechanical and fail loud:
 
-- **The generated-source gate.** The five generated files are tracked and
+- **The generated-source gate.** The six generated files are tracked and
   byte-identical to the generator's output for the tracked inputs, and the
   tracked LaTeX sources contain no table content of their own.
+- **The rule-correspondence gate.** The document's rendered `\grammarrule`
+  statements equal the rule file's `statement` values, sentence for sentence,
+  in both directions.
 - **The freshness gate.** The document records three things about the corpus:
   the pinned commit it was generated against, a per-file digest manifest of
   the corpus store at that commit, and an aggregate digest over the manifest.
@@ -254,7 +257,10 @@ sources. The drift detectors are mechanical and fail loud:
   `corpus/docs/research/data/grammar-sources/` to the SHA-256 of its content;
   the aggregate digest is the SHA-256 over the manifest's sorted path-and-digest
   lines. The
-  drift check runs inside `paper/build.sh` **before** the
+  drift check runs inside `paper/build.sh` **before** the generated-source
+  comparison, and the build's gate order is fixed: the drift check, the
+  generated-source comparison, the rule-correspondence check, the join
+  gate, the precedence gate, then the compile. The drift check compares
   generated-source comparison: it compares the digest of the checked-out
   corpus store against the recorded digest and, when they differ, fails
   naming the drifting path and the recorded and current digests. The
@@ -320,12 +326,16 @@ linguistic examples), `tikz` and `forest` (the figures), `booktabs`,
 `biblatex` with `biber`, and `hyperref` with `cleveref` after it. The
 typesetting convention follows the phonetics repository's: `\sloppy`,
 `\raggedbottom`, and flexible vertical lengths in the preamble, with no layout
-enforcement in the build tooling.
+enforcement in the build tooling. The document's date is fixed, not `\today`, so
+that the tracked PDF's text matches a later fresh build's text.
 
-**The toolchain precondition.** The build needs `latexmk` with the XeLaTeX
-engine, `biber`, and `pdftotext`, plus the TeX packages named above. The
-provisioning note at `paper/README.md` states the requirement and the
-installation command. On a machine without the toolchain, the build-dependent
+**The toolchain precondition.** The build needs Python with `uv` and the
+package's dependencies (`pyyaml`), `latexmk` with the XeLaTeX engine, `biber`,
+and `pdftotext`, plus the TeX packages named above. The build invokes the
+generator as `uv run python -m snea_grammar.docgen`, so a scratch-copy build
+needs the same environment the repository's own build needs. The provisioning
+note at `paper/README.md` states the requirement and the installation
+command. On a machine without the toolchain, the build-dependent
 tests skip with a reason naming the missing tool and the provisioning
 command, following the skip-with-instruction convention the corpus repository
 uses; the rest of the suite runs.
@@ -376,7 +386,7 @@ in snea-grammar#4's change-control table.
 | SC-5 | Every section in §2.6 is wired into `master.tex` and renders in the built PDF | behavioral | Build the document, extract the section headings from the built document's text, and assert each of the ten named sections is present |
 | SC-6 | `data/grammar-rules.yaml` carries a file-level `revision` date and the ten rules of §2.3, each with a non-empty `statement`, `scope`, and `authority`, and each `statement` carrying its rule's required term; the document's rendered rule statements are exactly the file's `statement` values, compared sentence for sentence in both directions | behavioral | Read the rule file and assert the revision date, the ten ids, the three non-empty fields each, and each statement's required term; extract the statements inside the document's `\grammarrule{...}` environments and compare them with the file's `statement` values in both directions |
 | SC-7 | The six generated files — `generated/sourcing-table.tex`, `generated/proofing-checklist.tex`, `generated/supporting-materials.tex`, `generated/as-of-metadata.tex`, `generated/fill-precedence.tex`, and `generated/references.bib` — are byte-identical to the generator's output for the tracked inputs | structural | Run the generator into a scratch directory and compare each output file byte for byte with its tracked counterpart |
-| SC-8 | No tracked LaTeX source under the document root carries table content of its own: the sourcing table's rows, the checklist's rows, the supporting-materials rows, and the precedence order's rows appear only in the generated `.tex` files | structural | A test that reads the tracked LaTeX sources and asserts that none of the three generated tables' rows appears in them |
+| SC-8 | No tracked LaTeX source under the document root carries table content of its own: the sourcing table's rows, the checklist's rows, the supporting-materials rows, and the precedence order's rows appear only in the generated `.tex` files | structural | A test that reads the tracked LaTeX sources and asserts that no row of any of the four generated tables appears in them |
 | SC-9 | Figures F1–F5 appear in the built PDF, each is referenced from a section source, and each carries its caption | behavioral | Extract the built document's text and assert the five captions are present; assert each figure's label is referenced from at least one section source |
 | SC-10 | The built PDF's extracted text carries the generated payload: a known registry source id with its tier role and its proofing state from the generated sourcing table, the neighbour classification of `masthay-1991`, the checklist's status values, the supporting-materials rows, each bibliography entry's rendered title, and the precedence order's provisional-status statement; and the generated sourcing table places `masthay-1991`'s tier-role cell empty with the neighbour classification in the classification column | behavioral | Extract the built document's text and assert each payload element, with the source id, tier role, and proofing state taken from the generated sourcing table, the status values from the generated checklist table, the supporting rows from the generated supporting-materials table, and the titles from the generated bibliography; read the generated sourcing table and assert `masthay-1991`'s tier-role cell is empty and its classification cell carries the neighbour marker |
 | SC-11 | The document's rule `GRM-08` carries a citation of the corpus runbook — a non-empty path and the rule ids `OCR-1`…`OCR-9` — and the citation resolves: the cited path exists under the corpus submodule, and the cited rule ids are present in that runbook | structural | A test that asserts `GRM-08`'s rendered statement carries a non-empty cited path and the nine rule ids, resolves the path under `corpus/`, and asserts each cited rule id appears in the runbook text |
@@ -403,9 +413,10 @@ pull rules.
 
 **Risk.** The document is published, and a document that misstates a rule or
 a proofing state misleads a reader who has no way to see the machinery behind
-it. The gates are therefore mechanical and fail loud: a stale generated file,
-a drifted corpus store, and a registry/dossier disagreement each stop the
-build rather than shipping a wrong document. The fill precedence order
+it. The gates are therefore mechanical and fail loud: a stale generated file, a
+drifted corpus store, a registry/dossier disagreement, a reworded rule, and a
+precedence order that diverges from its tracked form each stop the build
+rather than shipping a wrong document. The fill precedence order
 remains a provisional working order pending linguist review, and the document
 says so rather than presenting it as settled.
 
@@ -423,7 +434,9 @@ in the package; the new gate tests under `test/`, including the build-dependent
 tier that skips with a reason naming the missing tool and the provisioning
 command; a corpus submodule pin advance; the root `AGENTS.md` (its
 structure table, its tier paragraph, its agent conventions, its
-exports-contract section, and the corpus-dependency statement); the `data/sources.yaml` neighbour-marker change and the registry test's new case;
+exports-contract section, and the corpus-dependency statement); the document
+folder's `AGENTS.md`; snea-grammar#4's spec, which gains the change-control
+row and a pointer from its §2.3.3 to the tracked fill-precedence file; the `data/sources.yaml` neighbour-marker change and the registry test's new case;
 `ROADMAP.md`; and a change-control row in snea-grammar#4's spec. The grammar
 records, the three existing renderings, and the corpus repository's own
 surfaces are untouched.
