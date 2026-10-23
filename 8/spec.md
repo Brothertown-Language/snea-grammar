@@ -277,11 +277,12 @@ steps each fires are fixed:
 | A corpus material change | advance the `corpus/` submodule pin to a commit carrying the change; regenerate the five generated files; rebuild the document |
 | A proofed segment landing | the same three steps, with the checklist and supporting-materials tables picking up the new row |
 | A rule change | edit `data/grammar-rules.yaml`; regenerate the five generated files; rebuild the document; record the change in the document's maintenance section |
-| A registry change | edit `data/sources.yaml`; regenerate the five generated files; rebuild the document; record the change in snea-grammar#4's change-control table | The cross-repository half of the duty — the corpus repository
+| A registry change | edit `data/sources.yaml`; add a row for the new source in the corpus store; regenerate the five generated files; rebuild the document; record the change in snea-grammar#4's change-control table |
+
+The cross-repository half of the duty — the corpus repository
 updating its store and naming this repository's corpus-pin advance and the
 methodology document's refresh among the surfaces each event fires — is
-recorded in the corpus repository's own agent instructions
-(algonquian-library#68 SC-9).
+recorded in the corpus repository's own agent instructions (algonquian-library#68 SC-9).
 
 ### 2.9 The document tree, the toolchain, and the assets
 
